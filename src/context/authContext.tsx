@@ -60,6 +60,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const logout = () => {
         if (typeof window !== 'undefined') {
             localStorage.removeItem('token');
+            localStorage.removeItem('user_info');
             removeCookie('refresh')
         }
 
