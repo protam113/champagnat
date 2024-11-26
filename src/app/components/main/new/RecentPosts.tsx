@@ -121,7 +121,7 @@ const RecentLayout = () => {
 
     const [keywords, setKeywords] = useState(initialKeywords);
 
-    const removeKeyword = (index) => {
+    const removeKeyword = (index: any) => {
         setKeywords((prevKeywords) => prevKeywords.filter((_, i) => i !== index));
     };
 

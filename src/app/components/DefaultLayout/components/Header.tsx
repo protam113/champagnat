@@ -101,7 +101,7 @@ export default function Navbar() {
     }
 
     function closeSideMenu() {
-        setSideMenue(false);
+        setSideMenue(false);s
     }
 
     if (!isMounted) {

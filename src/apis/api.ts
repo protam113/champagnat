@@ -10,7 +10,6 @@ const endpoints = {
     //current user lgin
     currentUser: '/user/detail/',
 
-
     //category(thể loại)
     categories:  '/category/',
     category: '/category/:id/',

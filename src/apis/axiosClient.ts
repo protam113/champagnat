@@ -1,16 +1,15 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { baseURL } from "./api";
 
-// Function to create an Axios instance with a configured token
+// Function to create an Axios instance with optional token
 const authApi = (token: string | null = null) => {
+    const headers: Record<string, string> = token ? { Authorization: `Bearer ${token}` } : {};
     return axios.create({
         baseURL,
-        headers: {
-            Authorization: token ? `Bearer ${token}` : "",
-            // Xoá Content-Type tại đây để để cho axios tự thiết lập
-        },
+        headers, // Chỉ thêm header Authorization nếu token tồn tại
     });
 };
+
 
 // Function to handle API requests with support for different HTTP methods
 const handleAPI = async (
@@ -28,11 +27,16 @@ const handleAPI = async (
         };
         const response = await apiInstance(config);
         return response.data;
-    } catch (error) {
-        // Handle error here (logging or custom error message)
-        throw error;
+    } catch (error: any) {
+        if (error.response) {
+            console.error("Error Response:", error.response);
+            throw new Error(`API request failed: ${error.response?.data?.message || error.message}`);
+        } else {
+            throw new Error("API request failed: " + error.message);
+        }
     }
 };
+
 
 export default handleAPI;
 export { handleAPI };
