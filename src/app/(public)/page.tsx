@@ -1,16 +1,16 @@
-"use client"; // Ensures this is a client component
+"use client";
 
-import Hero from '../components/DefaultLayout/components/Hero'
-import {Content} from "@/app/components/main/home/homeComponents";
+import Hero from "../components/DefaultLayout/components/Hero";
+import { Content } from "@/app/components/main/home/homeComponents";
 
 // src/pages/index.tsx
 const Home = () => {
-    return (
-        <div>
-            <Hero />
-            <Content />
-        </div>
-    );
+  return (
+    <div>
+      <Hero />
+      <Content />
+    </div>
+  );
 };
 
 export default Home;
