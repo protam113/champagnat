@@ -12,6 +12,12 @@ const config: Config = {
       sm: "15px"
     },
     extend: {
+      keyframes: {
+        "rotate-full": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+      },
       container: {
         center: true,
         padding: {

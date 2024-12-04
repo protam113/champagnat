@@ -1,14 +1,14 @@
 "use client";
 
-import { useBlogsList } from "@/hooks/blog/useBlog";
+import { useNewsList } from "@/hooks/news/useNews";
 
-// BlogList.ts
+// NewsList.ts
 
-export const BlogList = (currentPage: number, category: string ,refreshKey: number) => {
+export const NewsList = (currentPage: number, category: string ,refreshKey: number) => {
 
     const filters = category.trim() === "" ? {} : { category };
 
-    const { data, isLoading, isError } = useBlogsList(currentPage,
+    const { data, isLoading, isError } = useNewsList(currentPage,
         filters // Use the category chosen by the news
         ,refreshKey);
 

@@ -5,6 +5,7 @@ import React
 // , { useEffect } 
 from 'react';
 import DefaultLayout from "@/app/components/DefaultLayout";
+import ScrollToTopButton from '../components/button/ScrollToTopButton';
 // import { useAuth } from '@/context/authContext';
 // import { useRouter } from 'next/navigation';
 
@@ -33,6 +34,7 @@ export default function DashboardLayout({
     return (
         <DefaultLayout>
             {children}
+            <ScrollToTopButton/>
         </DefaultLayout>
     );
 }

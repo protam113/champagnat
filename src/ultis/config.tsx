@@ -30,18 +30,24 @@ export const NavItems = () => {
     {
       id: 3,
       label: "Hội Dòng",
-      link: "/hoidong",
+      link: "/hoi_dong",
       children: [
+        {
+          id: 13,
+          label: "Giới Thiệu Chung",
+          link: "/hoi_dong/about_us",
+          icon: MdGroups,
+        },
         {
           id: 9,
           label: "Ơn Gọi",
-          link: "/hoidong/on_goi",
+          link: "/hoi_dong/on_goi",
           icon: MdOutlineEventNote,
         },
         {
           id: 11,
           label: "Sứ Vụ",
-          link: "/hoidong/su_vu",
+          link: "/hoi_dong/su_vu",
           icon: MdOutlineEventNote,
         },
       ],

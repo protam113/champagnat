@@ -1,68 +1,78 @@
-"use client"; // Ensures this is a client component
+'use client'; // Ensures this is a client component
 
+import Image from 'next/image';
+import React, { useState } from 'react';
+import { BlogList } from '@/lib/blogList'; // Đảm bảo rằng bạn đã có BlogList API
+import formatDate from '@/ultis/formatDate';
 
-import Image from "next/image";
-import React from "react";
-import congregation from "@/assets/image/congregation.png";
-import bannerImage from "@/assets/image/banner.png";
 export const Congregation = () => {
-    const HandleOnClick = () => {
-        alert("Hello");
-    };
-    return (
-        <article className="container mx-auto pt-10" style={{ width: "1400px" }}>
-            {/* Phần header của Tin Tức */}
-            <header className="bg-primary-500 py-3 rounded-lg flex items-center justify-between">
-                <h2 className="text-white font-semibold pl-4">Hội dòng</h2>
-                <button className="text-white font-semibold pr-4">Xem thêm</button>
-            </header>
+  const [currentPage] = useState(1);
+  const [refreshKey] = useState(0);
 
-            {/* Phần nội dung: Hình ảnh, text và lịch */}
-            <div className="flex  justify-between pt-5 cursor-pointer">
-                <div onClick={HandleOnClick}>
-                    <Image src={congregation} alt="news" width={700} height={300} />
-                    <h3 className="mt-4 text-sm font-bold">
-                        Mừng Kính Thánh Phanxicô Assisi: Bổn mạng Gia đình Học viện năm
-                    </h3>
-                    <p className="mt-1 text-sm">
-                        Trong niềm hân hoan mừng kính Thánh Phanxicô Assisi – Bổn mạng gia
-                        đình Học viện, Học xá Học viện đã long trọng cử hành Thánh lễ tạ ơn
-                        mừng kính Thánh Bổn mạng vào lúc 10g00 thứ Bảy, ngày 05.10.2024.
-                        <br />
-                        cử hành Thánh lễ tạ ơn mừng kính Thánh Bổn mạng vào lúc 10g00 thứ
-                        Bảy, ngày 05.10.2024. cử hành Thánh lễ tạ ơn mừng kính Thánh Bổn
-                        mạng vào lúc 10g00 thứ Bảy, ngày 05.10.2024.{" "}
-                        <button className="text-black font-semibold">Xem Thêm</button>
-                    </p>
+  // Lấy danh sách tin tức từ API
+  const { queueData, isLoading, isError } = BlogList(
+    currentPage,
+    '',
+    refreshKey,
+  );
+
+  // Kiểm tra dữ liệu
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error loading news...</p>;
+
+  // Chỉ lấy 5 bài viết mới nhất
+  const latestPosts = queueData?.slice(0, 5) || [];
+  const featuredPost = latestPosts[0]; // Bài viết nổi bật
+  const recentPosts = latestPosts.slice(1); // Các bài viết còn lại
+
+  return (
+    <>
+      {/* Phần header của Tin Tức */}
+      <div className="flex justify-between pt-5 cursor-pointer">
+        {/* Bài viết đầu tiên */}
+        <div>
+          <Image
+            src={featuredPost.image}
+            alt={featuredPost?.title || 'news'}
+            width={700}
+            height={300}
+          />
+          <h3 className="mt-4 text-sm font-bold">{featuredPost?.title}</h3>
+          <p className="mt-1 text-sm">
+            {featuredPost?.content?.slice(0, 150)}...
+            <button className="text-black font-semibold">Xem Thêm</button>
+          </p>
+        </div>
+
+        {/* 4 bài viết tiếp theo */}
+        <div className="grid gap-3">
+          {recentPosts.map((post, index) => (
+            <div
+              key={index}
+              className="rounded-lg flex items-start justify-between gap-2 bg-secondary-50"
+            >
+              <Image
+                src={post.image}
+                alt="News Image"
+                width={130}
+                height={100}
+                objectFit="cover"
+                className="rounded-md"
+              />
+              <div className="w-50">
+                <div className="flex items-center gap-2">
+                  <p className="font-semibold text-xs">{post.user.username}</p>
+                  <p>•</p>
+                  <p className="text-[#9C9C9C] text-xs">
+                    {formatDate(post.created_date)}
+                  </p>
                 </div>
-                <div className="grid gap-3 ">
-                    {[...Array(4)].map((_, index) => (
-                        <div
-                            key={index}
-                            className="rounded-lg flex items-start justify-between gap-2 bg-secondary-50"
-                        >
-                            <Image
-                                src={bannerImage}
-                                alt="News Image"
-                                width={130}
-                                objectFit="cover"
-                                className="rounded-md"
-                            />
-                            <div className="w-50">
-                                <div className="flex items-center gap-2">
-                                    <p className="font-semibold text-xs">DongDaMinh</p>
-                                    <p>•</p>
-                                    <p className="text-[#9C9C9C] text-xs">07/10/2024 19:28</p>
-                                </div>
-                                <h4 className="font-semibold ">
-                                    Đức Giáo hoàng Phanxicô đã công bố tổ chức Công nghị Hồng y
-                                    vào ngày 08.12.2024
-                                </h4>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                <h4 className="font-semibold">{post.title}</h4>
+              </div>
             </div>
-        </article>
-    );
+          ))}
+        </div>
+      </div>
+    </>
+  );
 };

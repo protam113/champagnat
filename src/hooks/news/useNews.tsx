@@ -1,25 +1,30 @@
 "use client";
 
 import {
-    useQuery
+    useQuery,
 } from "@tanstack/react-query";
 import { handleAPI } from "@/apis/axiosClient";
 import { endpoints } from "@/apis/api";
 import { useAuth } from "@/context/authContext";
 import { useEffect, useState } from "react";
-import {FetchCategoriesListResponse,Filters} from "@/types/types"
+import {FetchPostListResponse,Filters} from "@/types/types"
 
-const fetchCategoryList = async (
+    /*
+        Hooks lấy danh sách tin tức
+    */
+
+const fetchNewsList = async (
     filters: Filters,
     pageParam: number = 1,
     token?: string,
-): Promise<FetchCategoriesListResponse> => {
+): Promise<FetchPostListResponse> => {
 
     try {
         // Filter out undefined or empty values from filters
         const validFilters = Object.fromEntries(
             Object.entries(filters).filter(
-                ([, value]) => value !== undefined && value !== ""
+                // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                ([, value]) => value !== undefined && value !== "" && value !== null
             )
         );
 
@@ -29,24 +34,24 @@ const fetchCategoryList = async (
             ...validFilters, // Merge the valid filters into the query string
         }).toString();
 
+
         // Make the API request using handleAPI
         const response = await handleAPI(
-            `${endpoints.categories}${queryString ? `?${queryString}` : ""}`,
+            `${endpoints.news}${queryString ? `?${queryString}` : ""}`,
             "GET",
             null,
             token || null
         );
         return response;
     } catch (error) {
-        console.error("Error fetching categories list:", error);
+        console.error("Error fetching news list:", error);
         throw error; // Rethrow error for further handling
     }
 };
 
 
-
 // Custom hook for fetching the queue list
-const useCategoryList = (page: number, filters: Filters = {}, refreshKey: number) => {
+const useNewsList = (page: number, filters: Filters = {}, refreshKey: number) => {
     const { getToken } = useAuth();
     const [token, setToken] = useState<string | null>(null);
 
@@ -59,14 +64,12 @@ const useCategoryList = (page: number, filters: Filters = {}, refreshKey: number
         fetchToken();
     }, [getToken]);
 
-    return useQuery<FetchCategoriesListResponse, Error>({
-        queryKey: ["categoriesList" , filters, page, token, refreshKey], // Thêm refreshKey vào queryKey
-        queryFn: async () => {
-            return fetchCategoryList(filters,page ,token|| undefined);
-        },
+    return useQuery<FetchPostListResponse, Error>({
+        queryKey: ["newsList", filters, page, token, refreshKey],
+        queryFn: async () => fetchNewsList(filters, page, token || undefined),
+
         staleTime: 60000,
     });
 };
 
-
-export { useCategoryList };
+export {useNewsList}
