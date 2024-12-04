@@ -1,5 +1,4 @@
 import React from "react";
-import LayoutPage from "../components/main/study/layout";
 import PrivateLayout from "./layout";
 
 const StudyPage = () => {
