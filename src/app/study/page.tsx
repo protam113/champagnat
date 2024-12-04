@@ -4,9 +4,7 @@ import PrivateLayout from "./layout";
 const StudyPage = () => {
   return (
     <PrivateLayout>
-        <p>Hoc tap</p>
-
-
+      <p>Hoc tap</p>
     </PrivateLayout>
   );
 };

@@ -49,16 +49,7 @@ export const NavItems = () => {
     {
       id: 4,
       label: "Hoạt Động",
-      link: "/activity",
-
-      children: [
-        {
-          id: 12,
-          label: "Học Hỏi Kinh Thánh (AI)",
-          link: "/hoi_dong/about_us",
-          icon: MdGroups,
-        },
-      ],
+      link: "/events",
     },
     {
       id: 6,
