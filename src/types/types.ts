@@ -181,9 +181,28 @@ export interface Group {
   groupId: string;
 }
 
+    /**
+ Group Detail Interface
+ **/
+
 export interface GroupDetail {
   open: boolean;
   onClose: () => void;
   group: any | null; // Accept blog data type as any
 }
 
+    /**
+ Blog Detail Interface
+ **/
+
+ export interface BLogDetail {
+  id: number;
+  title: string;
+  description: string;
+  content: string; // Có thể cần điều chỉnh nếu cấu trúc khác
+  link: string;
+  image: string; // Chỉnh sửa để phù hợp với giá trị null trong JSON
+  categories: Category[];
+  user: User; // Sử dụng interface User đã khai báo ở trên
+  created_date:string
+}

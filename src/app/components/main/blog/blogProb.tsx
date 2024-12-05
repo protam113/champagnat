@@ -1,20 +1,20 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import Image from "next/image";
-import Link from "next/link";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
-import { BlogList } from "@/lib/blogList";
-import Container from "../../Container/container";
+import { useState } from 'react';
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import Link from 'next/link';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { BlogList } from '@/lib/blogList';
+import Container from '../../Container/container';
 const BlogGrid = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [refreshKey] = useState(0);
 
   const { queueData, isLoading, isError } = BlogList(
     currentPage,
-    "",
-    refreshKey
+    '',
+    refreshKey,
   );
 
   const handleNextPage = () => {
@@ -84,13 +84,14 @@ const BlogGrid = () => {
         transition={{ duration: 0.5 }}
       >
         {queueData.map((post) => (
-          <div
+          <Link
+            href={`/blog/${post.id}`}
             key={post.id}
             className="border rounded-lg overflow-hidden shadow-lg"
           >
             {/* Use a fallback image if post.image is null */}
             <Image
-              src={post.image || "/path/to/default-image.jpg"} // Fallback to a default image if null
+              src={post.image || '/path/to/default-image.jpg'} // Fallback to a default image if null
               alt={post.title}
               className="w-full h-48 object-cover"
               width={400} // Optionally specify width
@@ -118,7 +119,7 @@ const BlogGrid = () => {
                 </div>
               </Link>
             </div>
-          </div>
+          </Link>
         ))}
       </motion.div>
 
@@ -128,7 +129,7 @@ const BlogGrid = () => {
           onClick={handlePrevPage}
           disabled={currentPage === 1}
           className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-            currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+            currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
           }`}
         >
           <FaArrowLeft />
@@ -142,8 +143,8 @@ const BlogGrid = () => {
           disabled={queueData.length === 0 || queueData.length < 10} // Assuming each page returns 10 posts
           className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
             queueData.length === 0 || queueData.length < 10
-              ? "opacity-50 cursor-not-allowed"
-              : ""
+              ? 'opacity-50 cursor-not-allowed'
+              : ''
           }`}
         >
           <FaArrowRight />

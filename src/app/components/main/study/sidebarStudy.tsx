@@ -3,6 +3,8 @@
 import React from 'react';
 import { Layout, Menu } from 'antd';
 import Link from 'next/link';
+import logo from '@/assets/image/image_logo.png';
+import Image from 'next/image';
 
 const { Header } = Layout;
 
@@ -34,7 +36,9 @@ const SidebarStudy: React.FC = () => {
           alignItems: 'center',
         }}
       >
-        <div className="demo-logo" />
+        <div style={{ marginRight: 'auto' }}>
+          <Image src={logo} alt="logo" height={20} width={40} />
+        </div>
         <Menu
           theme="dark"
           mode="horizontal"

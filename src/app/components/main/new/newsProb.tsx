@@ -41,7 +41,8 @@ const NewsProb = ({
         transition={{ duration: 0.5 }}
       >
         {queueData.map((post, index) => (
-          <div
+          <Link
+            href={`/new/${post.id}`}
             key={index}
             className="bg-white shadow rounded-lg overflow-hidden h-full w-full"
           >
@@ -75,7 +76,7 @@ const NewsProb = ({
                 Đọc Thêm
               </Link>
             </div>
-          </div>
+          </Link>
         ))}
       </motion.div>
 

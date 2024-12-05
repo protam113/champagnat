@@ -33,7 +33,7 @@ const fetchBlogList = async (
 
     // Make the API request using handleAPI
     const response = await handleAPI(
-      `${endpoints.news}${queryString ? `?${queryString}` : ''}`,
+      `${endpoints.blogs}${queryString ? `?${queryString}` : ''}`,
       'GET',
       null,
       token || null,
