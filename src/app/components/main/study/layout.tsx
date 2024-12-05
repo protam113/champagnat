@@ -1,18 +1,41 @@
 'use client';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import Header from '@/app/components/DefaultLayout/components/Header';
 import Footer from '../../DefaultLayout/components/Footer';
 import SidebarStudy from './sidebarStudy';
+import { Layout, theme } from 'antd';
+import Breadcrumb from '../../design/BreackCumb';
 
-const LayoutPage = () => {
+const { Content } = Layout;
+
+interface PrivateLayoutProps {
+  children: ReactNode; // Khai báo kiểu cho children
+}
+
+const LayoutPage: React.FC<PrivateLayoutProps> = ({ children }) => {
+  const {
+    token: { colorBgContainer, borderRadiusLG },
+  } = theme.useToken();
+
   return (
-    <div>
+    <Layout>
       <Header />
-      <div>
-        <SidebarStudy />
-      </div>
+      <SidebarStudy />
+      <Content style={{ padding: '0 48px' }} className="bg-zinc-400">
+        <Breadcrumb />
+        <div
+          style={{
+            background: colorBgContainer,
+            minHeight: 280,
+            padding: 24,
+            borderRadius: borderRadiusLG,
+          }}
+        >
+          {children}
+        </div>
+      </Content>
       <Footer />
-    </div>
+    </Layout>
   );
 };
 

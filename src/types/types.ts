@@ -87,3 +87,37 @@ export interface PushButtonProps {
     href: string; // Đường dẫn để chuyển hướng
     label: string
 }
+
+
+export interface SidebarProps {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    selected: string;
+    setSelected: React.Dispatch<React.SetStateAction<string>>;
+  }
+
+  export   interface OptionProps {
+    Icon: React.ComponentType;
+    title: string;
+    selected: string;
+    setSelected: React.Dispatch<React.SetStateAction<string>>;
+    open: boolean;
+    notifs?: number;
+  }
+
+  export  interface TitleSectionProps {
+    open: boolean;
+  }
+
+  export  interface ToggleCloseProps {
+    open: boolean;
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  }
+  
+
+  export interface CategoryProps {
+    category: string;
+    handleTagChange: (tag: string) => void;
+    refreshKey: number;
+    onResetFilter: () => void;
+}

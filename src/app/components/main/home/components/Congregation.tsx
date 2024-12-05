@@ -39,7 +39,7 @@ export const Congregation = () => {
           />
           <h3 className="mt-4 text-sm font-bold">{featuredPost?.title}</h3>
           <p className="mt-1 text-sm">
-            {featuredPost?.content?.slice(0, 150)}...
+            {featuredPost?.description?.slice(0, 150)}...
             <button className="text-black font-semibold">Xem Thêm</button>
           </p>
         </div>

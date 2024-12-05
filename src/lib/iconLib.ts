@@ -5,6 +5,7 @@ import { IoMdMenu } from "react-icons/io";
 import {AiOutlineEye, AiOutlineLike} from "react-icons/ai";
 import { PiHandsPrayingBold } from "react-icons/pi";
 import { GiIronCross } from "react-icons/gi";
+import { IoDocumentText } from "react-icons/io5";
 
 // Export trực tiếp các icon mà không cần khai báo interface
 export {
@@ -23,4 +24,5 @@ export {
     FaExclamationTriangle,
     FaFolderOpen,
     FaUser, FaEnvelope, FaPhone, FaIdBadge, FaInfoCircle ,
+    IoDocumentText,
 };
