@@ -77,7 +77,9 @@ export const Dropdown_image = () => {
               </span>
             </div>
             <div className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-yellow-300">
-              <span className="whitespace-nowrap pl-3">Học Tập</span>
+              <Link href="/study" className="whitespace-nowrap pl-3">
+                Học Tập
+              </Link>
             </div>
             <div
               className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-yellow-300"
