@@ -5,34 +5,26 @@ import { handleAPI } from '@/apis/axiosClient';
 import { endpoints } from '@/apis/api';
 import { useAuth } from '@/context/authContext';
 import { useEffect, useState } from 'react';
-import { FetchGroupListResponse, Filters } from '@/types/types';
+import { FetchGroupMemberListResponse } from '@/types/types';
 
-const fetchGrouplist = async (
+const fetchGroupMember = async (
   pageParam: number = 1,
+  groupId: string,
   token: string,
-  filters: Filters,
-): Promise<FetchGroupListResponse> => {
+): Promise<FetchGroupMemberListResponse> => {
   if (!token) {
     throw new Error('No token provided');
   }
 
   try {
-    // Filter out undefined or empty values from filters
-    const validFilters = Object.fromEntries(
-      Object.entries(filters).filter(
-        ([, value]) => value !== undefined && value !== '',
-      ),
-    );
-
     // Construct the query string
     const queryString = new URLSearchParams({
       page: pageParam.toString(),
-      ...validFilters, // Merge the valid filters into the query string
     }).toString();
 
     // Make the API request using handleAPI
     const response = await handleAPI(
-      `${endpoints.groups}${queryString ? `?${queryString}` : ''}`,
+      `${endpoints.groupMember.replace(':id', groupId)}${queryString ? `?${queryString}` : ''}`,
       'GET',
       null,
       token,
@@ -45,36 +37,29 @@ const fetchGrouplist = async (
 };
 
 // Custom hook for fetching the queue list
-const useGroupList = (
-  page: number,
-  filters: Filters = {},
-  refreshKey: number,
-) => {
+const useGroupMember = (page: number, refreshKey: number, groupId: string) => {
   const { getToken } = useAuth();
   const [token, setToken] = useState<string | null>(null);
-  const [isReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchToken = async () => {
       const userToken = await getToken();
       setToken(userToken);
-      setIsReady(true);
     };
-
     fetchToken();
   }, [getToken]);
 
-  return useQuery<FetchGroupListResponse, Error>({
-    queryKey: ['groupList', token, page, filters, refreshKey], // Thêm refreshKey vào queryKey
+  return useQuery<FetchGroupMemberListResponse, Error>({
+    queryKey: ['groupMemberList', token, page, groupId, refreshKey], // Thêm refreshKey vào queryKey
     queryFn: async () => {
       if (!token) {
         throw new Error('Token is not available');
       }
-      return fetchGrouplist(page, token, filters);
+      return fetchGroupMember(page, groupId, token);
     },
-    enabled: isReady && !!token,
+    enabled: !!token,
     staleTime: 60000,
   });
 };
 
-export { useGroupList };
+export { useGroupMember };

@@ -5,55 +5,46 @@ import { handleAPI } from '@/apis/axiosClient';
 import { endpoints } from '@/apis/api';
 import { useAuth } from '@/context/authContext';
 import { useEffect, useState } from 'react';
-import { FetchGroupListResponse, Filters } from '@/types/types';
+import { FetchGroupListResponse } from '@/types/types';
 
-const fetchGrouplist = async (
+const fetchGroupRolelist = async (
+  groupId: string,
   pageParam: number = 1,
   token: string,
-  filters: Filters,
 ): Promise<FetchGroupListResponse> => {
   if (!token) {
     throw new Error('No token provided');
   }
 
   try {
-    // Filter out undefined or empty values from filters
-    const validFilters = Object.fromEntries(
-      Object.entries(filters).filter(
-        ([, value]) => value !== undefined && value !== '',
-      ),
-    );
-
     // Construct the query string
     const queryString = new URLSearchParams({
       page: pageParam.toString(),
-      ...validFilters, // Merge the valid filters into the query string
     }).toString();
 
+    // Build the API endpoint
+    const url = `${endpoints.groupRole.replace(':id', groupId)}${queryString ? `?${queryString}` : ''}`;
+
     // Make the API request using handleAPI
-    const response = await handleAPI(
-      `${endpoints.groups}${queryString ? `?${queryString}` : ''}`,
-      'GET',
-      null,
-      token,
-    );
+    const response = await handleAPI(url, 'GET', null, token);
     return response;
   } catch (error) {
-    console.error('Error fetching group list:', error);
+    console.error('Error fetching group role list:', error);
     throw error; // Rethrow error for further handling
   }
 };
 
-// Custom hook for fetching the queue list
-const useGroupList = (
+// Custom hook for fetching the group role list
+const useGroupRoleList = (
   page: number,
-  filters: Filters = {},
   refreshKey: number,
+  groupId: string,
 ) => {
   const { getToken } = useAuth();
   const [token, setToken] = useState<string | null>(null);
   const [isReady, setIsReady] = useState<boolean>(false);
 
+  // Fetch token once when the component mounts or `getToken` changes
   useEffect(() => {
     const fetchToken = async () => {
       const userToken = await getToken();
@@ -65,16 +56,16 @@ const useGroupList = (
   }, [getToken]);
 
   return useQuery<FetchGroupListResponse, Error>({
-    queryKey: ['groupList', token, page, filters, refreshKey], // Thêm refreshKey vào queryKey
+    queryKey: ['groupRoleList', token, page, refreshKey, groupId],
     queryFn: async () => {
       if (!token) {
         throw new Error('Token is not available');
       }
-      return fetchGrouplist(page, token, filters);
+      return fetchGroupRolelist(groupId, page, token); // Call the corrected function
     },
     enabled: isReady && !!token,
-    staleTime: 60000,
+    staleTime: 60000, // Keep data fresh for 1 minute
   });
 };
 
-export { useGroupList };
+export { useGroupRoleList };

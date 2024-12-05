@@ -4,34 +4,34 @@ import React, { useState } from 'react';
 import { Table, Button, Spin, Image, Pagination } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { FaSync } from 'react-icons/fa'; // Import refresh icon
-import { GroupList } from '@/lib/groupList';
 import dayjs from 'dayjs';
 import { EyeOutlined } from '@ant-design/icons';
 import Heading from '@/app/components/design/Heading';
-import GroupDetailDrawer from '@/app/components/drawer/GroupDetailDrawer';
+import { Group } from '@/types/types';
+import GroupMemberDetail from '../drawer/GroupMemberDetail';
+import { GroupMemberList } from '@/lib/Group/groupMemberList';
 
-const Page: React.FC = () => {
+const GroupMember: React.FC<Group> = ({ groupId }) => {
   const [selectedKeys, setSelectedKeys] = useState<number[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [model] = useState<string>('');
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [refreshKey, setRefreshKey] = useState(0); // State to refresh data
   // Pass model into CategoriesList
-  const { queueData, isLoading, isError } = GroupList(
+  const { queueData, isLoading, isError } = GroupMemberList(
     currentPage,
-    model,
+    groupId,
     refreshKey,
   );
-  const [selectedGroup, setSelectedGroup] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedMember, setSelectedMember] = useState(null); // State for selected blog
 
-  const handleViewDetails = (group: any) => {
-    setSelectedGroup(group);
+  const handleViewDetails = (member: any) => {
+    setSelectedMember(member);
     setIsDrawerOpen(true);
   };
 
   const handleDrawerClose = () => {
     setIsDrawerOpen(false);
-    setSelectedGroup(null);
+    setSelectedMember(null);
   };
 
   const columns: ColumnsType<any> = [
@@ -70,25 +70,25 @@ const Page: React.FC = () => {
       ),
     },
     {
-      title: 'Tên Cộng Đoàn',
+      title: 'Tên Thành Viên',
       dataIndex: 'name',
       key: 'name',
-      width: 300,
+      width: 250,
       render: (text) => <span>{text}</span>,
     },
     {
-      title: 'Ngày Thành Lập',
-      dataIndex: 'founding_date',
-      key: 'founding_date',
+      title: 'Ngày Khấn Tạm',
+      dataIndex: 'first_vows_date',
+      key: 'first_vows_date',
       width: 150,
       render: (text) => (
         <span>{text ? dayjs(text).format('DD/MM/YYYY') : ''}</span>
       ), // Format date to "DD/MM/YYYY"
     },
     {
-      title: 'Ngày Tạo',
-      dataIndex: 'created_date',
-      key: 'created_date',
+      title: 'Ngày Khấn trọn Đời  ',
+      dataIndex: 'final_vows_date',
+      key: 'final_vows_date',
       width: 150,
       render: (text) => (
         <span>{text ? dayjs(text).format('DD/MM/YYYY') : ''}</span>
@@ -106,7 +106,7 @@ const Page: React.FC = () => {
   return (
     <>
       <div className="p-4">
-        <Heading name="danh sách cộng đoàn  " />
+        <Heading name="Danh sách người dùng trong group " />
 
         {/* Model selection */}
         <div className="flex justify-between items-center mb-4">
@@ -145,13 +145,14 @@ const Page: React.FC = () => {
         </div>
       </div>
 
-      <GroupDetailDrawer
+      {/*Xem Thông Tin Chi Tiết Thành Viên Trong Cộng Đoàn*/}
+      <GroupMemberDetail
         open={isDrawerOpen}
         onClose={handleDrawerClose}
-        group={selectedGroup}
+        member={selectedMember}
       />
     </>
   );
 };
 
-export default Page;
+export default GroupMember;

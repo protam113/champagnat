@@ -31,7 +31,8 @@ const endpoints = {
     groups: '/group/',
     group: '/group/:id/',
     groupMember: '/group/:id/member/',
-
+    groupRole: '/group/:id/role/',
+    
     //Doc
     documents: '/document/',
     document: '/document/:id/',
