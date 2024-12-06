@@ -6,7 +6,7 @@ import BlogProb from '@/app/components/main/blog/blogProb';
 import Tittle from '@/app/components/design/Tittle';
 import formatDate from '@/ultis/formatDate';
 import BlogTag from '@/app/components/main/blog/BlogCategoryTag';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 
 const BlogContent = () => {
   const [currentPage, setCurrentPage] = useState(1);

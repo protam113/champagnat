@@ -10,7 +10,7 @@ interface DefaultLayoutProps {
 const ClientLayout: React.FC<DefaultLayoutProps> = ({ children }) => {
   return (
     <>
-      <div className="mb-10 mt-10 text-center">
+      <div className="mb-2 mt-4 text-center">
         <Breadcrumb />
       </div>
       <main>{children}</main>

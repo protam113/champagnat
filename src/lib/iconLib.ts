@@ -1,5 +1,12 @@
 // src/icons/IconLibrary.ts
-import { FaCommentDots, FaThumbsUp, FaHome,FaChurch  ,FaCross,FaExclamationTriangle,FaFolderOpen, FaUser, FaEnvelope, FaPhone, FaIdBadge, FaInfoCircle ,  } from "react-icons/fa";
+import { FaCommentDots, 
+    FaThumbsUp, 
+    FaHome,
+    FaChurch  ,
+    FaCross,
+    FaExclamationTriangle,FaFolderOpen, FaUser, FaEnvelope, FaPhone, FaIdBadge, FaInfoCircle ,
+    FaArrowLeft, FaArrowRight
+  } from "react-icons/fa";
 import { AiFillHeart, AiOutlineSearch } from "react-icons/ai";
 import { IoMdMenu } from "react-icons/io";
 import {AiOutlineEye, AiOutlineLike} from "react-icons/ai";
@@ -25,4 +32,5 @@ export {
     FaFolderOpen,
     FaUser, FaEnvelope, FaPhone, FaIdBadge, FaInfoCircle ,
     IoDocumentText,
+    FaArrowLeft, FaArrowRight,
 };

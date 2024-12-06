@@ -212,14 +212,14 @@ export interface GroupDetail {
  **/
 
  export interface EventList {
-  id: number;
+  id: string;
   title: string;
   description: string;
-  content: string; // Có thể cần điều chỉnh nếu cấu trúc khác
   status: string;
   image: string | null; // Chỉnh sửa để phù hợp với giá trị null trong JSON
   category: string;
   user: string;
+  created_date:string
 }
 
 // Khai Báo Các Thuộc Tính Không Có trong trường hiển thị

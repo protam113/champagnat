@@ -12,9 +12,7 @@ export const BlogList = (currentPage: number, category: string ,refreshKey: numb
         filters // Use the category chosen by the news
         ,refreshKey);
 
-        console.log("🚀 ~ BlogList ~ count:", data?.count)
-        console.log("🚀 ~ BlogList ~ count:", data?.next)
-
+       
     
     const queueData = data?.results || [];
 
