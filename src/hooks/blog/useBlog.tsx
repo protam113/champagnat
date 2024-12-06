@@ -28,7 +28,7 @@ const fetchBlogList = async (
     // Construct the query string
     const queryString = new URLSearchParams({
       page: pageParam.toString(),
-      ...validFilters, // Merge the valid filters into the query string
+      ...validFilters, // Merge các bộ lọc hợp lệ
     }).toString();
 
     // Make the API request using handleAPI

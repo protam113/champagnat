@@ -24,7 +24,7 @@ const BlogProb: React.FC<BlogCardProps> = ({
   return (
     <Link
       href={`/blog/${id}`}
-      className="rounded-lg shadow-lg overflow-hidden bg-white"
+      className="rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-300 hover:scale-105" // Thêm hiệu ứng hover
     >
       <div className="relative h-48 w-full">
         <Image
