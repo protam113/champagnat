@@ -80,7 +80,7 @@ const BlogContent = () => {
           ))}
           <button
             onClick={() => setCurrentPage((prev) => prev + 1)}
-            disabled={!next} // Disable nếu next là null
+            disabled={!next}
             className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
               !next ? 'opacity-50 cursor-not-allowed' : ''
             }`}
