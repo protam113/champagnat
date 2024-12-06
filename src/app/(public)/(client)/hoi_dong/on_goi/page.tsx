@@ -1,9 +1,31 @@
+'use client';
+
+import React, { useState } from 'react';
 import Container from '@/app/components/Container/container';
 import Breadcrumb from '@/app/components/design/BreackCumb';
-import Link from 'next/link';
-import React from 'react';
+import { EventList } from '@/lib/eventList';
+import OnGoiProb from '@/app/components/main/on_goi/onGoiProb';
+import formatDate from '@/utils/formatDate';
+import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
+import Heading from '@/app/components/design/Heading';
 
 const OnGoiPage = () => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [refreshKey] = useState(0);
+
+  // Lấy danh sách tin tức từ API
+  const {
+    queueData: vocation,
+    next,
+    isLoading,
+    isError,
+  } = EventList(currentPage, 'vocation', refreshKey);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (isError) return <p>Error loading news...</p>;
+
+  const totalPages = next ? currentPage + 1 : currentPage;
+
   return (
     <Container>
       <div className="py-10">
@@ -42,23 +64,47 @@ const OnGoiPage = () => {
         </section>
 
         {/* Programs Section */}
-        <section className="bg-gray-100 py-12 px-4">
-          <h2 className="text-24 font-semibold text-gray-800 mb-6">
-            Các Chương Trình Ơn Gọi
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-2xl font-semibold text-blue-600 mb-4">
-                Chương Trình Đào Tạo Ơn Gọi
-              </h3>
-              <p className="text-lg text-gray-600 mb-4">
-                Tham gia chương trình đào tạo để hiểu rõ hơn về ơn gọi của mình
-                và cách thức để phát triển trong cuộc sống.
-              </p>
-              <button className="text-white bg-blue-600 px-4 py-2 rounded-full hover:bg-blue-700">
-                Tìm Hiểu Thêm
+        <section className=" py-12 px-4">
+          <Heading name="Các Chương Trình Ơn Gọi" />
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {vocation.map((event, index) => (
+              <OnGoiProb
+                key={index}
+                id={event.id}
+                title={event.title}
+                date={formatDate(event.created_date)}
+                image={event?.image || ''}
+              />
+            ))}
+          </div>
+          <div className="flex justify-center mt-8 items-center space-x-2">
+            <button
+              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+              disabled={currentPage === 1}
+              className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
+                currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            >
+              <FaArrowLeft />
+            </button>
+            {Array.from({ length: totalPages }, (_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentPage(i + 1)}
+                className={`w-6 h-6 text-10 rounded-full hover:bg-gray-300 ${currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+              >
+                {i + 1}
               </button>
-            </div>
+            ))}
+            <button
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+              disabled={!next}
+              className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
+                !next ? 'opacity-50 cursor-not-allowed' : ''
+              }`}
+            >
+              <FaArrowRight />
+            </button>
           </div>
         </section>
 

@@ -3,7 +3,6 @@
 import React, { useState } from 'react';
 import { BlogList } from '@/lib/blogList'; // Đảm bảo rằng bạn đã có BlogList API
 import formatDate from '@/ultis/formatDate';
-import BlogCard from '../test/BlogCard';
 
 export const Congregation = () => {
   const [currentPage] = useState(1);
@@ -26,7 +25,7 @@ export const Congregation = () => {
     <>
       <div className="max-w-6xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {latestPosts.map((blog, index) => (
+          {/* {latestPosts.map((blog, index) => (
             <BlogCard
               key={index}
               title={blog.title}
@@ -36,7 +35,7 @@ export const Congregation = () => {
               categories={blog.categories.map((category) => category.name)}
               image={blog.image}
             />
-          ))}
+          ))} */}
         </div>
       </div>
     </>

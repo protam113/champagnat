@@ -8,7 +8,7 @@ import CarouselHero from '@/app/components/animate/hero/carousel';
 import { EventList } from '@/lib/eventList';
 import Tittle from '@/app/components/design/Tittle';
 import EventProb from '@/app/components/main/event/eventPost';
-import formatDate from '@/ultis/formatDate';
+import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 
 const Page = () => {

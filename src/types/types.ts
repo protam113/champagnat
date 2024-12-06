@@ -240,3 +240,13 @@ export interface FetchEventListResponse {
   title: string;
   answer: string;
 }
+/**
+ AccordionProps Interface
+ **/
+
+export interface EventProps {
+  id: string;
+  title: string;
+  date: string;
+  image: string;
+}

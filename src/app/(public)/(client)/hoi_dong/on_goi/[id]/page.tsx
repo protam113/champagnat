@@ -6,7 +6,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
 import Image from 'next/image';
 import { useEventDetail } from '@/hooks/event/useEventDetail';
-import EventRegister from '@/app/components/main/event/eventRegister';
+import OnGoiRegister from '@/app/components/main/on_goi/OnGoiRegister';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();
@@ -123,7 +123,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-      <EventRegister eventId={postId} />
+      <OnGoiRegister eventId={postId} />
       {/* <Comments postId={data._id}/> */}
     </div>
   );

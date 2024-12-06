@@ -46,7 +46,7 @@ const endpoints = {
     events: '/event/',
     event: '/event/:id/',
     eventForm: '/event/:id/form/',
-    eventRegister: '/event/:id/register',
+    eventRegister: '/event/:id/register/',
 
 };
 

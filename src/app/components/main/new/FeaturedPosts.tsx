@@ -6,7 +6,7 @@ import Container from '../../Container/container';
 import Link from 'next/link';
 import { NewsList } from '@/lib/newList';
 import Tittle from '../../design/Tittle';
-import formatDate from '@/ultis/formatDate';
+import formatDate from '@/utils/formatDate';
 
 const FeaturedLayout = () => {
   const [currentPage] = useState(1);
