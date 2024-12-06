@@ -3,15 +3,15 @@
 import { useParams } from 'next/navigation';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import { useNewsDetail } from '@/hooks/news/useNewsDetail';
 import formatDate from '@/ultis/formatDate';
 import Image from 'next/image';
+import { useDocumentDetail } from '@/hooks/document/useDocumentDetail';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();
   const postId = Array.isArray(blogIdParam) ? blogIdParam[0] : blogIdParam;
 
-  const { data: blog, isLoading, isError } = useNewsDetail(postId);
+  const { data: blog, isLoading, isError } = useDocumentDetail(postId);
 
   if (isLoading) {
     return (

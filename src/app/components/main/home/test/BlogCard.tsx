@@ -1,9 +1,7 @@
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import Image from 'next/image';
-import Link from 'next/link';
 
 interface BlogCardProps {
-  id: string;
   title: string;
   description: string;
   date: string;
@@ -12,8 +10,7 @@ interface BlogCardProps {
   image: string;
 }
 
-const BlogProb: React.FC<BlogCardProps> = ({
-  id,
+const BlogCard: React.FC<BlogCardProps> = ({
   title,
   description,
   date,
@@ -22,10 +19,7 @@ const BlogProb: React.FC<BlogCardProps> = ({
   image,
 }) => {
   return (
-    <Link
-      href={`/blog/${id}`}
-      className="rounded-lg shadow-lg overflow-hidden bg-white"
-    >
+    <div className="rounded-lg shadow-lg overflow-hidden bg-white">
       <div className="relative h-48 w-full">
         <Image
           src={image}
@@ -55,8 +49,8 @@ const BlogProb: React.FC<BlogCardProps> = ({
           Read More <FaExternalLinkAlt className="ml-1" />
         </a>
       </div>
-    </Link>
+    </div>
   );
 };
 
-export default BlogProb;
+export default BlogCard;

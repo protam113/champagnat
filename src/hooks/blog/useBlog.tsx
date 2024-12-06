@@ -64,7 +64,7 @@ const useBlogsList = (
   }, [getToken]);
 
   return useQuery<FetchPostListResponse, Error>({
-    queryKey: ['newsList', filters, page, token, refreshKey],
+    queryKey: ['blogList', filters, page, token, refreshKey],
     queryFn: async () => fetchBlogList(filters, page, token || undefined),
 
     staleTime: 60000,

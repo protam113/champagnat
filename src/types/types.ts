@@ -26,7 +26,7 @@ export interface TextParallaxContentProps {
     }
     
     interface User {
-        id: number;
+        id: string;
         username: string;
         first_name: string;
         last_name: string;
@@ -36,7 +36,7 @@ export interface TextParallaxContentProps {
     }
     
     interface PostList {
-        id: number;
+        id: string;
         title: string;
         description: string;
         content: string; // Có thể cần điều chỉnh nếu cấu trúc khác
@@ -205,4 +205,38 @@ export interface GroupDetail {
   categories: Category[];
   user: User; // Sử dụng interface User đã khai báo ở trên
   created_date:string
+}
+
+/**
+ Event Interface
+ **/
+
+ export interface EventList {
+  id: number;
+  title: string;
+  description: string;
+  content: string; // Có thể cần điều chỉnh nếu cấu trúc khác
+  status: string;
+  image: string | null; // Chỉnh sửa để phù hợp với giá trị null trong JSON
+  category: string;
+  user: string;
+}
+
+// Khai Báo Các Thuộc Tính Không Có trong trường hiển thị
+export interface FetchEventListResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: EventList[];
+}
+
+
+
+/**
+ AccordionProps Interface
+ **/
+
+ export interface AccordionProps {
+  title: string;
+  answer: string;
 }

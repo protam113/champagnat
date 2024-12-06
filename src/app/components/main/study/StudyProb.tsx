@@ -55,7 +55,8 @@ const StudyProb = ({
         transition={{ duration: 0.5 }}
       >
         {queueData.map((post) => (
-          <div
+          <Link
+            href={`/study/${post.id}`}
             key={post.id}
             className="border rounded-lg overflow-hidden shadow-lg"
           >
@@ -89,7 +90,7 @@ const StudyProb = ({
                 </div>
               </Link>
             </div>
-          </div>
+          </Link>
         ))}
       </motion.div>
 

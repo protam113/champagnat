@@ -1,6 +1,7 @@
 import React from 'react';
 import Heading from '@/app/components/design/Heading';
 import Breadcrumb from '@/app/components/design/BreackCumb';
+import Test from '@/app/components/main/home/test/main';
 
 // Kiểu dữ liệu của ContentData
 type ContentData = {
@@ -66,6 +67,8 @@ const Page = () => {
         <h1>Processed Content</h1>
         {/* Hiển thị dữ liệu đã xử lý */}
         <pre>{JSON.stringify(finalData, null, 2)}</pre>
+
+        <Test />
       </div>
     </div>
   );

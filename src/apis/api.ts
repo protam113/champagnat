@@ -41,6 +41,13 @@ const endpoints = {
     news: '/news/',
     new: '/news/:id/',
 
+    //event
+
+    events: '/event/',
+    event: '/event/:id/',
+    eventForm: '/event/:id/form/',
+    eventRegister: '/event/:id/register',
+
 };
 
 export { baseURL, endpoints };
