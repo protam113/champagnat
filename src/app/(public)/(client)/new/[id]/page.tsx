@@ -4,8 +4,9 @@ import { useParams } from 'next/navigation';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useNewsDetail } from '@/hooks/news/useNewsDetail';
-import formatDate from '@/ultis/formatDate';
+import formatDate from '@/utils/formatDate';
 import Image from 'next/image';
+import NewsCommentsSection from '@/app/components/main/new/comment/CommentsSection';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();
@@ -122,7 +123,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-      {/* <Comments postId={data._id}/> */}
+      <NewsCommentsSection postId={blog.id} />
     </div>
   );
 };

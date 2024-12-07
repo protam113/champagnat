@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import React, { useState } from 'react';
 import { BlogList } from '@/lib/blogList';
-import formatDate from '@/ultis/formatDate';
+import formatDate from '@/utils/formatDate';
 
 const RecentBlogPosts = () => {
   const [currentPage] = useState(1);

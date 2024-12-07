@@ -196,7 +196,7 @@ export interface GroupDetail {
  **/
 
  export interface BLogDetail {
-  id: number;
+  id: string;
   title: string;
   description: string;
   content: string; // Có thể cần điều chỉnh nếu cấu trúc khác

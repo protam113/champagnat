@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { BlogList } from '@/lib/blogList';
 import BlogProb from '@/app/components/main/blog/blogProb';
 import Tittle from '@/app/components/design/Tittle';
-import formatDate from '@/ultis/formatDate';
+import formatDate from '@/utils/formatDate';
 import BlogTag from '@/app/components/main/blog/BlogCategoryTag';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 

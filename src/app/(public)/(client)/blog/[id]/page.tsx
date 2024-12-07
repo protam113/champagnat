@@ -3,11 +3,10 @@
 import { useParams } from 'next/navigation';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import Link from 'next/link';
-import formatDate from '@/ultis/formatDate';
-import Image from 'next/image';
+import formatDate from '@/utils/formatDate';
 import { useBlogDetail } from '@/hooks/blog/useBlogDetail';
 import Heading from '@/app/components/design/Heading';
+import BlogCommentsSection from '@/app/components/main/blog/comment/CommentsSection';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();
@@ -93,7 +92,7 @@ const Page = () => {
 
         <p>{blog.link}</p>
       </div>
-      {/* <Comments postId={data._id}/> */}
+      <BlogCommentsSection postId={blog.id} />
     </div>
   );
 };

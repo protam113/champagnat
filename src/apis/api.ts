@@ -19,13 +19,12 @@ const endpoints = {
     categories:  '/category/',
     category: '/category/:id/',
 
+    // comment
+    comment: '/comment/',
+
    //blog
     blogs: '/blog/',
     blog: '/blog/:id/',
-    likeBlog: '/blog/:id/like/',
-    commentBlog: '/blog/:id/comment/',
-    replyComment: '/comment/:id/replies/',
-    comment: '/comment/:id/',
 
     //group
     groups: '/group/',
