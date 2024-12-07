@@ -15,12 +15,11 @@ const BlogPage = () => {
           Khám phá những thông tin chi tiết, bài viết và cập nhật mới nhất
         </p>
       </div>
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <Tittle name="BÀI VIẾT GẦN ĐÂY" />
-        <div className="mt-4">
-          <RecentBlogPosts />
-        </div>
+
+      <div className="mt-6">
+        <RecentBlogPosts />
       </div>
+
       <BlogContent />
 
       {/* Newsletter section */}

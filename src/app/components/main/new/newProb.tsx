@@ -2,7 +2,7 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 
-interface BlogCardProps {
+interface NewCardProps {
   id: string;
   title: string;
   description: string;
@@ -12,7 +12,7 @@ interface BlogCardProps {
   image: string;
 }
 
-const BlogProb: React.FC<BlogCardProps> = ({
+const NewProb: React.FC<NewCardProps> = ({
   id,
   title,
   description,
@@ -23,7 +23,7 @@ const BlogProb: React.FC<BlogCardProps> = ({
 }) => {
   return (
     <Link
-      href={`/blog/${id}`}
+      href={`/new/${id}`}
       className="rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-300 hover:scale-105" // Thêm hiệu ứng hover
     >
       <div className="relative h-48 w-full">
@@ -59,4 +59,4 @@ const BlogProb: React.FC<BlogCardProps> = ({
   );
 };
 
-export default BlogProb;
+export default NewProb;

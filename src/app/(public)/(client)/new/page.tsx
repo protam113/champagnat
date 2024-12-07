@@ -1,20 +1,27 @@
 'use client';
 
-import RecentPosts from '@/app/components/main/new/RecentPosts';
-import FeaturedPosts from '@/app/components/main/new/FeaturedPosts';
+import RecentNewPosts from '@/app/components/main/new/RecentNewPosts';
 import Heading from '@/app/components/design/Heading';
+import Newsletter from '@/app/components/main/new/newLetter';
+import NewContent from '@/app/components/main/new/NewContent';
 
 const New = () => {
   return (
-    <main className="flex flex-col items-center justify-center">
+    <main>
       <div className="mb-10 text-center">
-        <Heading name="tin tức " />
+        <Heading name="Tin Tức" />
         <p className="mt-2 text-gray-600">
-          Tin tức về những tin chi tiết, bài viết và cập nhật mới nhất
+          Khám phá những tin tức chi tiết và cập nhật mới nhất
         </p>
       </div>
-      <FeaturedPosts />
-      <RecentPosts />
+
+      <div className="mt-6">
+        <RecentNewPosts />
+      </div>
+
+      <NewContent />
+
+      <Newsletter />
     </main>
   );
 };

@@ -3,8 +3,8 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 import { FaUser, FaPhone, FaEnvelope, FaIdCard } from 'react-icons/fa'; // React Icons
-import Container from '../blog/container';
 import { useEventRegistion } from '@/hooks/event/useEventRegister';
+import Container from '../../Container/container';
 
 const EventRegister = ({ eventId }: { eventId: string }) => {
   const [form] = Form.useForm();

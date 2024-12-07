@@ -6,9 +6,9 @@ const Newsletter = () => {
     <Container>
       {' '}
       <div className="mt-12 p-6 bg-primary-500 text-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold">Đăng ký nhận bài viết mới nhất</h2>
+        <h2 className="text-2xl font-bold">Đăng ký nhận tin tức mới nhất</h2>
         <p className="mt-4 text-sm">
-          Nhận thông báo về các bài viết mới nhất và cập nhật blog!
+          Nhận thông báo về các tin tức mới nhất và cập nhật tin tức!
         </p>
         <div className="mt-4 flex">
           <input

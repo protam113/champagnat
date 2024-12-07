@@ -3,19 +3,16 @@
 import { useParams } from 'next/navigation';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import Link from 'next/link';
-import formatDate from '@/ultis/formatDate';
+import { useNewsDetail } from '@/hooks/news/useNewsDetail';
+import formatDate from '@/utils/formatDate';
 import Image from 'next/image';
-import { useBlogDetail } from '@/hooks/blog/useBlogDetail';
-import Heading from '@/app/components/design/Heading';
+import Container from '@/app/components/Container/container';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();
   const postId = Array.isArray(blogIdParam) ? blogIdParam[0] : blogIdParam;
 
-  const { data: blog, isLoading, isError } = useBlogDetail(postId);
-  console.log('🚀 ~ Page ~ blog:', blog);
-  console.log('Blog content field:', blog?.content);
+  const { data: blog, isLoading, isError } = useNewsDetail(postId);
 
   if (isLoading) {
     return (
@@ -25,7 +22,6 @@ const Page = () => {
     );
   }
 
-  // Nếu có lỗi khi lấy dữ liệu, hiển thị thông báo lỗi
   if (isError) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -34,67 +30,63 @@ const Page = () => {
     );
   }
 
-  // Nếu không tìm thấy blog, hiển thị thông báo
   if (!blog) {
     return <p className="text-gray-500">Không tìm thấy bài viết nào.</p>;
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      {/* detail */}
-      <div className="flex gap-8">
-        <div className="lg:w-3/5 flex flex-col gap-8">
-          <h1 className="text-xl md:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">
+    <Container>
+      <div className="flex flex-col gap-8">
+        {/* detail */}
+        <div className="flex flex-col gap-4">
+          <h1 className="text-xl md:text-3xl xl:text-4xl 2xl:text-5xl font-semibold text-center">
             {blog.title}
           </h1>
-          <div className="flex items-center gap-2 text-gray-400 text-sm">
-            <span>Written by</span>
-            <p className="text-blue-800">{blog.user.username}</p>
-            <span>on</span>
-            <p className="text-blue-800">
+
+          <div className=" text-center text-gray-500 text-sm">
+            <span className="text-blue-800 mr-4 text-16">
               {blog.categories?.map((category) => category.name).join(', ')}
-            </p>
+            </span>
             <span>{formatDate(blog.created_date)}</span>
           </div>
-          <p className="text-gray-500 font-medium">Mô Tả</p>
-          <div className="lg:text-lg flex flex-col gap-6 text-justify">
+
+          <div className="text-center mt-2 text-16">
             <p>{blog.description}</p>
           </div>
-        </div>
-        {/* {blog.image && (
-          <div className="hidden lg:block w-2/5">
-            <Image
-              src={blog.image || '/path/to/default-image.jpg'} // Fallback to a default image if null
-              alt={blog.title}
-              className="w-full h-48 object-cover"
-              width={400} // Optionally specify width
-              height={300} // Optionally specify height
-            />
-          </div>
-        )} */}
-      </div>
-      {/* content */}
-      <Heading name="Chi tiết bài viết" />
 
-      <div className="flex flex-col md:flex-row gap-12 justify-between">
-        {/* text */}
-        <div className="lg:text-lg flex flex-col gap-6 text-justify">
-          {/* Sử dụng dangerouslySetInnerHTML để hiển thị HTML */}
+          {/* Image */}
+          {/* Image */}
+          {blog.image && (
+            <div className="mt-8 w-full max-w-3xl mx-auto">
+              <Image
+                src={blog.image}
+                alt={blog.title}
+                className="rounded-2xl object-cover"
+                width={800}
+                height={450}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Content */}
+        <div className="flex flex-col gap-8 mt-12">
+          <h2 className="text-2xl font-semibold">Chi tiết bài viết</h2>
           <div
-            className="content"
+            className="content text-lg text-justify"
             dangerouslySetInnerHTML={{
               __html: blog.content.replace(/\"/g, ''), // Xóa tất cả dấu "
             }}
           />
+
+          {/* Source */}
+          <div className="mt-6">
+            <p className="text-gray-500 font-semibold">Nguồn:</p>
+            <p className="text-blue-800">{blog.link}</p>
+          </div>
         </div>
       </div>
-      <div className="lg:text-14 ">
-        <p className="text-gray-500 font-16">Nguồn:</p>
-
-        <p>{blog.link}</p>
-      </div>
-      {/* <Comments postId={data._id}/> */}
-    </div>
+    </Container>
   );
 };
 

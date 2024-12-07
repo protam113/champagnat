@@ -3,25 +3,24 @@
 import Image from 'next/image';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import React, { useState } from 'react';
-import { BlogList } from '@/lib/blogList';
 import formatDate from '@/utils/formatDate';
 import Container from '../../Container/container';
 import Tittle from '../../design/Tittle';
-import { ClipLoader } from 'react-spinners';
+import { NewsList } from '@/lib/newList';
 
-const RecentBlogPosts = () => {
+const RecentNewPosts = () => {
   const [currentPage] = useState(1);
   const [refreshKey] = useState(0);
 
   // Lấy danh sách tin tức từ API
   const {
-    queueData: blogs,
+    queueData: news,
     isLoading,
     isError,
-  } = BlogList(currentPage, '', refreshKey);
+  } = NewsList(currentPage, '', refreshKey);
 
-  const latestPost = blogs[0];
-  const otherPosts = blogs.slice(1, 4);
+  const latestPost = news[0];
+  const otherPosts = news.slice(1, 4);
 
   // Kiểm tra dữ liệu
   if (isLoading) return <div className="text-white">isloading</div>;
@@ -30,7 +29,7 @@ const RecentBlogPosts = () => {
   return (
     <main className="pb-20">
       <Container>
-        <Tittle name="BÀI VIẾT GẦN ĐÂY" />
+        <Tittle name="TIN TỨC GẦN ĐÂY" />
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
           {/* Bài viết nổi bật bên trái */}
           <div className="cursor-pointer lg:col-span-2 rounded-lg shadow-lg overflow-hidden bg-white ">
@@ -125,4 +124,4 @@ const RecentBlogPosts = () => {
   );
 };
 
-export default RecentBlogPosts;
+export default RecentNewPosts;

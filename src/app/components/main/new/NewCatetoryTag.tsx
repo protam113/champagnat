@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { CategoriesList } from '@/lib/categoriesList';
 import { ClipLoader } from 'react-spinners';
 
-const BlogTag = ({
+const NewsTag = ({
   onFilterChange,
   setRefreshKey,
 }: {
@@ -17,7 +17,7 @@ const BlogTag = ({
   // Fetching categories
   const { queueData, isLoading, isError } = CategoriesList(
     currentPage,
-    'blog',
+    'news',
     0, // Sử dụng refreshKey tại đây
   );
 
@@ -71,4 +71,4 @@ const BlogTag = ({
   );
 };
 
-export default BlogTag;
+export default NewsTag;

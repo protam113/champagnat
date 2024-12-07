@@ -1,16 +1,17 @@
 'use client';
 
 import { useState } from 'react';
-import { BlogList } from '@/lib/blogList';
 import BlogProb from '@/app/components/main/blog/blogProb';
 import Tittle from '@/app/components/design/Tittle';
 import formatDate from '@/utils/formatDate';
 import BlogTag from '@/app/components/main/blog/BlogCategoryTag';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
+import { NewsList } from '@/lib/newList';
 import { ClipLoader } from 'react-spinners';
+import NewProb from './newProb';
 
-const BlogContent = () => {
+const NewContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [refreshKey, setRefreshKey] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -19,11 +20,11 @@ const BlogContent = () => {
 
   // Lấy danh sách tin tức từ API
   const {
-    queueData: blogs,
+    queueData: news,
     next,
     isLoading,
     isError,
-  } = BlogList(currentPage, categoryQuery, refreshKey);
+  } = NewsList(currentPage, categoryQuery, refreshKey);
 
   // Kiểm tra dữ liệu
   if (isLoading)
@@ -47,7 +48,7 @@ const BlogContent = () => {
   return (
     <main>
       <Container>
-        <Tittle name="TẤT CẢ BÀI VIẾT" />
+        <Tittle name="TẤT CẢ TIN TỨC" />
         <div className="mt-6 mb-4">
           <BlogTag
             onFilterChange={handleFilterChange}
@@ -55,8 +56,8 @@ const BlogContent = () => {
           />
         </div>
         <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogs.map((blog, index) => (
-            <BlogProb
+          {news.map((blog, index) => (
+            <NewProb
               key={index}
               id={blog.id}
               title={blog.title}
@@ -102,4 +103,4 @@ const BlogContent = () => {
   );
 };
 
-export default BlogContent;
+export default NewContent;
