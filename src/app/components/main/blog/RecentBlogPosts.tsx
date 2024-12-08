@@ -7,7 +7,6 @@ import { BlogList } from '@/lib/blogList';
 import formatDate from '@/utils/formatDate';
 import Container from '../../Container/container';
 import Tittle from '../../design/Tittle';
-import { ClipLoader } from 'react-spinners';
 
 const RecentBlogPosts = () => {
   const [currentPage] = useState(1);
@@ -36,19 +35,21 @@ const RecentBlogPosts = () => {
           <div className="cursor-pointer lg:col-span-2 rounded-lg shadow-lg overflow-hidden bg-white ">
             <div className="h-full flex flex-col">
               {/* Hình ảnh bài viết nổi bật */}
-              <div className="relative w-full h-60">
-                {' '}
-                {/* Đặt chiều cao cố định */}
+              <div className="relative w-full h-60 overflow-hidden">
+                {/* Đặt chiều cao cố định và ẩn phần thừa */}
                 {latestPost?.image && (
-                  <Image
-                    src={latestPost.image}
-                    alt={latestPost.title || 'No Title'}
-                    layout="fill" // Giữ tỷ lệ ảnh phù hợp với container
-                    objectFit="cover" // Đảm bảo ảnh không bị kéo dãn
-                    className="rounded-t-lg"
-                  />
+                  <div className="relative w-full h-full group">
+                    <Image
+                      src={latestPost.image}
+                      alt={latestPost.title || 'No Title'}
+                      layout="fill" // Giữ tỷ lệ ảnh phù hợp với container
+                      objectFit="cover" // Đảm bảo ảnh không bị kéo dãn
+                      className="rounded-t-lg transition-transform duration-300 ease-in-out transform group-hover:scale-110"
+                    />
+                  </div>
                 )}
               </div>
+
               {/* Nội dung bài viết nổi bật */}
               <div className=" p-6 flex-1 flex flex-col">
                 <p className="text-gray-500 text-sm">
@@ -87,7 +88,7 @@ const RecentBlogPosts = () => {
                 key={index}
                 className="flex rounded-lg shadow-lg overflow-hidden bg-white h-1/3 hover:shadow-2xl hover:scale-105 transform transition-all duration-300"
               >
-                <div className="relative w-2/4 h-full">
+                <div className="relative w-1/3 h-full">
                   {' '}
                   {/* Đặt chiều cao cố định */}
                   {post?.image && (
