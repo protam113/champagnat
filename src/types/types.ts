@@ -306,3 +306,28 @@ export interface EventProps {
   date: string;
   image: string;
 }
+
+
+/**
+  change password Interface
+ **/
+
+
+
+  export interface ChangePassword {
+    old_password: string;
+    new_password: string;
+  }
+
+
+
+  /**
+  update profiile Interface
+ **/
+
+  export interface UpdateProfile {
+    profile_image:File | null
+    first_name: string| null;
+    last_name: string| null;
+    phone_number: string| null;
+  }

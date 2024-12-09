@@ -55,6 +55,9 @@ const endpoints = {
     missions: '/mission/',
     mission: '/mission/:id/',
 
+    changePassword: '/password/change-password/'
+
+
 };
 
 export { baseURL, endpoints };
