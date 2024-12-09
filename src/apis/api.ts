@@ -50,6 +50,11 @@ const endpoints = {
 
     nhaDong: '/website/',
 
+    //mission
+
+    missions: '/mission/',
+    mission: '/mission/:id/',
+
 };
 
 export { baseURL, endpoints };
