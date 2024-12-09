@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import BlogProb from '@/app/components/main/blog/blogProb';
 import Tittle from '@/app/components/design/Tittle';
 import formatDate from '@/utils/formatDate';
 import BlogTag from '@/app/components/main/blog/BlogCategoryTag';

@@ -1,14 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { BlogList } from '@/lib/blogList';
-import BlogProb from '@/app/components/main/blog/blogProb';
+
 import Tittle from '@/app/components/design/Tittle';
 import formatDate from '@/utils/formatDate';
-import BlogTag from '@/app/components/main/blog/BlogCategoryTag';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
 import { ClipLoader } from 'react-spinners';
+import DonateProb from './donateProb';
+import { DonateList } from '@/lib/donateList';
+import DonateTag from './DonateCategoryTag';
 
 const DonateContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,11 +20,11 @@ const DonateContent = () => {
 
   // Lấy danh sách tin tức từ API
   const {
-    queueData: blogs,
+    queueData: donate,
     next,
     isLoading,
     isError,
-  } = BlogList(currentPage, categoryQuery, refreshKey);
+  } = DonateList(currentPage, categoryQuery, refreshKey);
 
   // Kiểm tra dữ liệu
   if (isLoading)
@@ -48,15 +49,15 @@ const DonateContent = () => {
     <main className="pt-20">
       <Container>
         <Tittle name="HÀNH TRÌNH QUYÊN GÓP CỦA CHÚNG TÔI" />
-        {/* <div className="mt-6 mb-4">
-          <BlogTag
+        <div className="mt-6 mb-4">
+          <DonateTag
             onFilterChange={handleFilterChange}
             setRefreshKey={setRefreshKey}
           />
-        </div> */}
+        </div>
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogs.map((blog, index) => (
-            <BlogProb
+          {donate.map((blog, index) => (
+            <DonateProb
               key={index}
               id={blog.id}
               title={blog.title}

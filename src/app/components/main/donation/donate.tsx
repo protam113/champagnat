@@ -1,6 +1,8 @@
 import Image from 'next/image';
 import React from 'react';
-import money from '@/assets/image/banner.png';
+import money from '@/assets/image/donatemoney.jpg';
+import item from '@/assets/image/doanteitem.jpg';
+import time from '@/assets/image/donatetime.jpg';
 import Tittle from '../../design/Tittle';
 const Donate = () => {
   return (
@@ -41,7 +43,7 @@ const Donate = () => {
           {/* Quyên Góp Vật Dụng */}
           <div className="bg-white rounded-lg shadow-lg transform transition-transform duration-300  hover:scale-110">
             <Image
-              src={money}
+              src={item}
               alt="Quyên góp vật dụng"
               className="w-full h-48 object-cover rounded-t-lg mb-4"
             />
@@ -62,7 +64,7 @@ const Donate = () => {
           {/* Quyên Góp Thời Gian */}
           <div className="bg-white rounded-lg shadow-lg transform transition-transform duration-300  hover:scale-110">
             <Image
-              src={money}
+              src={time}
               alt="Quyên góp thời gian"
               className="w-full h-48 object-cover rounded-t-lg mb-4"
             />
