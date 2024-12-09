@@ -271,6 +271,16 @@ export interface EventProps {
     old_password: string;
     new_password: string;
   }
+  
+  export interface VerifyCode {
+    email:string 
+  }
+
+  export interface ResetPassword {
+    code:string, 
+    new_password: string,
+    email: string,
+  }
 
 
 
@@ -336,7 +346,7 @@ interface CommentList {
 }
 
 export interface NewComment {
-  parent: string | null;
+  parent?: string | null;
   model: string;
   content: string;
   object_id: string;

@@ -7,6 +7,7 @@ import formatDate from '@/utils/formatDate';
 import { useBlogDetail } from '@/hooks/blog/useBlogDetail';
 import Heading from '@/app/components/design/Heading';
 import BlogCommentsSection from '@/app/components/main/blog/comment/CommentsSection';
+import Comment from '@/app/components/main/blog/comment/Comment';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();
@@ -92,7 +93,8 @@ const Page = () => {
 
         <p>{blog.link}</p>
       </div>
-      <BlogCommentsSection postId={blog.id} />
+      <Comment postId={blog.id} model="blog" />
+      <BlogCommentsSection postId={blog.id} PostModel="blog" />
     </div>
   );
 };

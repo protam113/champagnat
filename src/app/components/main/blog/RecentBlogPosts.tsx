@@ -5,6 +5,8 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import React, { useState } from 'react';
 import { BlogList } from '@/lib/blogList';
 import formatDate from '@/utils/formatDate';
+import { FaCross } from '@/lib/iconLib';
+import Container from '../../Container/container';
 
 const RecentBlogPosts = () => {
   const [currentPage] = useState(1);
@@ -23,6 +25,19 @@ const RecentBlogPosts = () => {
   // Kiểm tra dữ liệu
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading news...</p>;
+
+  if (blogs.length === 0) {
+    return (
+      <Container>
+        <div className="flex flex-col items-center justify-center h-full text-center pt-10">
+          <FaCross className="text-6xl text-gray-400 mb-4" />
+          <p className="text-lg text-gray-600">
+            Hiện tại chưa có bài viết nào. Vui lòng quay lại sau!
+          </p>
+        </div>
+      </Container>
+    );
+  }
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
       {/* Bài viết nổi bật bên trái */}

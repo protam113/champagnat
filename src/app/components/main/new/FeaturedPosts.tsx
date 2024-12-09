@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { NewsList } from '@/lib/newList';
 import Tittle from '../../design/Tittle';
 import formatDate from '@/utils/formatDate';
+import { FaCross } from '@/lib/iconLib';
 
 const FeaturedLayout = () => {
   const [currentPage] = useState(1);
@@ -19,7 +20,7 @@ const FeaturedLayout = () => {
     refreshKey,
   );
 
-  // Kiểm tra dữ liệu
+  // Kiểm tra dữ liệua
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading news...</p>;
 
@@ -27,6 +28,19 @@ const FeaturedLayout = () => {
   const latestPosts = queueData?.slice(0, 5) || [];
   const featuredPost = latestPosts[0]; // Bài viết nổi bật
   const recentPosts = latestPosts.slice(1); // Các bài viết còn lại
+
+  if (latestPosts.length === 0) {
+    return (
+      <Container>
+        <div className="flex flex-col items-center justify-center h-full text-center pt-10">
+          <FaCross className="text-6xl text-gray-400 mb-4" />
+          <p className="text-lg text-gray-600">
+            Hiện tại chưa có bài viết nào. Vui lòng quay lại sau!
+          </p>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Container>

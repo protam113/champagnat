@@ -69,41 +69,29 @@ const useCommentList = (
   });
 };
 
-const CreateComment = async (newBlog: NewComment, token: string) => {
+const CreateComment = async (newComment: NewComment, token?: string) => {
   const formData = new FormData();
 
   // Duyệt qua các thuộc tính của `newBlog` và xử lý
-  for (const key in newBlog) {
-    const value = newBlog[key as keyof NewComment];
+  for (const key in newComment) {
+    const value = newComment[key as keyof NewComment];
 
     if (key === 'content') {
       // Xử lý content nếu là object hoặc JSON string
       formData.append(key, JSON.stringify(value));
-    } else if (key === 'category' && Array.isArray(value)) {
-      value.forEach((id) => formData.append('category', id)); // Gửi từng ID
-    } else if (key === 'image' && typeof value === 'string') {
-      // Nếu là URL hình ảnh
-      formData.append(key, value);
-    } else if (key === 'image' && Array.isArray(value)) {
-      // Nếu là mảng hình ảnh tải lên
-      value.forEach((file) => {
-        formData.append('image', file);
-      });
     } else if (value) {
       // Thêm các trường khác
       formData.append(key, value as string);
     }
   }
 
-  if (!token) throw new Error('No token available');
-
   try {
     // Gửi FormData tới backend
     const response = await handleAPI(
-      `${endpoints.blogs}`,
+      `${endpoints.comment}`,
       'POST',
       formData,
-      token,
+      token || null,
     );
     return response.data;
   } catch (error: any) {
@@ -127,17 +115,14 @@ const useCreateComment = () => {
   }, [getToken]);
 
   return useMutation({
-    mutationFn: async (newBlog: NewComment) => {
-      if (!token) {
-        throw new Error('Token is not available');
-      }
-      return CreateComment(newBlog, token);
+    mutationFn: async (newComment: NewComment) => {
+      return CreateComment(newComment, token || undefined);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['commentList'] });
     },
     onError: (error) => {
-      console.log(error.message || 'Failed to create blog.');
+      console.log(error.message || 'Failed to create comment.');
     },
   });
 };

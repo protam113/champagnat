@@ -6,15 +6,21 @@ import formatDate from '@/utils/formatDate';
 import { FaCommentDots } from '@/lib/iconLib';
 import { CommentList } from '@/lib/commentList';
 import ReplyCommentSection from './ReplyCommentSection';
+import ReplyComment from './ReplyCommen';
 
-const BlogCommentsSection = ({ postId }: { postId: string }) => {
+const BlogCommentsSection = ({
+  postId,
+  PostModel,
+}: {
+  postId: string;
+  PostModel: string;
+}) => {
   const [currentPage, setPage] = useState(1);
   const [refreshKey, setRefreshKey] = useState(0);
 
   // Đặt object_id và model theo blogId để xác định đúng bài viết
   const object_id = postId; // Dùng blogId làm object_id
-  const model = 'blog'; // Ví dụ: `blog` là model của bài viết
-
+  const model = PostModel;
   // Gọi CommentList với các tham số cần thiết
   const { queueData, next, isLoading, isError } = CommentList({
     currentPage,
@@ -78,15 +84,12 @@ const BlogCommentsSection = ({ postId }: { postId: string }) => {
                 postId={postId}
                 parentId={String(comment.id)}
               />
-
+              <ReplyComment
+                postId={postId}
+                model="blog"
+                parent={String(comment.id)}
+              />
               <hr className="my-2 border-gray-300" />
-              {/* {String(activeReply) === String(comment.id) && userInfo && (
-                                <ReplyComment
-                                    blogId={blogId}
-                                    commentId={String(comment.id)} // Đảm bảo commentId là chuỗi
-                                    onReplyAdded={() => setActiveReply(null)}
-                                />
-                            )} */}
             </div>
           ) : null,
         )}

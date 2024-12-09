@@ -55,7 +55,9 @@ const endpoints = {
     missions: '/mission/',
     mission: '/mission/:id/',
 
-    changePassword: '/password/change-password/'
+    changePassword: '/password/change-password/',
+    codePassword: '/password/reset-password/',
+    verifyCode: '/password/verify-code/',
 
 
 };
