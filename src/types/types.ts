@@ -284,3 +284,62 @@ export interface EventProps {
     last_name: string| null;
     phone_number: string| null;
   }
+
+
+
+  // Define Role interface
+interface Role {
+  id: string;
+  name: string;
+  description: string;
+}
+
+// Define UserInfo interface
+export interface UserInfo {
+  id: string;
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string | null;
+  profile_image: string;
+  role: Role;
+}
+
+// Define UserContextType interface
+export interface UserContextType {
+  userInfo: UserInfo | null;
+  userRoleId: number | null; // Store the role id here
+  loading: boolean;
+  error: string | null;
+  refreshUserInfo: () => void;
+}
+
+
+interface CommentList {
+  id: number;
+  guest_name: string | null;
+  guest_email: string | null;
+  content: string;
+  user: User;
+  reply_count: number;
+  created_date: string;
+  comment_count: number;
+  parent: string | null;
+}
+
+ export interface FetchCommentListResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: CommentList[];
+}
+
+export interface NewComment {
+  parent: string | null;
+  model: string;
+  content: string;
+  object_id: string;
+  guest_name: string | null;
+  guest_email: string | null;
+}

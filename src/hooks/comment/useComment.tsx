@@ -6,35 +6,7 @@ import { endpoints } from '@/apis/api';
 import { useAuth } from '@/context/authContext';
 import { useEffect, useState } from 'react';
 import { Filters } from '@/types/types';
-
-interface User {
-  id: number;
-  username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  phone_number: string | null;
-  profile_image: string;
-}
-
-interface CommentList {
-  id: number;
-  guest_name: string | null;
-  guest_email: string | null;
-  content: string;
-  user: User;
-  reply_count: number;
-  created_date: string;
-  comment_count: number;
-  parent: string | null;
-}
-
-interface FetchCommentListResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: CommentList[];
-}
+import { FetchCommentListResponse, NewComment } from '@/types/types';
 
 const fetchCommentList = async (
   filters: Filters,
@@ -97,4 +69,77 @@ const useCommentList = (
   });
 };
 
-export { useCommentList };
+const CreateComment = async (newBlog: NewComment, token: string) => {
+  const formData = new FormData();
+
+  // Duyệt qua các thuộc tính của `newBlog` và xử lý
+  for (const key in newBlog) {
+    const value = newBlog[key as keyof NewComment];
+
+    if (key === 'content') {
+      // Xử lý content nếu là object hoặc JSON string
+      formData.append(key, JSON.stringify(value));
+    } else if (key === 'category' && Array.isArray(value)) {
+      value.forEach((id) => formData.append('category', id)); // Gửi từng ID
+    } else if (key === 'image' && typeof value === 'string') {
+      // Nếu là URL hình ảnh
+      formData.append(key, value);
+    } else if (key === 'image' && Array.isArray(value)) {
+      // Nếu là mảng hình ảnh tải lên
+      value.forEach((file) => {
+        formData.append('image', file);
+      });
+    } else if (value) {
+      // Thêm các trường khác
+      formData.append(key, value as string);
+    }
+  }
+
+  if (!token) throw new Error('No token available');
+
+  try {
+    // Gửi FormData tới backend
+    const response = await handleAPI(
+      `${endpoints.blogs}`,
+      'POST',
+      formData,
+      token,
+    );
+    return response.data;
+  } catch (error: any) {
+    console.error('Error creating blog:', error.response?.data);
+    throw new Error(error.response?.data?.message || 'Failed to create blog');
+  }
+};
+
+const useCreateComment = () => {
+  const queryClient = useQueryClient();
+  const { getToken } = useAuth();
+  const [token, setToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      const userToken = await getToken();
+      setToken(userToken);
+    };
+
+    fetchToken();
+  }, [getToken]);
+
+  return useMutation({
+    mutationFn: async (newBlog: NewComment) => {
+      if (!token) {
+        throw new Error('Token is not available');
+      }
+      return CreateComment(newBlog, token);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['commentList'] });
+    },
+    onError: (error) => {
+      console.log(error.message || 'Failed to create blog.');
+    },
+  });
+};
+
+export { useCommentList, useCreateComment };
