@@ -1,75 +1,69 @@
-"use client";
+'use client';
 
-import {
-    useQuery,
-} from "@tanstack/react-query";
-import { handleAPI } from "@/apis/axiosClient";
-import { endpoints } from "@/apis/api";
-import { useAuth } from "@/context/authContext";
-import { useEffect, useState } from "react";
-import {FetchPostListResponse,Filters} from "@/types/types"
-
-    /*
-        Hooks lấy danh sách tin tức
-    */
+import { useQuery } from '@tanstack/react-query';
+import { handleAPI } from '@/apis/axiosClient';
+import { endpoints } from '@/apis/api';
+import { useAuth } from '@/context/authContext';
+import { useEffect, useState } from 'react';
+import { FetchPostListResponse, Filters } from '@/types/types';
 
 const fetchNewsList = async (
-    filters: Filters,
-    pageParam: number = 1,
-    token?: string,
+  filters: Filters,
+  pageParam: number = 1,
+  token?: string,
 ): Promise<FetchPostListResponse> => {
+  try {
+    // lọc ra các giá trị không xác định hoặc trống từ các bộ lọc
+    const validFilters = Object.fromEntries(
+      Object.entries(filters).filter(
+        ([, value]) => value !== undefined && value !== '' && value !== null,
+      ),
+    );
 
-    try {
-        // Filter out undefined or empty values from filters
-        const validFilters = Object.fromEntries(
-            Object.entries(filters).filter(
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                ([, value]) => value !== undefined && value !== "" && value !== null
-            )
-        );
+    // Xây dựng chuỗi truy vấn
+    const queryString = new URLSearchParams({
+      page: pageParam.toString(),
+      ...validFilters, // hợp nhất các bộ lọc hợp lệ vào chuỗi truy vấn
+    }).toString();
 
-        // Construct the query string
-        const queryString = new URLSearchParams({
-            page: pageParam.toString(),
-            ...validFilters, // Merge the valid filters into the query string
-        }).toString();
-
-
-        // Make the API request using handleAPI
-        const response = await handleAPI(
-            `${endpoints.news}${queryString ? `?${queryString}` : ""}`,
-            "GET",
-            null,
-            token || null
-        );
-        return response;
-    } catch (error) {
-        console.error("Error fetching news list:", error);
-        throw error; // Rethrow error for further handling
-    }
+    // Thực hiện yêu cầu API bằng cách sử dụng Handle api
+    const response = await handleAPI(
+      `${endpoints.news}${queryString ? `?${queryString}` : ''}`,
+      'GET',
+      null,
+      token || null,
+    );
+    return response;
+  } catch (error) {
+    console.error('Error fetching news list:', error);
+    throw error;
+  }
 };
 
+// Hook tùy chỉnh để tìm nạp danh sách hàng đợi
+const useNewsList = (
+  page: number,
+  filters: Filters = {},
+  refreshKey: number,
+) => {
+  const { getToken } = useAuth();
+  const [token, setToken] = useState<string | null>(null);
 
-// Custom hook for fetching the queue list
-const useNewsList = (page: number, filters: Filters = {}, refreshKey: number) => {
-    const { getToken } = useAuth();
-    const [token, setToken] = useState<string | null>(null);
+  useEffect(() => {
+    const fetchToken = async () => {
+      const userToken = await getToken();
+      setToken(userToken);
+    };
 
-    useEffect(() => {
-        const fetchToken = async () => {
-            const userToken = await getToken();
-            setToken(userToken);
-        };
+    fetchToken();
+  }, [getToken]);
 
-        fetchToken();
-    }, [getToken]);
+  return useQuery<FetchPostListResponse, Error>({
+    queryKey: ['newsList', filters, page, token, refreshKey],
+    queryFn: async () => fetchNewsList(filters, page, token || undefined),
 
-    return useQuery<FetchPostListResponse, Error>({
-        queryKey: ["newsList", filters, page, token, refreshKey],
-        queryFn: async () => fetchNewsList(filters, page, token || undefined),
-
-        staleTime: 60000,
-    });
+    staleTime: 60000,
+  });
 };
 
-export {useNewsList}
+export { useNewsList };

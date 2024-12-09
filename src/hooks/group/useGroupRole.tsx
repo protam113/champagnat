@@ -17,24 +17,20 @@ const fetchGroupRolelist = async (
   }
 
   try {
-    // Construct the query string
     const queryString = new URLSearchParams({
       page: pageParam.toString(),
     }).toString();
 
-    // Build the API endpoint
     const url = `${endpoints.groupRole.replace(':id', groupId)}${queryString ? `?${queryString}` : ''}`;
 
-    // Make the API request using handleAPI
     const response = await handleAPI(url, 'GET', null, token);
     return response;
   } catch (error) {
     console.error('Error fetching group role list:', error);
-    throw error; // Rethrow error for further handling
+    throw error;
   }
 };
 
-// Custom hook for fetching the group role list
 const useGroupRoleList = (
   page: number,
   refreshKey: number,
@@ -44,7 +40,6 @@ const useGroupRoleList = (
   const [token, setToken] = useState<string | null>(null);
   const [isReady, setIsReady] = useState<boolean>(false);
 
-  // Fetch token once when the component mounts or `getToken` changes
   useEffect(() => {
     const fetchToken = async () => {
       const userToken = await getToken();
@@ -61,10 +56,10 @@ const useGroupRoleList = (
       if (!token) {
         throw new Error('Token is not available');
       }
-      return fetchGroupRolelist(groupId, page, token); // Call the corrected function
+      return fetchGroupRolelist(groupId, page, token);
     },
     enabled: isReady && !!token,
-    staleTime: 60000, // Keep data fresh for 1 minute
+    staleTime: 60000,
   });
 };
 

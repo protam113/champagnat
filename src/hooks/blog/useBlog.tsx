@@ -7,31 +7,25 @@ import { useAuth } from '@/context/authContext';
 import { useEffect, useState } from 'react';
 import { FetchPostListResponse, Filters } from '@/types/types';
 
-/*
-        Hooks lấy danh sách bài viết
-    */
-
 const fetchBlogList = async (
   filters: Filters,
   pageParam: number = 1,
   token?: string,
 ): Promise<FetchPostListResponse> => {
   try {
-    // Filter out undefined or empty values from filters
+    // Lọc bỏ các giá trị không xác định hoặc rỗng từ bộ lọc
     const validFilters = Object.fromEntries(
       Object.entries(filters).filter(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         ([, value]) => value !== undefined && value !== '' && value !== null,
       ),
     );
 
-    // Construct the query string
+    // Xây dựng chuỗi truy vấn
     const queryString = new URLSearchParams({
       page: pageParam.toString(),
-      ...validFilters, // Merge các bộ lọc hợp lệ
+      ...validFilters,
     }).toString();
-
-    // Make the API request using handleAPI
+    // Thực hiện yêu cầu API bằng cách sử dụng API xử lý
     const response = await handleAPI(
       `${endpoints.blogs}${queryString ? `?${queryString}` : ''}`,
       'GET',
@@ -41,11 +35,11 @@ const fetchBlogList = async (
     return response;
   } catch (error) {
     console.error('Error fetching news list:', error);
-    throw error; // Rethrow error for further handling
+    throw error;
   }
 };
 
-// Custom hook for fetching the queue list
+// Hook tùy chỉnh để lấy danh sách hàng đợi
 const useBlogsList = (
   page: number,
   filters: Filters = {},

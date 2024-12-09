@@ -11,7 +11,6 @@ const fetchHistoryMonastery = async (
   token?: string,
 ): Promise<HistoryMonasteryResponse> => {
   try {
-    // Make the API request using handleAPI
     const response = await handleAPI(
       `${endpoints.nhaDong}`,
       'GET',
@@ -21,11 +20,10 @@ const fetchHistoryMonastery = async (
     return response;
   } catch (error) {
     console.error('Error fetching event list:', error);
-    throw error; // Rethrow error for further handling
+    throw error;
   }
 };
 
-// Custom hook for fetching the queue list
 const useHistoryMonastery = (refreshKey: number) => {
   const { getToken } = useAuth();
   const [token, setToken] = useState<string | null>(null);

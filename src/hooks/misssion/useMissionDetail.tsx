@@ -26,12 +26,10 @@ const fetchMissionDetail = async (
   }
 };
 
-// Custom hook for fetching the blog list
 const useMissionDetail = (postId: string) => {
   const { getToken } = useAuth();
   const [token, setToken] = useState<string | null>(null);
 
-  // Fetch token only once when component mounts
   useEffect(() => {
     const fetchToken = async () => {
       const userToken = await getToken();

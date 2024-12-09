@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { PiEyeSlash } from 'react-icons/pi';
 import { RxEyeOpen } from 'react-icons/rx';
 import { useRouter } from 'next/navigation';
+import Heading from '@/app/components/design/Heading';
+import { useChangePassword } from '@/hooks/auth/usePassword'; // Giả sử bạn đã có hook để thay đổi mật khẩu
 
 const ResetPasswordPage = () => {
   const router = useRouter();
@@ -12,6 +14,7 @@ const ResetPasswordPage = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
+  const { mutate } = useChangePassword(); // Giả sử bạn đã có hook để xử lý cập nhật mật khẩu
 
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
@@ -26,11 +29,19 @@ const ResetPasswordPage = () => {
       return;
     }
 
-    // Logic xử lý đổi mật khẩu ở đây
+    // Tạo đối tượng passwordData để gửi đi
+    const passwordData = {
+      old_password: oldPassword,
+      new_password: newPassword,
+    };
+
     try {
-      // Ví dụ gọi API đổi mật khẩu
+      // Gọi API để thay đổi mật khẩu
+      await mutate(passwordData);
+
+      // Sau khi đổi mật khẩu thành công, chuyển hướng đến trang đăng nhập
       alert('Mật khẩu đã được đổi thành công.');
-      router.push('/login'); // Sau khi đổi mật khẩu, chuyển hướng đến trang đăng nhập
+      router.push('/login');
     } catch (error) {
       console.error('Error resetting password:', error);
       alert('Đổi mật khẩu thất bại. Vui lòng thử lại.');
@@ -38,12 +49,10 @@ const ResetPasswordPage = () => {
   };
 
   return (
-    <div className=" flex items-center justify-center  py-2">
-      <div className="w-full max-w-md  p-4">
+    <div className="flex items-center justify-center py-2">
+      <div className="w-full max-w-md p-4">
         {/* Tiêu đề */}
-        <h2 className="text-2xl font-semibold text-center mb-8">
-          Đổi Mật Khẩu
-        </h2>
+        <Heading name="Đổi mật khẩu" />
 
         {/* Hiển thị thông báo lỗi nếu có */}
         {error && (

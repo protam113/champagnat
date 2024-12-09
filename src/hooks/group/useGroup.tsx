@@ -17,20 +17,17 @@ const fetchGrouplist = async (
   }
 
   try {
-    // Filter out undefined or empty values from filters
     const validFilters = Object.fromEntries(
       Object.entries(filters).filter(
         ([, value]) => value !== undefined && value !== '',
       ),
     );
 
-    // Construct the query string
     const queryString = new URLSearchParams({
       page: pageParam.toString(),
-      ...validFilters, // Merge the valid filters into the query string
+      ...validFilters,
     }).toString();
 
-    // Make the API request using handleAPI
     const response = await handleAPI(
       `${endpoints.groups}${queryString ? `?${queryString}` : ''}`,
       'GET',
@@ -40,11 +37,10 @@ const fetchGrouplist = async (
     return response;
   } catch (error) {
     console.error('Error fetching group list:', error);
-    throw error; // Rethrow error for further handling
+    throw error;
   }
 };
 
-// Custom hook for fetching the queue list
 const useGroupList = (
   page: number,
   filters: Filters = {},

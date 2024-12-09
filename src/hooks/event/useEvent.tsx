@@ -13,20 +13,17 @@ const fetchEventList = async (
   token?: string,
 ): Promise<FetchEventListResponse> => {
   try {
-    // Filter out undefined or empty values from filters
     const validFilters = Object.fromEntries(
       Object.entries(filters).filter(
         ([, value]) => value !== undefined && value !== '',
       ),
     );
 
-    // Construct the query string
     const queryString = new URLSearchParams({
       page: pageParam.toString(),
-      ...validFilters, // Merge the valid filters into the query string
+      ...validFilters,
     }).toString();
 
-    // Make the API request using handleAPI
     const response = await handleAPI(
       `${endpoints.events}${queryString ? `?${queryString}` : ''}`,
       'GET',
@@ -36,11 +33,10 @@ const fetchEventList = async (
     return response;
   } catch (error) {
     console.error('Error fetching event list:', error);
-    throw error; // Rethrow error for further handling
+    throw error;
   }
 };
 
-// Custom hook for fetching the queue list
 const useEventList = (
   page: number,
   filters: Filters = {},

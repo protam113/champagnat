@@ -7,31 +7,23 @@ import { useAuth } from '@/context/authContext';
 import { useEffect, useState } from 'react';
 import { FetchPostListResponse, Filters } from '@/types/types';
 
-/*
-        Hooks lấy danh sách bài viết
-    */
-
 const fetchDonateList = async (
   filters: Filters,
   pageParam: number = 1,
   token?: string,
 ): Promise<FetchPostListResponse> => {
   try {
-    // Filter out undefined or empty values from filters
     const validFilters = Object.fromEntries(
       Object.entries(filters).filter(
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         ([, value]) => value !== undefined && value !== '' && value !== null,
       ),
     );
 
-    // Construct the query string
     const queryString = new URLSearchParams({
       page: pageParam.toString(),
-      ...validFilters, // Merge các bộ lọc hợp lệ
+      ...validFilters,
     }).toString();
 
-    // Make the API request using handleAPI
     const response = await handleAPI(
       `${endpoints.blogs}${queryString ? `?${queryString}` : ''}`,
       'GET',
@@ -41,11 +33,10 @@ const fetchDonateList = async (
     return response;
   } catch (error) {
     console.error('Error fetching news list:', error);
-    throw error; // Rethrow error for further handling
+    throw error;
   }
 };
 
-// Custom hook for fetching the queue list
 const useDonateList = (
   page: number,
   filters: Filters = {},

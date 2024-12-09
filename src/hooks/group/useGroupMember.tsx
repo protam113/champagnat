@@ -17,12 +17,10 @@ const fetchGroupMember = async (
   }
 
   try {
-    // Construct the query string
     const queryString = new URLSearchParams({
       page: pageParam.toString(),
     }).toString();
 
-    // Make the API request using handleAPI
     const response = await handleAPI(
       `${endpoints.groupMember.replace(':id', groupId)}${queryString ? `?${queryString}` : ''}`,
       'GET',
@@ -32,11 +30,10 @@ const fetchGroupMember = async (
     return response;
   } catch (error) {
     console.error('Error fetching group list:', error);
-    throw error; // Rethrow error for further handling
+    throw error;
   }
 };
 
-// Custom hook for fetching the queue list
 const useGroupMember = (page: number, refreshKey: number, groupId: string) => {
   const { getToken } = useAuth();
   const [token, setToken] = useState<string | null>(null);

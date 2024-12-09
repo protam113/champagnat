@@ -1,6 +1,6 @@
 'use client';
 
-import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { handleAPI } from '@/apis/axiosClient';
 import { endpoints } from '@/apis/api';
 import { useAuth } from '@/context/authContext';
@@ -43,15 +43,13 @@ const fetchCommentList = async (
 ): Promise<FetchCommentListResponse> => {
   const validFilters = Object.fromEntries(
     Object.entries(filters).filter(
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       ([, value]) => value !== undefined && value !== '' && value !== null,
     ),
   );
 
-  // Construct the query string
   const queryString = new URLSearchParams({
     page: pageParam.toString(),
-    ...validFilters, // Merge các bộ lọc hợp lệ
+    ...validFilters,
   }).toString();
 
   try {
@@ -69,7 +67,6 @@ const fetchCommentList = async (
   }
 };
 
-// Custom hook for fetching the blog list
 const useCommentList = (
   page: number,
   filters: Filters = {},
@@ -78,7 +75,6 @@ const useCommentList = (
   const { getToken } = useAuth();
   const [token, setToken] = useState<string | null>(null);
 
-  // Fetch token only once when component mounts
   useEffect(() => {
     const fetchToken = async () => {
       const userToken = await getToken();

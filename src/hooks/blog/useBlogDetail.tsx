@@ -26,12 +26,12 @@ const fetchBlogDetail = async (
   }
 };
 
-// Custom hook for fetching the blog list
+// Hook tùy chỉnh để tìm nạp danh sách blog
 const useBlogDetail = (postId: string) => {
   const { getToken } = useAuth();
   const [token, setToken] = useState<string | null>(null);
 
-  // Fetch token only once when component mounts
+  // chỉ tìm nạp mã thông báo một lần khi thành phần gắn kết
   useEffect(() => {
     const fetchToken = async () => {
       const userToken = await getToken();
