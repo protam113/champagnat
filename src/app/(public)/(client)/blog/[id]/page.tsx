@@ -10,6 +10,7 @@ import Container from '@/app/components/Container/container';
 import { useState } from 'react';
 import { MdOutlineDelete } from 'react-icons/md';
 import { LucideMessageCircleReply } from 'lucide-react';
+import BlogCommentsSection from '@/app/components/main/blog/comment/CommentsSection';
 
 interface Reply {
   text: string;
@@ -25,7 +26,6 @@ interface Comment {
 // import { useBlogDetail } from '@/hooks/blog/useBlogDetail';
 // import Heading from '@/app/components/design/Heading';
 // import BlogCommentsSection from '@/app/components/main/blog/comment/CommentsSection';
-
 
 const Page = () => {
   const { id: blogIdParam } = useParams();
@@ -292,17 +292,8 @@ const Page = () => {
           </form>
         </div>
       </div>
-<<<<<<< HEAD
-    </Container>
-=======
-      <div className="lg:text-14 ">
-        <p className="text-gray-500 font-16">Nguồn:</p>
-
-        <p>{blog.link}</p>
-      </div>
       <BlogCommentsSection postId={blog.id} />
-    </div>
->>>>>>> d2ff31dec86df6a62e9be323157299465e6ecf58
+    </Container>
   );
 };
 

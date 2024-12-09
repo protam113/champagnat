@@ -1,43 +1,20 @@
-import React from "react";
-import Container from "@/app/components/Container/container";
-import Image from "next/image";
-import Link from "next/link";
-import img from "@/assets/image/banner.png";
+import React from 'react';
+import Container from '@/app/components/Container/container';
+import SuvuContent from '@/app/components/main/su_vu/SuvuContent';
+import Heading from '@/app/components/design/Heading';
 
 const SuVuPage = () => {
   return (
     <Container>
-      <div className="container mx-auto px-4 py-10">
-        {/* Phần tiêu đề */}
-        <header className="text-center mb-10">
-          <h1 className="text-5xl font-bold text-primary-900">Sứ Vụ</h1>
-          <p className="text-gray-700 mt-2 text-lg">
-            Tìm hiểu về những giá trị cốt lõi và mục tiêu chúng tôi hướng đến.
-          </p>
-          <div className="text-sm text-gray-500 mt-4">
-            <Link href="/" passHref>
-              <span className="hover:text-primary-500 cursor-pointer">
-                Trang Chủ
-              </span>
-            </Link>
-            {" > "}
-            <span className="text-primary-500">Sứ Vụ</span>
-          </div>
-        </header>
-
-        {/* Phần giới thiệu */}
-        <section className="mb-12 text-center">
-          <h2 className="text-3xl font-semibold text-primary-700 mb-4">
-            Sứ mệnh của chúng tôi
-          </h2>
-          <p className="text-gray-700 max-w-3xl mx-auto text-lg">
-            Chúng tôi cam kết mang đến những giá trị tốt đẹp nhất cho cộng đồng
-            thông qua các hoạt động, dự án và sáng kiến mang tính bền vững.
-          </p>
-        </section>
-
-        {/* Phần bài viết nổi bật */}
-        <section className="mb-16">
+      {/* Phần tiêu đề */}
+      <div className="text-center mb-10">
+        <Heading name="Sứ Vụ" />
+        <p className="text-gray-700 mt-2 text-lg">
+          Tìm hiểu về những giá trị cốt lõi và mục tiêu chúng tôi hướng đến.
+        </p>
+      </div>
+      {/* Phần bài viết nổi bật */}
+      {/* <section className="mb-16">
           <div className="relative w-full h-[400px] rounded-lg overflow-hidden shadow-lg">
             <Image
               src={img}
@@ -55,51 +32,13 @@ const SuVuPage = () => {
               tôi đang thực hiện.
             </p>
           </div>
-        </section>
+        </section> */}
 
-        {/* Danh sách bài viết theo dạng lưới */}
-        <section className="mb-16">
-          <h2 className="text-3xl font-semibold text-primary-700 mb-8">
-            Bài viết gần đây
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[...Array(6)].map((_, index) => (
-              <div
-                key={index}
-                className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
-              >
-                <div className="relative w-full h-40">
-                  <Image
-                    src={img}
-                    alt={`Bài viết ${index + 1}`}
-                    layout="fill"
-                    objectFit="cover"
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold">
-                    Tiêu đề bài viết {index + 1}
-                  </h3>
-                  <p className="text-gray-500 text-sm mt-2">
-                    Ngày đăng: 14/12/2023
-                  </p>
-                  <p className="text-gray-700 mt-4">
-                    Một đoạn mô tả ngắn về bài viết để thu hút sự chú ý của
-                    người đọc.
-                  </p>
-                  <Link href={`/baiviet/${index + 1}`} passHref>
-                    <span className="text-primary-500 hover:underline text-sm mt-4 inline-block">
-                      Đọc thêm
-                    </span>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
+      {/* Danh sách bài viết theo dạng lưới */}
+      <SuvuContent />
 
-        {/* Phần câu hỏi thường gặp */}
-        <section className="mb-16">
+      {/* Phần câu hỏi thường gặp */}
+      {/* <section className="mb-16">
           <h2 className="text-3xl font-semibold text-primary-700 mb-8">
             Câu hỏi thường gặp
           </h2>
@@ -119,10 +58,10 @@ const SuVuPage = () => {
               </div>
             ))}
           </div>
-        </section>
+        </section> */}
 
-        {/* Phần liên hệ */}
-        <section className="bg-primary-100 p-10 rounded-lg shadow-lg text-center">
+      {/* Phần liên hệ */}
+      {/* <section className="bg-primary-100 p-10 rounded-lg shadow-lg text-center">
           <h2 className="text-3xl font-semibold text-primary-700 mb-4">
             Liên hệ với chúng tôi
           </h2>
@@ -135,8 +74,7 @@ const SuVuPage = () => {
               Liên hệ ngay
             </button>
           </Link>
-        </section>
-      </div>
+        </section> */}
     </Container>
   );
 };

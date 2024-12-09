@@ -35,22 +35,6 @@ const RecentBlogPosts = () => {
           {/* Bài viết nổi bật bên trái */}
           <div className="cursor-pointer lg:col-span-2 rounded-lg shadow-lg overflow-hidden bg-white ">
             <div className="h-full flex flex-col">
-              {/* Hình ảnh bài viết nổi bật */}
-              <div className="relative w-full h-60 overflow-hidden">
-                {/* Đặt chiều cao cố định và ẩn phần thừa */}
-                {latestPost?.image && (
-                  <div className="relative w-full h-full group">
-                    <Image
-                      src={latestPost.image}
-                      alt={latestPost.title || 'No Title'}
-                      layout="fill" // Giữ tỷ lệ ảnh phù hợp với container
-                      objectFit="cover" // Đảm bảo ảnh không bị kéo dãn
-                      className="rounded-t-lg transition-transform duration-300 ease-in-out transform group-hover:scale-110"
-                    />
-                  </div>
-                )}
-              </div>
-
               {/* Nội dung bài viết nổi bật */}
               <div className=" p-6 flex-1 flex flex-col">
                 <p className="text-gray-500 text-sm">

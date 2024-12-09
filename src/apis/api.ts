@@ -1,6 +1,6 @@
 //api/api.ts
 
-const baseURL = 'http://localhost:8000';
+const baseURL = 'http://103.20.102.30:8000/';
 
 const endpoints = {
 
@@ -16,13 +16,13 @@ const endpoints = {
     updateProfile: '/user/update-profile/',
 
     //category(thể loại)
-    categories:  '/category/',
+    categories: '/category/',
     category: '/category/:id/',
 
     // comment
     comment: '/comment/',
 
-   //blog
+    //blog
     blogs: '/blog/',
     blog: '/blog/:id/',
 
@@ -31,12 +31,12 @@ const endpoints = {
     group: '/group/:id/',
     groupMember: '/group/:id/member/',
     groupRole: '/group/:id/role/',
-    
+
     //Doc
     documents: '/document/',
     document: '/document/:id/',
 
-     //News
+    //News
     news: '/news/',
     new: '/news/:id/',
 
