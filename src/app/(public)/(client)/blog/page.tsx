@@ -2,7 +2,6 @@
 
 import Newsletter from '@/app/components/main/blog/newletter';
 import Heading from '@/app/components/design/Heading';
-import Tittle from '@/app/components/design/Tittle';
 import RecentBlogPosts from '@/app/components/main/blog/RecentBlogPosts';
 import BlogContent from '@/app/components/main/blog/BlogContent';
 

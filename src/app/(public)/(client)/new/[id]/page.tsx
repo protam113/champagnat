@@ -24,6 +24,8 @@ interface Comment {
   replies: Reply[]; // Mảng các trả lời của bình luận
 }
 
+// import NewsCommentsSection from '@/app/components/main/new/comment/CommentsSection';
+
 const Page = () => {
   const { id: blogIdParam } = useParams();
   const postId = Array.isArray(blogIdParam) ? blogIdParam[0] : blogIdParam;
@@ -263,6 +265,7 @@ const Page = () => {
           </form>
         </div>
       </div>
+      <NewsCommentsSection postId={blog.id} />
     </Container>
   );
 };

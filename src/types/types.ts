@@ -9,10 +9,65 @@ export interface StickyImageProps {
   imgUrl: string;
 }
 
+
 export interface OverlayCopyProps {
   subheading: string;
   heading: string;
 }
+export interface OverlayCopyProps {
+  subheading: string;
+  heading: string;
+}
+
+/*
+  NhaDong History Interface
+*/
+
+export interface HistoryMonasteryResponse {
+  id: string,
+  about: string,
+}
+
+
+/*
+  Posts List Interface
+*/
+
+interface Category {
+  id: number;
+  name: string;
+  file: string;
+}
+
+interface User {
+  id: string;
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone_number: string | null;
+  profile_image: string;
+}
+
+interface PostList {
+  id: string;
+  title: string;
+  description: string;
+  content: string; // Có thể cần điều chỉnh nếu cấu trúc khác
+  link: string;
+  image: string; // Chỉnh sửa để phù hợp với giá trị null trong JSON
+  categories: Category[];
+  user: User; // Sử dụng interface User đã khai báo ở trên
+  created_date: string
+}
+
+export interface FetchPostListResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: PostList[];
+}
+
 
 
 /*
@@ -197,7 +252,7 @@ Blog Detail Interface
 **/
 
 export interface BLogDetail {
-  id: number;
+  id: string;
   title: string;
   description: string;
   content: string; // Có thể cần điều chỉnh nếu cấu trúc khác

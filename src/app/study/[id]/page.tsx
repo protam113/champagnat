@@ -3,7 +3,7 @@
 import { useParams } from 'next/navigation';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
-import formatDate from '@/ultis/formatDate';
+import formatDate from '@/utils/formatDate';
 import Image from 'next/image';
 import { useDocumentDetail } from '@/hooks/document/useDocumentDetail';
 

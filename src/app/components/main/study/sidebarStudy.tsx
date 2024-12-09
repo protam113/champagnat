@@ -22,6 +22,10 @@ const SidebarStudy: React.FC = () => {
       key: '3',
       label: <Link href="/study/community">Cộng Đoàn</Link>,
     },
+    {
+      key: '4',
+      label: <Link href="/study/resetpass">Đổi mật khẩu</Link>,
+    },
   ];
 
   return (

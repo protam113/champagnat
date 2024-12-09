@@ -21,7 +21,7 @@ const LayoutPage: React.FC<PrivateLayoutProps> = ({ children }) => {
     <Layout>
       <Header />
       <SidebarStudy />
-      <Content style={{ padding: '0 48px' }} className="bg-zinc-400">
+      <Content style={{ padding: '0 48px' }}>
         <Breadcrumb />
         <div
           style={{

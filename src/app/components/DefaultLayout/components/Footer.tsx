@@ -1,20 +1,20 @@
 // src/components/Footer.tsx
-import LogoFooter from "@/assets/image/logo.svg";
-import Image from "next/image";
+import LogoFooter from '@/assets/image/logo.svg';
+import Image from 'next/image';
 
 const resources = [
-  { name: "HOOKSTER", link: "https://youtub.com/" },
-  { name: "DanhThuong", link: "https://youtub.com/" },
+  { name: 'HOOKSTER', link: 'https://youtub.com/' },
+  { name: 'DanhThuong', link: 'https://youtub.com/' },
 ];
 
 const followUs = [
-  { name: "Github", link: "https://youtub.com/" },
-  { name: "Discord", link: "https://youtub.com/" },
+  { name: 'Github', link: 'https://youtub.com/' },
+  { name: 'Discord', link: 'https://youtub.com/' },
 ];
 
 const legal = [
-  { name: "Privacy Policy", link: "#" },
-  { name: "Terms & Conditions", link: "#" },
+  { name: 'Privacy Policy', link: '#' },
+  { name: 'Terms & Conditions', link: '#' },
 ];
 
 const Footer = () => {
@@ -87,14 +87,14 @@ const Footer = () => {
       </div>
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-white py-4 px-2 shadow-md">
         <span className="text-sm text-gray-500 sm:text-center">
-          © 2024{" "}
+          &copy; {new Date().getFullYear()}
           <a
             href="https://www.facebook.com/XLR.Team"
             className="hover:underline"
           >
             HOOKSTER
-          </a>{" "}
-          &{" "}
+          </a>
+          &
           <a href="https://flowbite.com/" className="hover:underline">
             DanhThuong
           </a>

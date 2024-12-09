@@ -22,6 +22,11 @@ interface Comment {
   replies: Reply[]; // Mảng các trả lời của bình luận
 }
 
+// import { useBlogDetail } from '@/hooks/blog/useBlogDetail';
+// import Heading from '@/app/components/design/Heading';
+// import BlogCommentsSection from '@/app/components/main/blog/comment/CommentsSection';
+
+
 const Page = () => {
   const { id: blogIdParam } = useParams();
   const postId = Array.isArray(blogIdParam) ? blogIdParam[0] : blogIdParam;
@@ -287,7 +292,17 @@ const Page = () => {
           </form>
         </div>
       </div>
+<<<<<<< HEAD
     </Container>
+=======
+      <div className="lg:text-14 ">
+        <p className="text-gray-500 font-16">Nguồn:</p>
+
+        <p>{blog.link}</p>
+      </div>
+      <BlogCommentsSection postId={blog.id} />
+    </div>
+>>>>>>> d2ff31dec86df6a62e9be323157299465e6ecf58
   );
 };
 
