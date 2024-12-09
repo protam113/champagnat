@@ -16,10 +16,15 @@ export const BlogList = (currentPage: number, category: string ,refreshKey: numb
     
     const queueData = data?.results || [];
 
+    const latestPost = queueData[0];
+    const otherPosts = queueData.slice(1, 4);
+
     return { 
         queueData,
         next:data?.next,
         count: data?.count,
+        latestPost,
+        otherPosts,
         isLoading, 
         isError };
 };

@@ -14,6 +14,15 @@ export interface TextParallaxContentProps {
     heading: string;
   }
   
+  /*
+    NhaDong History Interface
+  */
+
+  export interface HistoryMonasteryResponse {
+    id:string,
+    about:string,
+}
+  
 
   /*
     Posts List Interface

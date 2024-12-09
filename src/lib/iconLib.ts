@@ -5,7 +5,7 @@ import { FaCommentDots,
     FaChurch  ,
     FaCross,
     FaExclamationTriangle,FaFolderOpen, FaUser, FaEnvelope, FaPhone, FaIdBadge, FaInfoCircle ,
-    FaArrowLeft, FaArrowRight
+    FaArrowLeft, FaArrowRight,
   } from "react-icons/fa";
 import { AiFillHeart, AiOutlineSearch } from "react-icons/ai";
 import { IoMdMenu } from "react-icons/io";

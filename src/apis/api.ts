@@ -47,6 +47,9 @@ const endpoints = {
     eventForm: '/event/:id/form/',
     eventRegister: '/event/:id/register/',
 
+
+    nhaDong: '/website/',
+
 };
 
 export { baseURL, endpoints };
