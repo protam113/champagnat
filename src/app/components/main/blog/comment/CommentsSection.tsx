@@ -86,7 +86,7 @@ const BlogCommentsSection = ({
               />
               <ReplyComment
                 postId={postId}
-                model="blog"
+                model={PostModel}
                 parent={String(comment.id)}
               />
               <hr className="my-2 border-gray-300" />

@@ -353,3 +353,27 @@ export interface NewComment {
   guest_name: string | null;
   guest_email: string | null;
 }
+
+
+/**
+ Schedule Interface
+ **/
+
+ interface Feasts {
+  id: string;
+  feast_name: string;
+  feast_type: string;
+}
+
+interface ScheduleItem {
+  id: string;
+  day: Date;
+  weekday: string;
+  feasts: Feasts[];
+}
+
+export interface ScheduleList {
+  results: ScheduleItem[]; 
+  find: any // The correct property name for the array of schedule items
+}
+

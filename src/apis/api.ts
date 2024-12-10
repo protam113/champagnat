@@ -60,6 +60,10 @@ const endpoints = {
     verifyCode: '/password/verify-code/',
 
 
+
+    //schedule
+
+    schedules: '/schedule/',
 };
 
 export { baseURL, endpoints };
