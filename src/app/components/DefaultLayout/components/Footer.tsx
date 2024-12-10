@@ -3,13 +3,16 @@ import LogoFooter from '@/assets/image/logo.svg';
 import Image from 'next/image';
 
 const resources = [
-  { name: 'HOOKSTER', link: 'https://youtub.com/' },
-  { name: 'DanhThuong', link: 'https://youtub.com/' },
+  { name: 'Giới Thiệu', link: '/hoi_dong/about_us' },
+  { name: 'Ơn Gọi', link: '/hoi_dong/on_goi' },
+  { name: 'Sứ Vụ', link: '/hoi_dong/su_vu' },
 ];
 
 const followUs = [
-  { name: 'Github', link: 'https://youtub.com/' },
-  { name: 'Discord', link: 'https://youtub.com/' },
+  { name: 'Tin Tức', link: '/new' },
+  { name: 'Bài Viết', link: '/blog' },
+  { name: 'Sự Kiện', link: '/event' },
+  { name: 'Quyên Góp', link: '/donation' },
 ];
 
 const legal = [
@@ -40,7 +43,7 @@ const Footer = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-6 md:gap-4 md:flex-grow">
             <div>
               <h2 className="mb-4 text-sm font-semibold text-white uppercase">
-                Resources
+                Về Chúng Tôi
               </h2>
               <ul className="text-white font-medium">
                 {resources.map((item, index) => (
@@ -55,7 +58,7 @@ const Footer = () => {
 
             <div>
               <h2 className="mb-4 text-sm font-semibold text-white uppercase">
-                Follow us
+                Bài Viết
               </h2>
               <ul className="text-white font-medium">
                 {followUs.map((item, index) => (
@@ -85,8 +88,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between bg-white py-4 px-2 shadow-md">
-        <span className="text-sm text-gray-500 sm:text-center">
+      <div className="flex flex-col items-center justify-center bg-white py-4 px-2 shadow-md">
+        <span className="text-sm text-gray-500 text-center">
           &copy; {new Date().getFullYear()}
           <a
             href="https://www.facebook.com/XLR.Team"
@@ -95,7 +98,10 @@ const Footer = () => {
             HOOKSTER
           </a>
           &
-          <a href="https://flowbite.com/" className="hover:underline">
+          <a
+            href="https://www.facebook.com/thuong.ledanh.9"
+            className="hover:underline"
+          >
             DanhThuong
           </a>
           . All Rights Reserved.

@@ -124,7 +124,6 @@ const Page = () => {
         </div>
       </div>
       <EventRegister eventId={postId} />
-      {/* <Comments postId={data._id}/> */}
     </div>
   );
 };

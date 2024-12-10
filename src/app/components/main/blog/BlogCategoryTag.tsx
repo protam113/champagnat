@@ -15,7 +15,11 @@ const BlogTag = ({
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   // Fetching categories
-  const { queueData, isLoading, isError } = CategoriesList(
+  const {
+    queueData,
+    isLoading: blogLoading,
+    isError,
+  } = CategoriesList(
     currentPage,
     'blog',
     0, // Sử dụng refreshKey tại đây
@@ -27,7 +31,7 @@ const BlogTag = ({
     return <div>Error fetching categories</div>;
   }
 
-  if (isLoading) {
+  if (blogLoading) {
     return <div>Loading...</div>;
   }
 
