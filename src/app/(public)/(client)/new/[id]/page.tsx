@@ -13,6 +13,7 @@ const Page = () => {
   const postId = Array.isArray(blogIdParam) ? blogIdParam[0] : blogIdParam;
 
   const { data: blog, isLoading, isError } = useNewsDetail(postId);
+  console.log('🚀 ~ Page ~ blog:', blog?.content);
 
   if (isLoading) {
     return (

@@ -7,6 +7,7 @@ const endpoints = {
     //auth
     login: '/auth/login/',
     register: '/user/register/',
+    refresh: '/auth/refresh/',
 
     //web
     web: '/website/1/',

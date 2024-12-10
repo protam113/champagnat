@@ -1,40 +1,40 @@
 // src/layout/DashboardLayout.tsx
 'use client';
-
-import React
-// , { useEffect } 
-from 'react';
-import DefaultLayout from "@/app/components/DefaultLayout";
+import DefaultLayout from '@/app/components/DefaultLayout';
 import ScrollToTopButton from '../components/button/ScrollToTopButton';
-// import { useAuth } from '@/context/authContext';
-// import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react';
+import Loading from '../components/design/Loading';
+import { useAuthStore } from '@/store/authStore';
 
 export default function DashboardLayout({
-                                            children,
-                                        }: Readonly<{
-    children: React.ReactNode;
+  children,
+}: Readonly<{
+  children: React.ReactNode;
 }>) {
-    // const { isAuthenticated, loading } = useAuth();
-    // const router = useRouter();
+  const { loading, checkAuth } = useAuthStore();
+  const [tokenChecked, setTokenChecked] = useState(false);
 
-    // useEffect(() => {
-    //     if (!loading && !isAuthenticated) {
-    //         router.push('/login'); // Điều hướng tới trang đăng nhập nếu chưa đăng nhập
-    //     }
-    // }, [isAuthenticated, loading, router]);
+  // Kiểm tra trạng thái xác thực khi mount
+  useEffect(() => {
+    checkAuth(); // Kiểm tra xác thực khi mount trang
+  }, []);
 
-    // if (loading || !isAuthenticated) return null; // Đợi xác thực xong trước khi hiển thị
+  // Cập nhật tokenChecked sau khi kiểm tra xong
+  useEffect(() => {
+    if (!loading) {
+      setTokenChecked(true); // Token đã được kiểm tra
+    }
+  }, [loading]);
 
-    /**
-         <DefaultLayout>
-                 // </DefaultLayout>
+  // Nếu đang loading, hiển thị Loading spinner
+  if (loading || !tokenChecked) {
+    return <Loading />;
+  }
 
-         **/ 
-
-    return (
-        <DefaultLayout>
-            {children}
-            <ScrollToTopButton/>
-        </DefaultLayout>
-    );
+  return (
+    <DefaultLayout>
+      {children}
+      <ScrollToTopButton />
+    </DefaultLayout>
+  );
 }

@@ -15,8 +15,8 @@ const BlogCommentsSection = ({
   postId: string;
   PostModel: string;
 }) => {
-  const [currentPage, setPage] = useState(1);
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [refreshKey] = useState(0);
 
   // Đặt object_id và model theo blogId để xác định đúng bài viết
   const object_id = postId; // Dùng blogId làm object_id
@@ -28,14 +28,7 @@ const BlogCommentsSection = ({
     refreshKey,
   });
 
-  const loadNextPage = () => {
-    setPage((prevPage) => prevPage + 1); // Increase page when loading more
-    setRefreshKey((prevKey) => prevKey + 1); // Increase refreshKey to fetch new data
-  };
-
   const renderComment = () => {
-    // Access the results array instead of directly using data
-
     if (isError) {
       return (
         <p className="text-red-500">Đã có lỗi xảy ra khi tải bình luận.</p>
@@ -55,6 +48,7 @@ const BlogCommentsSection = ({
         </div>
       );
     }
+    const totalPages = next ? currentPage + 1 : currentPage;
 
     return (
       <div className="space-y-4">
@@ -103,7 +97,7 @@ const BlogCommentsSection = ({
       {/* Load More Button */}
       <div className="mt-4 text-center">
         <button
-          onClick={loadNextPage}
+          onClick={() => setCurrentPage((prev) => prev + 1)}
           className="text-blue-500 hover:text-blue-300 text-sm px-4 py-2 rounded"
         >
           Tải Thêm
