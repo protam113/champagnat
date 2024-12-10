@@ -21,7 +21,7 @@ const ReplyCommentSection = ({
   const parent_id = parentId; // Sửa lại thành dấu "="
 
   // Gọi CommentList với các tham số cần thiết
-  const { queueData, next, isLoading, isError } = CommentList({
+  const { queueData, isLoading, isError } = CommentList({
     currentPage,
     filter: { object_id: [object_id], model: [model], parent_id: parent_id },
     refreshKey,

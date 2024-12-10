@@ -61,7 +61,7 @@ const Page = () => {
       setComments([...comments, newComment]);
       setComment('');
       setError(null);
-    } catch (error) {
+    } catch {
       setError('Có lỗi xảy ra khi gửi bình luận.');
     } finally {
       setIsCommenting(false);
@@ -93,7 +93,7 @@ const Page = () => {
       setComments(updatedComments);
       setReplyContent(''); // Reset reply content
       setError(null);
-    } catch (error) {
+    } catch {
       setError('Có lỗi xảy ra khi gửi trả lời.');
     } finally {
       setIsCommenting(false);

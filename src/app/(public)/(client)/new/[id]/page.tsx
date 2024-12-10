@@ -10,6 +10,7 @@ import Container from '@/app/components/Container/container';
 import { useState } from 'react';
 import { MdOutlineDelete } from 'react-icons/md';
 import { LucideMessageCircleReply } from 'lucide-react';
+import NewsCommentsSection from '@/app/components/main/new/comment/CommentsSection';
 
 interface Reply {
   text: string;
@@ -62,7 +63,7 @@ const Page = () => {
       setComments([...comments, newComment]);
       setComment('');
       setError(null);
-    } catch (error) {
+    } catch {
       setError('Có lỗi xảy ra khi gửi bình luận.');
     } finally {
       setIsCommenting(false);
@@ -94,7 +95,7 @@ const Page = () => {
       setComments(updatedComments);
       setReplyContent('');
       setError(null);
-    } catch (error) {
+    } catch {
       setError('Có lỗi xảy ra khi gửi trả lời.');
     } finally {
       setIsCommenting(false);

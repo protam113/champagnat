@@ -4,9 +4,9 @@ import React from 'react';
 import { Form, Input, Button, DatePicker, Upload } from 'antd';
 import { FaUser, FaPhone, FaEnvelope, FaIdCard } from 'react-icons/fa'; // React Icons
 import { UploadOutlined } from '@ant-design/icons';
-import Container from '../blog/container';
 import { useEventRegistion } from '@/hooks/event/useEventRegister';
 import dayjs from 'dayjs';
+import Container from '../../Container/container';
 
 const OnGoiRegister = ({ eventId }: { eventId: string }) => {
   const [form] = Form.useForm();

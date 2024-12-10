@@ -16,7 +16,7 @@ const BlogCommentsSection = ({ postId }: { postId: string }) => {
   const model = 'blog'; // Ví dụ: `blog` là model của bài viết
 
   // Gọi CommentList với các tham số cần thiết
-  const { queueData, next, isLoading, isError } = CommentList({
+  const { queueData, isLoading, isError } = CommentList({
     currentPage,
     filter: { object_id: [object_id], model: [model] },
     refreshKey,

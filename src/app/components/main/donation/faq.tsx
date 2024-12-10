@@ -34,7 +34,7 @@ const FAQ = () => {
     },
   ];
 
-  const toggleAnswer = (index) => {
+  const toggleAnswer = (index: any) => {
     setActiveIndex(activeIndex === index ? null : index);
   };
 

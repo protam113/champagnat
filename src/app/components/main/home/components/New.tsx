@@ -3,7 +3,6 @@
 import Image from 'next/image';
 import news from '@/assets/image/news.png';
 import CalendarCustom from './Calendar';
-import PushButton from '@/app/components/design/Head';
 
 export const News = () => {
   return (
