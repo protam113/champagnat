@@ -85,7 +85,6 @@ body {
   filter: brightness(50%); /* Điều chỉnh độ sáng: 50% sẽ làm tối hình ảnh */
 }
 
-
 /* styles/loading.module.css */
 .loading-container {
   display: flex;
@@ -115,4 +114,12 @@ body {
   50% {
     transform: scale(1.2);
   }
+}
+
+.feast-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: currentColor; /* Màu từ Tooltip hoặc Ant Design */
+  margin: auto;
 }
