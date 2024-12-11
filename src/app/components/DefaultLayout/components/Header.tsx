@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import logo from '@/assets/image/logo.svg';
+import logo from '@/assets/image 2.svg';
 import Link from 'next/link';
 import { IoIosArrowDown } from 'react-icons/io';
 import { FiMenu } from 'react-icons/fi';
@@ -128,7 +128,9 @@ export default function Navbar() {
         className="flex items-center justify-between w-full"
       >
         {/* logo */}
-        <Image src={logo} alt="logo" height={80} width={120} />
+        <h1>
+          <Image src={logo} alt="logo" height={80} width={120} />
+        </h1>
         {isSideMenuOpen && <MobileNav closeSideMenu={closeSideMenu} />}
 
         {/* Nav items */}

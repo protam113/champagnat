@@ -2,6 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css?family=Bangers|Cinzel:400,700,900|Lato:100,300,400,700,900|Lobster|Lora:400,700|Mansalva|Muli:200,300,400,600,700,800,900|Open+Sans:300,400,600,700,800|Oswald:200,300,400,500,600,700|Roboto:100,300,400,500,700,900&display=swap');
+
+/* Đặt font mặc định cho toàn bộ ứng dụng */
+/* .textDesign {
+  font-family: 'Roboto', sans-serif; /* Font mặc định cho class .textDesign 
+} */
+
+.logo-4 h3 {
+  color: #e74c3c;
+  font-weight: 300;
+  font-size: 50px;
+  line-height: 0.65;
+  font-family: 'Lobster', cursive;
+}
+
+.logo-4 p {
+  font-size: 14px;
+  margin-left: 50px;
+  color: #545454;
+  font-weight: 400;
+  text-transform: capitalize;
+  font-style: italic;
+  font-family: 'Mansalva', cursive;
+}
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -123,3 +147,25 @@ body {
   background-color: currentColor; /* Màu từ Tooltip hoặc Ant Design */
   margin: auto;
 }
+
+.scroll-container {
+  scroll-behavior: smooth;
+}
+
+/* Logo-4
+.logo-4 h3 {
+  color: #e74c3c;
+  font-weight: 300;
+  font-size: 50px;
+  line-height: 0.65;
+  font-family: 'Lobster', cursive;
+}
+.logo-4 p {
+  font-size: 14px;
+  margin-left: 50px;
+  color: #545454;
+  font-weight: 400;
+  text-transform: capitalize;
+  font-style: italic;
+  font-family: 'Mansalva', cursive;
+} */

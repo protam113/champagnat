@@ -1,9 +1,6 @@
-'use client';
-
 import React, { useState } from 'react';
-import { Calendar, Badge, Modal } from 'antd';
-import type { BadgeProps, CalendarProps } from 'antd';
-import type { Dayjs } from 'dayjs';
+import { Badge, Spin, Alert } from 'antd';
+import type { BadgeProps } from 'antd';
 import { useScheduleList } from '@/hooks/schedule/useSchedule';
 
 // Màu sắc cho các loại lễ
@@ -15,101 +12,125 @@ const feastTypeColors: Record<string, BadgeProps['status']> = {
   'Lễ nhớ tùy ý*': 'processing',
 };
 
-// Sắp xếp loại lễ theo ưu tiên
-const feastPriority = [
-  'Lễ trọng',
-  'Lễ kính',
-  'Lễ nhớ',
-  'Lễ nhớ tùy ý',
-  'Lễ nhớ tùy ý*',
-];
-
-// Hàm sắp xếp lễ
-const sortFeasts = (feasts: any[]) => {
-  return feasts.sort(
-    (a, b) =>
-      feastPriority.indexOf(a.feast_type) - feastPriority.indexOf(b.feast_type),
-  );
+// Hàm lấy dải ngày
+const getDateRange = (
+  currentDate: Date,
+  daysBefore: number,
+  daysAfter: number,
+) => {
+  const dates = [];
+  for (let i = -daysBefore; i <= daysAfter; i++) {
+    const date = new Date(currentDate);
+    date.setDate(currentDate.getDate() + i);
+    dates.push(date);
+  }
+  return dates;
 };
 
 const CatholicCalendarTable: React.FC = () => {
   const [year] = useState<string>(new Date().getFullYear().toString());
   const [refreshKey] = useState<number>(0);
-  const [selectedFeast, setSelectedFeast] = useState<any>(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const currentDate = new Date();
+  const dateRange = getDateRange(currentDate, 0, 31); // Lấy 31 ngày sau
 
   const {
-    data: queueData,
+    data: scheduleData,
     isLoading,
     isError,
   } = useScheduleList({ year: year }, refreshKey);
 
-  // Hiển thị lễ theo ngày
-  const dateCellRender = (value: Dayjs) => {
-    const currentDate = value.format('YYYY-MM-DD');
-    const dayData = queueData?.find((item: any) => item.day === currentDate);
+  const getFeastsByDate = (date: Date) => {
+    const formattedDate = date.toISOString().split('T')[0];
+    const feasts: any[] = [];
+    if (scheduleData && Array.isArray(scheduleData)) {
+      for (let i = 0; i < scheduleData.length; i++) {
+        if (scheduleData[i].day === formattedDate) {
+          feasts.push(...scheduleData[i].feasts); // Lấy tất cả lễ trong ngày
+        }
+      }
+    }
+    return feasts;
+  };
 
-    if (!dayData || !dayData.feasts || dayData.feasts.length === 0) return null;
-
-    const sortedFeasts = sortFeasts(dayData.feasts);
-
+  // Hiển thị khi dữ liệu đang tải
+  if (isLoading) {
     return (
-      <ul className="events">
-        {sortedFeasts.map((feast: any) => (
-          <li
-            key={feast.id}
-            onClick={() => {
-              setSelectedFeast(feast); // Gán dữ liệu lễ vào trạng thái
-              setIsModalVisible(true); // Mở modal
-            }}
-            style={{ cursor: 'pointer' }}
-          >
-            <Badge
-              status={feastTypeColors[feast.feast_type]}
-              text={feast.feast_name}
-            />
-          </li>
-        ))}
-      </ul>
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <Spin tip="Đang tải lịch..."></Spin>
+      </div>
     );
-  };
+  }
 
-  const cellRender: CalendarProps<Dayjs>['cellRender'] = (current, info) => {
-    if (info.type === 'date') return dateCellRender(current);
-    return info.originNode;
-  };
+  // Hiển thị khi có lỗi
+  if (isError) {
+    return (
+      <div style={{ textAlign: 'center', marginTop: '20px' }}>
+        <Alert message="Lỗi khi tải lịch" type="error" />
+      </div>
+    );
+  }
 
   return (
-    <div>
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : isError ? (
-        <p>Error loading data</p>
-      ) : (
-        <Calendar cellRender={cellRender} />
-      )}
+    <div
+      style={{
+        maxHeight: '500px',
+        overflowY: 'auto',
+        padding: '8px',
+        border: '1px solid #ddd',
+        borderRadius: '4px',
+      }}
+    >
+      {dateRange.map((date, index) => {
+        const feasts = getFeastsByDate(date);
+        const isToday = date.toDateString() === currentDate.toDateString();
 
-      {/* Modal hiển thị thông tin lễ */}
-      <Modal
-        title="Thông tin lễ"
-        visible={isModalVisible}
-        onCancel={() => setIsModalVisible(false)} // Đóng modal
-        footer={null}
-      >
-        {selectedFeast && (
-          <div>
-            <p>
-              <strong>Tên lễ:</strong> {selectedFeast.feast_name}
-            </p>
-            <p>
-              <strong>Loại lễ:</strong> {selectedFeast.feast_type}
-            </p>
-            <p>
-              <strong>Mô tả:</strong> {selectedFeast.description || 'Không có'}
-            </p>
+        return (
+          <div key={index} style={{ marginBottom: '16px' }}>
+            <div
+              style={{
+                fontSize: '16px',
+                backgroundColor: isToday ? '#e6f7ff' : 'transparent',
+                padding: '8px',
+                borderRadius: '4px',
+                border: isToday ? '1px solid #1890ff' : 'none',
+              }}
+            >
+              <strong>
+                {date.toLocaleDateString('vi-VN', {
+                  weekday: 'long',
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </strong>
+            </div>
+            <ul className="events">
+              {feasts.length > 0 ? (
+                feasts.map((feast: any) => (
+                  <li
+                    key={feast.id}
+                    style={{
+                      cursor: 'pointer',
+                      fontSize: '16px',
+                    }}
+                    onClick={() => {
+                      console.log(feast); // Thay bằng modal nếu cần
+                    }}
+                  >
+                    <Badge
+                      status={feastTypeColors[feast.feast_type]}
+                      text={feast.feast_name}
+                    />
+                  </li>
+                ))
+              ) : (
+                <li>Không có lễ</li>
+              )}
+            </ul>
+            {index < dateRange.length - 1 && <hr />}
           </div>
-        )}
-      </Modal>
+        );
+      })}
     </div>
   );
 };
