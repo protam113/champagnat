@@ -16,6 +16,7 @@ import { useAuth } from '@/context/authContext';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import ProfileDrawer from '@/app/components/drawer/ProfileDrawer';
+import Loading from '../../design/Loading';
 
 type NavItem = {
   label: string | undefined; // Allow undefined
@@ -36,8 +37,7 @@ export const TopHeader = () => {
   );
 };
 
-export const Dropdown_image = () => {
-  const { userInfo } = useUser() || {}; // Provide a default empty object if useUser returns null
+export const Dropdown_image = ({ userInfo }: { userInfo: any }) => {
   const { logout } = useAuth();
   const [open, setOpen] = useState(false);
 
@@ -117,7 +117,7 @@ export default function Navbar() {
 
   if (!isMounted) {
     // Render nothing on the server to prevent hydration issues
-    return null;
+    return <Loading />;
   }
 
   return (
@@ -171,7 +171,7 @@ export default function Navbar() {
         {/* right side data */}
         <section className="hidden md:flex items-center gap-8">
           {userInfo ? (
-            <Dropdown_image /> // Show dropdown if user is logged in
+            <Dropdown_image userInfo={userInfo} /> // Show dropdown if user is logged in
           ) : (
             <Link href="/login">
               <button className="h-fit rounded-xl bg-primary-400 px-4 py-2 text-white font-bold transition-colors duration-300 ease-in-out hover:bg-yellow-500">
