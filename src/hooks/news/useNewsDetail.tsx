@@ -12,6 +12,9 @@ const fetchBlogDetail = async (
   token?: string, // Token là tùy chọn
 ): Promise<BLogDetail> => {
   try {
+    if (!endpoints.new) {
+      throw null;
+    }
     // Gửi request với token nếu có, không thì bỏ qua
     const response = await handleAPI(
       `${endpoints.new.replace(':id', postId)}`,

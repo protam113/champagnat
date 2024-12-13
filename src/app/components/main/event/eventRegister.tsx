@@ -3,8 +3,8 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 import { FaUser, FaPhone, FaEnvelope, FaIdCard } from 'react-icons/fa'; // React Icons
-import Container from '../blog/container';
 import { useEventRegistion } from '@/hooks/event/useEventRegister';
+import Container from '../../Container/container';
 
 const EventRegister = ({ eventId }: { eventId: string }) => {
   const [form] = Form.useForm();
@@ -20,12 +20,9 @@ const EventRegister = ({ eventId }: { eventId: string }) => {
 
   return (
     <Container>
-      <div className="mt-12 p-6 bg-primary-500 text-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold">Đăng ký nhận bản tin</h2>
-        <p className="mt-4 text-sm">
-          Nhận thông báo về các bài viết mới nhất và cập nhật blog!
-        </p>
-        <div className="mt-4 flex">
+      <div className="mt-12 p-8 bg-primary-500  text-white rounded-lg  max-w-xl mx-auto">
+        <h2 className="text-24 font-bold text-center">Đăng Ký Sự Kiện</h2>
+        <div className="mt-6 text-white">
           <Form
             name="event-register"
             onFinish={onFinish}
@@ -34,29 +31,29 @@ const EventRegister = ({ eventId }: { eventId: string }) => {
             form={form}
           >
             <Form.Item
-              label="Họ và tên"
+              label={<span className="text-white">Họ và tên</span>}
               name="first_name"
               rules={[{ required: true, message: 'Vui lòng nhập họ và tên!' }]}
             >
               <Input
-                prefix={<FaUser className="text-gray-500 mr-2" />}
+                prefix={<FaUser className="text-gray-400 mr-3" />}
                 placeholder="Nhập họ và tên"
-                className="border-gray-300 rounded-md"
+                className="border-gray-300 rounded-md p-3"
               />
             </Form.Item>
             <Form.Item
-              label="Tên"
+              label={<span className="text-white">Tên</span>}
               name="last_name"
               rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
             >
               <Input
-                prefix={<FaIdCard className="text-gray-500 mr-2" />}
+                prefix={<FaIdCard className="text-gray-400 mr-3" />}
                 placeholder="Nhập tên"
-                className="border-gray-300 rounded-md"
+                className="border-gray-300 rounded-md p-3"
               />
             </Form.Item>
             <Form.Item
-              label="Số điện thoại"
+              label={<span className="text-white">Số điện thoại</span>}
               name="phone_number"
               rules={[
                 { required: true, message: 'Vui lòng nhập số điện thoại!' },
@@ -64,14 +61,14 @@ const EventRegister = ({ eventId }: { eventId: string }) => {
               ]}
             >
               <Input
-                prefix={<FaPhone className="text-gray-500 mr-2" />}
+                prefix={<FaPhone className="text-gray-400 mr-3" />}
                 placeholder="Nhập số điện thoại"
-                className="border-gray-300 rounded-md"
+                className="border-gray-300 rounded-md p-3"
               />
             </Form.Item>
 
             <Form.Item
-              label="Email"
+              label={<span className="text-white">Email</span>}
               name="email"
               rules={[
                 { required: true, message: 'Vui lòng nhập email!' },
@@ -79,9 +76,9 @@ const EventRegister = ({ eventId }: { eventId: string }) => {
               ]}
             >
               <Input
-                prefix={<FaEnvelope className="text-gray-500 mr-2" />}
+                prefix={<FaEnvelope className="text-gray-400 mr-3" />}
                 placeholder="Nhập email"
-                className="border-gray-300 rounded-md"
+                className="border-gray-300 rounded-md p-3"
               />
             </Form.Item>
 
@@ -89,7 +86,7 @@ const EventRegister = ({ eventId }: { eventId: string }) => {
               <Button
                 type="primary"
                 htmlType="submit"
-                className="w-full bg-blue-500 hover:bg-blue-600"
+                className="w-m bg-blue-600 hover:bg-blue-700 transition-all duration-300 p-3 rounded-md text-white font-semibold"
               >
                 Đăng Ký
               </Button>

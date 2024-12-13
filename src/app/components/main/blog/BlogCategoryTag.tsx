@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Flex, Tag } from 'antd';
 import { CategoriesList } from '@/lib/categoriesList';
+import { ClipLoader } from 'react-spinners';
 
 const BlogTag = ({
   onFilterChange,
@@ -15,11 +15,7 @@ const BlogTag = ({
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   // Fetching categories
-  const {
-    queueData,
-    isLoading: blogLoading,
-    isError,
-  } = CategoriesList(
+  const { queueData, isLoading, isError } = CategoriesList(
     currentPage,
     'blog',
     0, // Sử dụng refreshKey tại đây
@@ -31,46 +27,43 @@ const BlogTag = ({
     return <div>Error fetching categories</div>;
   }
 
-  if (blogLoading) {
-    return <div>Loading...</div>;
-  }
+  if (isLoading)
+    return (
+      <div>
+        <div className="text-center">
+          <ClipLoader size="20" loading={isLoading} />
+        </div>
+      </div>
+    );
 
   const handleCategoryChange = (categoryId: string) => {
-    // If the selected category is clicked again, unselect it
     const newSelectedCategory =
       selectedCategory === categoryId ? null : categoryId;
     setSelectedCategory(newSelectedCategory);
 
-    // Trigger filter change with the selected category
     onFilterChange(newSelectedCategory ? [newSelectedCategory] : []);
-
-    // If no category is selected, trigger a refresh
     if (!newSelectedCategory) {
       setRefreshKey((prev) => prev + 1);
     }
   };
 
   return (
-    <Flex gap="4px 0" wrap>
+    <div className="flex flex-wrap gap-2 ">
       {queueData?.map((category) => (
-        <Tag
+        <div
           key={category.id}
-          color={selectedCategory === category.id ? 'blue' : ''}
-          style={{
-            color: selectedCategory === category.id ? 'white' : '#142857',
-            backgroundColor:
-              selectedCategory === category.id ? 'blue' : 'white',
-            border: '1px solid #142857',
-            fontSize: '16px',
-            padding: '8px 16px',
-            cursor: 'pointer',
-          }}
+          className={` py-2 px-4 rounded-lg cursor-pointer border border-[#142857] ${
+            selectedCategory === category.id
+              ? 'bg-primary-500 text-white'
+              : 'bg-white text-[#142857]'
+          } transition-all duration-300 ease-in-out hover:bg-[#142857] hover:text-white 
+          sm:text-12 md:text-14 lg:text-16`} // responsive text size
           onClick={() => handleCategoryChange(category.id)}
         >
           {category.name}
-        </Tag>
+        </div>
       ))}
-    </Flex>
+    </div>
   );
 };
 

@@ -12,6 +12,9 @@ const fetchEventDetail = async (
   token?: string, // Token là tùy chọn
 ): Promise<EventList> => {
   try {
+    if (!endpoints.event) {
+      throw null;
+    }
     // Gửi request với token nếu có, không thì bỏ qua
     const response = await handleAPI(
       `${endpoints.event.replace(':id', postId)}`,

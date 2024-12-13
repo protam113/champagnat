@@ -6,7 +6,7 @@ import formatDate from '@/utils/formatDate';
 import { CommentList } from '@/lib/commentList';
 import { FaCommentDots } from '@/lib/iconLib';
 
-const NewsReplyCommentSection = ({
+const ReplyCommentSection = ({
   postId,
   parentId,
 }: {
@@ -17,11 +17,11 @@ const NewsReplyCommentSection = ({
   const [refreshKey, setRefreshKey] = useState(0);
 
   const object_id = postId;
-  const model = 'news';
+  const model = 'blog';
   const parent_id = parentId; // Sửa lại thành dấu "="
 
   // Gọi CommentList với các tham số cần thiết
-  const { queueData, next, isLoading, isError } = CommentList({
+  const { queueData, isLoading, isError } = CommentList({
     currentPage,
     filter: { object_id: [object_id], model: [model], parent_id: parent_id },
     refreshKey,
@@ -91,4 +91,4 @@ const NewsReplyCommentSection = ({
   );
 };
 
-export default NewsReplyCommentSection;
+export default ReplyCommentSection;

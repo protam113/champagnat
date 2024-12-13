@@ -6,6 +6,8 @@ import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'; // Thêm style cho slideshow
 import { FaArrowLeft, FaArrowRight, FaLongArrowAltRight } from 'react-icons/fa';
 import { NewsList } from '@/lib/newList';
+import { Spin } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 
 // Dữ liệu cho phần tin tức
 
@@ -40,16 +42,12 @@ const Hero = () => {
 
   // Hiển thị khi đang tải
   if (isLoading) {
-    return <div className="text-center">Đang tải dữ liệu...</div>;
+    return <Spin indicator={<LoadingOutlined spin />} />;
   }
 
   // Hiển thị khi có lỗi
   if (isError) {
-    return (
-      <div className="text-center">
-        Không thể tải dữ liệu. Vui lòng thử lại.
-      </div>
-    );
+    return null;
   }
 
   return (

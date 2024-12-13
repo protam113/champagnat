@@ -12,6 +12,7 @@ type AuthState = {
   getToken: () => string | null;
   checkAuth: () => void;
   refreshLogin: () => Promise<void>;
+  scheduleTokenCheck: () => void; // Thêm scheduleTokenCheck vào đây
 };
 
 // Persist options for AuthState
@@ -19,7 +20,7 @@ type AuthPersist = PersistOptions<AuthState>;
 
 export const useAuthStore = create<AuthState>()(
   persist<AuthState>(
-    (set) => ({
+    (set, get) => ({
       isAuthenticated: false,
       token: null, // Thêm token vào trạng thái ban đầu
       loading: false,
@@ -77,7 +78,6 @@ export const useAuthStore = create<AuthState>()(
       },
       refreshLogin: async (): Promise<void> => {
         try {
-          // Lấy refresh token từ cookie
           const refreshToken = document.cookie
             .split('; ')
             .find((row) => row.startsWith('refresh='))
@@ -87,11 +87,9 @@ export const useAuthStore = create<AuthState>()(
             throw new Error('No refresh token found');
           }
 
-          // Chuẩn bị FormData
           const formData = new FormData();
           formData.append('refresh', refreshToken);
 
-          // Gửi yêu cầu làm mới token
           const response = await fetch(`${baseURL}${endpoints.refresh}`, {
             method: 'POST',
             body: formData,
@@ -101,21 +99,40 @@ export const useAuthStore = create<AuthState>()(
             throw new Error('Failed to refresh token');
           }
 
-          // Lấy dữ liệu phản hồi
           const data = await response.json();
 
           if (typeof window !== 'undefined') {
-            // Lưu access token mới vào localStorage
             localStorage.setItem('token', data.access);
           }
 
-          // Cập nhật trạng thái trong store
           set({ token: data.access, isAuthenticated: true });
+          get().scheduleTokenCheck(); // Lập lại timer sau khi làm mới token
         } catch (error) {
           console.error('Refresh login error:', error);
-          // Đặt lại trạng thái nếu làm mới thất bại
           set({ isAuthenticated: false, token: null });
-          throw error;
+          get().logout(); // Đăng xuất nếu làm mới thất bại
+        }
+      },
+      scheduleTokenCheck: () => {
+        const expires = Number(localStorage.getItem('expires'));
+        const currentTime = Math.floor(Date.now() / 1000); // Lấy thời gian hiện tại
+        const remainingTime = expires - currentTime;
+
+        if (remainingTime > 0) {
+          const refreshTime = remainingTime * 0.75 * 1000; // 3/4 thời gian còn lại
+
+          setTimeout(async () => {
+            try {
+              await get().refreshLogin(); // Gọi refreshLogin khi đến thời gian làm mới
+            } catch {
+              get().logout(); // Đăng xuất nếu không thể làm mới
+            }
+          }, refreshTime);
+
+          // Đăng xuất nếu token hết hạn
+          setTimeout(() => {
+            get().logout();
+          }, remainingTime * 1000);
         }
       },
     }),

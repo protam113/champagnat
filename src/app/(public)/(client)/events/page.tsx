@@ -2,14 +2,15 @@
 
 import React, { useState } from 'react';
 import Heading from '@/app/components/design/Heading';
-import HeroSectionTextHover from '@/app/components/animate/hero/hero-section-text-hover';
-import InteractiveGrid from '@/app/components/animate/background/interactive-grid';
+// import HeroSectionTextHover from '@/app/components/animate/hero/hero-section-text-hover';
+// import InteractiveGrid from '@/app/components/animate/background/interactive-grid';
 import CarouselHero from '@/app/components/animate/hero/carousel';
 import { EventList } from '@/lib/eventList';
 import Tittle from '@/app/components/design/Tittle';
 import EventProb from '@/app/components/main/event/eventPost';
 import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
+import Container from '@/app/components/Container/container';
 
 const Page = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -30,7 +31,7 @@ const Page = () => {
   const totalPages = next ? currentPage + 1 : currentPage;
 
   return (
-    <div>
+    <Container>
       <Heading name="Event" />
       <CarouselHero
         events={event.map((item) => ({ id: item.id, image: item.image || '' }))}
@@ -78,10 +79,10 @@ const Page = () => {
           </button>
         </div>
       </div>
-      <HeroSectionTextHover />
+      {/* <HeroSectionTextHover /> */}
 
-      <InteractiveGrid>
-        {/* Nội dung hoàn toàn mới */}
+      {/* <InteractiveGrid>
+
         <div className="text-center text-white">
           <h2 className="text-3xl font-semibold">
             Khám Phá Không Gian Sáng Tạo
@@ -94,8 +95,8 @@ const Page = () => {
             Bắt Đầu Hành Trình
           </button>
         </div>
-      </InteractiveGrid>
-    </div>
+      </InteractiveGrid> */}
+    </Container>
   );
 };
 

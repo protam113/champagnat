@@ -1,24 +1,22 @@
-import Image from "next/image";
-import Link from "next/link";
-import React from "react";
-import money from "@/assets/image/banner.png";
-import Heading from "../../design/Heading";
-import Breadcrumb from "../../design/BreackCumb";
+import Image from 'next/image';
+import React from 'react';
+import money from '@/assets/image/banner.png';
+import Heading from '../../design/Heading';
+
 const Intro = () => {
   return (
     <div>
       <div className="mb-16">
         <div className="text-center">
           <Heading name="Quyên góp cho những mục tiêu tốt đẹp" />
-          <Breadcrumb />
         </div>
 
         {/* Văn bản mô tả thêm về cảm hứng và ý nghĩa quyên góp */}
         <div className="pt-10 space-y-6 text-lg text-gray-700 max-w-3xl mx-auto">
           <p className="transition-all duration-300 transform hover:scale-105">
-            "Mỗi hành động của bạn là một phần tạo dựng nên niềm hy vọng, một
-            câu chuyện mới bắt đầu, và một bước đi vững chắc trên con đường thay
-            đổi thế giới."
+            &#34;Mỗi hành động của bạn là một phần tạo dựng nên niềm hy vọng,
+            một câu chuyện mới bắt đầu, và một bước đi vững chắc trên con đường
+            thay đổi thế giới. &#34;
           </p>
           <p className="transition-all duration-300 transform hover:scale-105">
             Tổ chức của chúng tôi luôn nỗ lực hỗ trợ cộng đồng gặp khó khăn, từ
@@ -35,7 +33,7 @@ const Intro = () => {
 
         {/* Thêm phần hình ảnh động hoặc minh họa động */}
         <div className="flex justify-center mt-8">
-          <div className="relative group">
+          <div className="relative group rounded-lg">
             <Image
               src={money} // Đảm bảo chọn hình ảnh phù hợp
               alt="Quyên góp"
@@ -43,8 +41,8 @@ const Intro = () => {
               width={800}
               height={400}
             />
-            <div className="absolute inset-0 bg-black opacity-50 group-hover:opacity-0 transition-all duration-300"></div>
-            <div className="absolute bottom-5 left-5 text-white font-semibold text-lg transition-all duration-300 transform group-hover:translate-y-4">
+            <div className="absolute rounded-lg inset-0 bg-black opacity-50 group-hover:opacity-0 transition-all duration-300"></div>
+            <div className="absolute bottom-5 left-5 text-white font-semibold text-lg transition-all duration-300 transform group-hover:translate-y-4 rounded-lg">
               Cùng Bạn Thực Hiện Những Điều Tốt Đẹp
             </div>
           </div>

@@ -1,16 +1,55 @@
 'use client'; // Ensures this is a client component
 
-import React from 'react';
-import { Form, Input, Button, DatePicker, Upload } from 'antd';
+import React, { useState } from 'react';
+import {
+  Form,
+  Input,
+  Button,
+  DatePicker,
+  Upload,
+  Image,
+  UploadFile,
+  UploadProps,
+} from 'antd';
 import { FaUser, FaPhone, FaEnvelope, FaIdCard } from 'react-icons/fa'; // React Icons
-import { UploadOutlined } from '@ant-design/icons';
-import Container from '../blog/container';
 import { useEventRegistion } from '@/hooks/event/useEventRegister';
 import dayjs from 'dayjs';
+import Container from '../../Container/container';
+import { RcFile } from 'antd/es/upload';
+import { PiPlusDuotone } from 'react-icons/pi';
 
-const OnGoiRegister = ({ eventId }: { eventId: string }) => {
+const OnGoiRegister = ({ ongoiId }: { ongoiId: string }) => {
   const [form] = Form.useForm();
-  const { mutate } = useEventRegistion(eventId);
+  const { mutate } = useEventRegistion(ongoiId);
+  const [previewImage, setPreviewImage] = useState<string>('');
+  const [previewOpen, setPreviewOpen] = useState<boolean>(false);
+  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [blogData, setBlogData] = useState<any>({}); // Định nghĩa blogData để lưu trữ dữ liệu
+  const handleChange: UploadProps['onChange'] = ({ fileList }) => {
+    setFileList(fileList);
+    setBlogData({
+      ...blogData,
+      image: fileList.map((file) => file.originFileObj as RcFile), // Lưu mảng file
+    });
+  };
+
+  const handlePreview = async (file: UploadFile) => {
+    if (!file.url && !file.preview) {
+      const reader = new FileReader();
+      reader.onload = () => setPreviewImage(reader.result as string);
+      reader.readAsDataURL(file.originFileObj as RcFile);
+    } else {
+      setPreviewImage(file.url || file.preview || '');
+    }
+    setPreviewOpen(true);
+  };
+
+  const uploadButton = (
+    <div>
+      <PiPlusDuotone />
+      <div style={{ marginTop: 8 }}>Upload</div>
+    </div>
+  );
 
   const onFinish = (values: any) => {
     const formattedValues = {
@@ -57,10 +96,28 @@ const OnGoiRegister = ({ eventId }: { eventId: string }) => {
             layout="vertical"
             form={form}
           >
-            <Form.Item label="Hình ảnh" name="image" valuePropName="fileList">
-              <Upload listType="picture" beforeUpload={() => false}>
-                <Button icon={<UploadOutlined />}>Tải lên</Button>
+            <Form.Item label="Hình ảnh chính">
+              <Upload
+                listType="picture-card"
+                fileList={fileList}
+                onPreview={handlePreview}
+                onChange={handleChange}
+                beforeUpload={() => false} // Ngăn tự động tải lên
+              >
+                {fileList.length >= 1 ? null : uploadButton}
               </Upload>
+
+              {previewImage && (
+                <Image
+                  alt="Hình ảnh xem trước bài viết"
+                  wrapperStyle={{ display: 'none' }}
+                  preview={{
+                    visible: previewOpen,
+                    onVisibleChange: (visible) => setPreviewOpen(visible),
+                  }}
+                  src={previewImage}
+                />
+              )}
             </Form.Item>
             <Form.Item
               label="Họ và tên đệm"

@@ -1,70 +1,68 @@
 //api/api.ts
 
-const baseURL = 'http://localhost:8000';
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const endpoints = {
 
     //auth
-    login: '/auth/login/',
-    register: '/user/register/',
-    refresh: '/auth/refresh/',
-
-    //web
-    web: '/website/1/',
+    login: process.env.NEXT_PUBLIC_LOGIN,
+    register: process.env.NEXT_PUBLIC_REGISTER,
+    refresh: process.env.NEXT_PUBLIC_REFRESH,
+    changePassword: process.env.NEXT_PUBLIC_CHANGE_PASSWORD,
+    codePassword: process.env.NEXT_PUBLIC_RESET_PASSWORD,
+    verifyCode: process.env.NEXT_PUBLIC_VERIFY_CODE,
 
     //current user lgin
-    currentUser: '/user/detail/',
-    updateProfile: '/user/update-profile/',
+    currentUser: process.env.NEXT_PUBLIC_CURRENT_USER,
+    updateProfile: process.env.NEXT_PUBLIC_UPDATE_PROFILE,
+
+     // nha dong
+     nhaDong: process.env.NEXT_PUBLIC_NHA_DONG,
 
     //category(thể loại)
-    categories:  '/category/',
-    category: '/category/:id/',
+    categories: process.env.NEXT_PUBLIC_CATEGORIES,
+    category: process.env.NEXT_PUBLIC_CATEGORY,
 
     // comment
-    comment: '/comment/',
+    comment: process.env.NEXT_PUBLIC_COMMENT,
 
-   //blog
-    blogs: '/blog/',
-    blog: '/blog/:id/',
+    //blog
+    blogs: process.env.NEXT_PUBLIC_BLOGS,
+    blog: process.env.NEXT_PUBLIC_BLOG,
 
     //group
-    groups: '/group/',
-    group: '/group/:id/',
-    groupMember: '/group/:id/member/',
-    groupRole: '/group/:id/role/',
-    
-    //Doc
-    documents: '/document/',
-    document: '/document/:id/',
+    groups: process.env.NEXT_PUBLIC_BASE_URL,
+    group: process.env.NEXT_PUBLIC_BASE_URL,
+    groupMember: process.env.NEXT_PUBLIC_BASE_URL,
+    groupRole: process.env.NEXT_PUBLIC_BASE_URL,
 
-     //News
-    news: '/news/',
-    new: '/news/:id/',
+    //Doc
+    documents: process.env.NEXT_PUBLIC_DOCUMENTS,
+    document: process.env.NEXT_PUBLIC_DOCUMENT,
+
+    //News
+    news:  process.env.NEXT_PUBLIC_NEWS,
+    new:  process.env.NEXT_PUBLIC_NEW,
 
     //event
 
-    events: '/event/',
-    event: '/event/:id/',
-    eventForm: '/event/:id/form/',
-    eventRegister: '/event/:id/register/',
-
-
-    nhaDong: '/website/',
+    events: process.env.NEXT_PUBLIC_EVENTS,
+    event: process.env.NEXT_PUBLIC_EVENT,
+    eventForm: process.env.NEXT_PUBLIC_EVENT_FORM,
+    eventRegister: process.env.NEXT_PUBLIC_EVENT_REGISTER,
 
     //mission
 
-    missions: '/mission/',
-    mission: '/mission/:id/',
+    missions: process.env.NEXT_PUBLIC_MISSIONS,
+    mission:process.env.NEXT_PUBLIC_MISSION,
 
-    changePassword: '/password/change-password/',
-    codePassword: '/password/reset-password/',
-    verifyCode: '/password/verify-code/',
-
-
-
+    // donation
+    donations:process.env.NEXT_PUBLIC_DONATIONS,
+    donation:process.env.NEXT_PUBLIC_DONATE,
+    
     //schedule
 
-    schedules: '/schedule/',
+    schedules: process.env.NEXT_PUBLIC_SCHEDULES,
 };
 
 export { baseURL, endpoints };

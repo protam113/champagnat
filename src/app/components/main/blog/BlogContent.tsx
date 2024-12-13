@@ -7,6 +7,8 @@ import Tittle from '@/app/components/design/Tittle';
 import formatDate from '@/utils/formatDate';
 import BlogTag from '@/app/components/main/blog/BlogCategoryTag';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
+import Container from '../../Container/container';
+import { ClipLoader } from 'react-spinners';
 
 const BlogContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -24,7 +26,14 @@ const BlogContent = () => {
   } = BlogList(currentPage, categoryQuery, refreshKey);
 
   // Kiểm tra dữ liệu
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <div>
+        <div className="text-center">
+          <ClipLoader size="20" loading={isLoading} />
+        </div>
+      </div>
+    );
   if (isError) return <p>Error loading news...</p>;
 
   // Cập nhật thể loại được chọn
@@ -37,15 +46,15 @@ const BlogContent = () => {
 
   return (
     <main>
-      <div className="max-w-6xl mx-auto px-4 py-8">
+      <Container>
         <Tittle name="TẤT CẢ BÀI VIẾT" />
-        <div className="mt-4 mb-4">
+        <div className="mt-6 mb-4">
           <BlogTag
             onFilterChange={handleFilterChange}
             setRefreshKey={setRefreshKey}
           />
         </div>
-        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogs.map((blog, index) => (
             <BlogProb
               key={index}
@@ -73,7 +82,7 @@ const BlogContent = () => {
             <button
               key={i}
               onClick={() => setCurrentPage(i + 1)}
-              className={`w-6 h-6 text-10 rounded-full hover:bg-gray-300 ${currentPage === i + 1 ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+              className={`w-6 h-6 text-10 rounded-full hover:bg-gray-300 ${currentPage === i + 1 ? 'bg-primary-500 text-white' : 'bg-gray-200'}`}
             >
               {i + 1}
             </button>
@@ -88,7 +97,7 @@ const BlogContent = () => {
             <FaArrowRight />
           </button>
         </div>
-      </div>
+      </Container>
     </main>
   );
 };

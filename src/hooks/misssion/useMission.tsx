@@ -5,13 +5,13 @@ import { handleAPI } from '@/apis/axiosClient';
 import { endpoints } from '@/apis/api';
 import { useAuth } from '@/context/authContext';
 import { useEffect, useState } from 'react';
-import { FetchPostListResponse, Filters } from '@/types/types';
+import { FetchMissionListResponse, Filters } from '@/types/types';
 
 const fetchMissionlist = async (
   filters: Filters,
   pageParam: number = 1,
   token?: string,
-): Promise<FetchPostListResponse> => {
+): Promise<FetchMissionListResponse> => {
   try {
     // Filter out undefined or empty values from filters
     const validFilters = Object.fromEntries(
@@ -58,7 +58,7 @@ const useMissionList = (
     fetchToken();
   }, [getToken]);
 
-  return useQuery<FetchPostListResponse, Error>({
+  return useQuery<FetchMissionListResponse, Error>({
     queryKey: ['missionList', filters, page, token, refreshKey], // Thêm refreshKey vào queryKey
     queryFn: async () => {
       return fetchMissionlist(filters, page, token || undefined);

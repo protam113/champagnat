@@ -5,27 +5,40 @@ import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
 import { useBlogDetail } from '@/hooks/blog/useBlogDetail';
-import Heading from '@/app/components/design/Heading';
 import BlogCommentsSection from '@/app/components/main/blog/comment/CommentsSection';
 import Comment from '@/app/components/main/blog/comment/Comment';
+import Container from '@/app/components/Container/container';
+import Image from 'next/image';
+import Link from 'next/link';
+import { BlogList } from '@/lib/blogList';
+import Tittle from '@/app/components/design/Tittle';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();
   const postId = Array.isArray(blogIdParam) ? blogIdParam[0] : blogIdParam;
 
   const { data: blog, isLoading, isError } = useBlogDetail(postId);
-  console.log('🚀 ~ Page ~ blog:', blog);
-  console.log('Blog content field:', blog?.content);
+  const { queueData: blogs } = BlogList(1, '', 0);
+
+  const relatedBlogs = blogs.filter((relatedPost) => {
+    // Kiểm tra xem có danh mục trùng với bài viết hiện tại không
+    // Đồng thời kiểm tra bài viết không phải là bài hiện tại (so sánh ID)
+    return (
+      relatedPost.id !== blog?.id &&
+      relatedPost.categories.some((relatedCategory) =>
+        blog?.categories.some((category) => category.id === relatedCategory.id),
+      )
+    );
+  });
 
   if (isLoading) {
     return (
-      <>
+      <div className="flex items-center justify-center min-h-screen">
         <Spin indicator={<LoadingOutlined style={{ fontSize: 48 }} spin />} />
-      </>
+      </div>
     );
   }
 
-  // Nếu có lỗi khi lấy dữ liệu, hiển thị thông báo lỗi
   if (isError) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -34,68 +47,100 @@ const Page = () => {
     );
   }
 
-  // Nếu không tìm thấy blog, hiển thị thông báo
   if (!blog) {
     return <p className="text-gray-500">Không tìm thấy bài viết nào.</p>;
   }
 
   return (
-    <div className="flex flex-col gap-8">
-      {/* detail */}
-      <div className="flex gap-8">
-        <div className="lg:w-3/5 flex flex-col gap-8">
-          <h1 className="text-xl md:text-3xl xl:text-4xl 2xl:text-5xl font-semibold">
-            {blog.title}
-          </h1>
-          <div className="flex items-center gap-2 text-gray-400 text-sm">
-            <span>Written by</span>
-            <p className="text-blue-800">{blog.user.username}</p>
-            <span>on</span>
-            <p className="text-blue-800">
-              {blog.categories?.map((category) => category.name).join(', ')}
-            </p>
-            <span>{formatDate(blog.created_date)}</span>
+    <Container>
+      <div className="grid grid-cols-12 gap-8">
+        {/* Bài viết chi tiết (bên trái) */}
+        <div className="col-span-12 lg:col-span-8">
+          <div className="flex flex-col gap-4">
+            <h1 className="text-24 font-semibold text-center">{blog.title}</h1>
+
+            <div className="text-center text-gray-500 text-sm">
+              <span className="text-blue-800 mr-4 text-16">
+                {blog.categories?.map((category) => category.name).join(', ')}
+              </span>
+              <span>{formatDate(blog.created_date)}</span>
+            </div>
+
+            <div className="text-center mt-2 text-16">
+              <p>{blog.description}</p>
+            </div>
+
+            {/* Image */}
+            {blog.image && (
+              <div className="mt-8 w-full max-w-3xl mx-auto">
+                <Image
+                  src={blog.image}
+                  alt={blog.title}
+                  className="rounded-2xl object-cover"
+                  width={800}
+                  height={450}
+                />
+              </div>
+            )}
           </div>
-          <p className="text-gray-500 font-medium">Mô Tả</p>
-          <div className="lg:text-lg flex flex-col gap-6 text-justify">
-            <p>{blog.description}</p>
-          </div>
-        </div>
-        {/* {blog.image && (
-          <div className="hidden lg:block w-2/5">
-            <Image
-              src={blog.image || '/path/to/default-image.jpg'} // Fallback to a default image if null
-              alt={blog.title}
-              className="w-full h-48 object-cover"
-              width={400} // Optionally specify width
-              height={300} // Optionally specify height
+
+          {/* Content */}
+          <div className="flex flex-col gap-8 mt-12">
+            <div
+              className="content text-lg text-justify"
+              dangerouslySetInnerHTML={{
+                __html: blog.content.replace(/\"/g, ''), // Xóa tất cả dấu "
+              }}
             />
-          </div>
-        )} */}
-      </div>
-      {/* content */}
-      <Heading name="Chi tiết bài viết" />
 
-      <div className="flex flex-col md:flex-row gap-12 justify-between">
-        {/* text */}
-        <div className="lg:text-lg flex flex-col gap-6 text-justify">
-          {/* Sử dụng dangerouslySetInnerHTML để hiển thị HTML */}
-          <div
-            className="content"
-            dangerouslySetInnerHTML={{
-              __html: blog.content.replace(/\"/g, ''), // Xóa tất cả dấu "
-            }}
-          />
+            {/* Source */}
+            <div className="mt-6">
+              <p className="text-gray-500 font-semibold">Nguồn:</p>
+              <p className="text-blue-800">{blog.link}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Các bài viết gợi ý (bên phải) */}
+        <div className=" col-span-12 lg:col-span-4  p-6 ">
+          <div>
+            <div className=" mb-4">
+              <Tittle name="Bài Viết Liên Quan" />
+            </div>
+            <ul>
+              {relatedBlogs.slice(0, 5).map((relatedPost, index) => (
+                <li key={index} className="mb-4">
+                  <Link href={`/new/${relatedPost.id}`}>
+                    <p className="text-16 border-b-2 pb-2 line-clamp-3 text-gray-700 transform transition-transform duration-300 hover:text-gray-500">
+                      {relatedPost.title}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="pt-10">
+            <div className=" mb-4">
+              <Tittle name="Tất Cả Bài Viết" />
+            </div>
+            <ul>
+              {blogs.slice(0, 10).map((allPost, index) => (
+                <li key={index} className="mb-4">
+                  <Link href={`/new/${allPost.id}`}>
+                    <p className="text-16 border-b-2 pb-2 line-clamp-3 text-gray-700 transform transition-transform duration-300 hover:text-gray-500">
+                      {allPost.title}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
-      <div className="lg:text-14 ">
-        <p className="text-gray-500 font-16">Nguồn:</p>
 
-        <p>{blog.link}</p>
-      </div>
       <Comment postId={blog.id} model="blog" />
       <BlogCommentsSection postId={blog.id} PostModel="blog" />
-    </div>
+    </Container>
   );
 };
 

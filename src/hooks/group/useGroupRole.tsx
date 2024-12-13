@@ -21,7 +21,9 @@ const fetchGroupRolelist = async (
     const queryString = new URLSearchParams({
       page: pageParam.toString(),
     }).toString();
-
+    if (!endpoints.groupRole) {
+      throw null;
+    }
     // Build the API endpoint
     const url = `${endpoints.groupRole.replace(':id', groupId)}${queryString ? `?${queryString}` : ''}`;
 

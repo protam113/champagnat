@@ -1,12 +1,12 @@
-import React from "react";
-import Container from "../../Container/container";
+import React from 'react';
+import Container from '../../Container/container';
 
 const Newsletter = () => {
   return (
     <Container>
-      {" "}
+      {' '}
       <div className="mt-12 p-6 bg-primary-500 text-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold">Đăng ký nhận bản tin</h2>
+        <h2 className="text-2xl font-bold">Đăng ký nhận bài viết mới nhất</h2>
         <p className="mt-4 text-sm">
           Nhận thông báo về các bài viết mới nhất và cập nhật blog!
         </p>

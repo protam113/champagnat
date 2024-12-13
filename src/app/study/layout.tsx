@@ -6,6 +6,7 @@ import LayoutPage from '../components/main/study/layout';
 import Loading from '../components/design/Loading';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
+import { message } from 'antd';
 
 export default function PrivateLayout({
   children,
@@ -29,20 +30,18 @@ export default function PrivateLayout({
   }, [loading]);
 
   useEffect(() => {
-    // Chỉ thực hiện chuyển hướng khi trạng thái loading đã hoàn tất và chưa xác thực
     if (tokenChecked) {
       if (isAuthenticated) {
-        // Không chuyển hướng nếu đã xác thực
-        console.log('User is authenticated');
+        // logout();
+        console.error('User is authenticated');
       } else {
         // Nếu chưa xác thực, chuyển hướng về login
-        console.log('User not authenticated');
+        message.error('Bạn Không Có Quyền Truy Cập Vào Trang !!');
         router.replace('/login');
       }
     }
   }, [isAuthenticated, loading, router, tokenChecked]);
 
-  // Nếu đang loading, hiển thị Loading spinner
   if (loading || !tokenChecked) {
     return <Loading />;
   }

@@ -21,7 +21,9 @@ const fetchGroupMember = async (
     const queryString = new URLSearchParams({
       page: pageParam.toString(),
     }).toString();
-
+    if (!endpoints.groupMember) {
+      throw null;
+    }
     // Make the API request using handleAPI
     const response = await handleAPI(
       `${endpoints.groupMember.replace(':id', groupId)}${queryString ? `?${queryString}` : ''}`,

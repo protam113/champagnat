@@ -13,24 +13,19 @@ const ReplyCommentSection = ({
   postId: string;
   parentId: string;
 }) => {
-  const [currentPage, setPage] = useState(1);
-  const [refreshKey, setRefreshKey] = useState(0);
+  const [currentPage] = useState(1);
+  const [refreshKey] = useState(0);
 
   const object_id = postId;
   const model = 'blog';
   const parent_id = parentId; // Sửa lại thành dấu "="
 
   // Gọi CommentList với các tham số cần thiết
-  const { queueData, next, isLoading, isError } = CommentList({
+  const { queueData, isLoading, isError } = CommentList({
     currentPage,
     filter: { object_id: [object_id], model: [model], parent_id: parent_id },
     refreshKey,
   });
-
-  const loadNextPage = () => {
-    setPage((prevPage) => prevPage + 1);
-    setRefreshKey((prevKey) => prevKey + 1);
-  };
 
   if (isError) {
     return <p className="text-red-500">Đã có lỗi xảy ra khi tải bình luận.</p>;
@@ -76,14 +71,14 @@ const ReplyCommentSection = ({
             <p className="ml-10 text-black">{comment.content}</p>
 
             <hr className="my-2 border-gray-300" />
-            <div className="mt-4 text-center">
+            {/* <div className="mt-4 text-center">
               <button
                 onClick={loadNextPage}
                 className="text-blue-500 hover:text-blue-300 text-sm px-4 py-2 rounded"
               >
                 Tải Thêm
               </button>
-            </div>
+            </div> */}
           </div>
         ) : null,
       )}

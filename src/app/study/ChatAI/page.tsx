@@ -1,5 +1,5 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 import {
   FaChevronLeft,
   FaChevronRight,
@@ -8,19 +8,21 @@ import {
   FaFacebook,
   FaDonate,
   FaGlobe,
-} from "react-icons/fa";
+} from 'react-icons/fa';
 
 const ChatAi = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [chatView, setChatView] = useState(false); // Biến trạng thái xác định hiển thị nội dung chính hay phần chat
-  const [userInput, setUserInput] = useState(""); // Lưu nội dung nhập
-  const [chatHistory, setChatHistory] = useState([]); // Lưu lịch sử chat
+  const [userInput, setUserInput] = useState(''); // Lưu nội dung nhập
+  const [chatHistory, setChatHistory] = useState<
+    { message: string; sender: string }[]
+  >([]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: any) => {
     setUserInput(e.target.value);
   };
 
@@ -29,9 +31,9 @@ const ChatAi = () => {
       // Cập nhật lịch sử chat và hiển thị phần chat
       setChatHistory((prev) => [
         ...prev,
-        { message: userInput, sender: "user" },
+        { message: userInput, sender: 'user' },
       ]);
-      setUserInput(""); // Reset input
+      setUserInput(''); // Reset input
       setChatView(true); // Chuyển sang chế độ chat
     }
   };
@@ -41,7 +43,7 @@ const ChatAi = () => {
       {/* Sidebar */}
       <aside
         className={`${
-          isSidebarOpen ? "w-64" : "w-16"
+          isSidebarOpen ? 'w-64' : 'w-16'
         } shadow-md bg-white flex flex-col transition-all duration-300 relative cursor-pointer`}
       >
         {/* Toggle Button */}
@@ -122,9 +124,9 @@ const ChatAi = () => {
                 <div
                   key={index}
                   className={`${
-                    chat.sender === "user"
-                      ? "text-right text-blue-500"
-                      : "text-left text-gray-700"
+                    chat.sender === 'user'
+                      ? 'text-right text-blue-500'
+                      : 'text-left text-gray-700'
                   }`}
                 >
                   {chat.message}

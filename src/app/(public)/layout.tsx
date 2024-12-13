@@ -3,9 +3,10 @@
 
 import React, { useEffect, useState } from 'react';
 import DefaultLayout from '@/app/components/DefaultLayout';
-import ScrollToTopButton from '../components/button/ScrollToTopButton';
-import Loading from '../components/design/Loading';
+
 import { useAuthStore } from '@/store/authStore';
+import Loading from '@/app/components/design/Loading';
+import ScrollToTopButton from '../components/button/ScrollToTopButton';
 
 export default function DashboardLayout({
   children,

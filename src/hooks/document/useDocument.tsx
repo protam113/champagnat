@@ -8,13 +8,13 @@ import { useEffect, useState } from 'react';
 import { FetchPostListResponse, Filters } from '@/types/types';
 
 /*
-        Hooks lấy danh sách tin tức
+        Hooks lấy danh sách tài liệu
     */
 
 const fetchDocList = async (
   filters: Filters,
   pageParam: number = 1,
-  token?: string,
+  token: string,
 ): Promise<FetchPostListResponse> => {
   try {
     // Filter out undefined or empty values from filters
@@ -36,7 +36,7 @@ const fetchDocList = async (
       `${endpoints.documents}${queryString ? `?${queryString}` : ''}`,
       'GET',
       null,
-      token || null,
+      token,
     );
     return response;
   } catch (error) {
@@ -65,7 +65,12 @@ const useDocList = (
 
   return useQuery<FetchPostListResponse, Error>({
     queryKey: ['docList', filters, page, token, refreshKey],
-    queryFn: async () => fetchDocList(filters, page, token || undefined),
+    queryFn: async () => {
+      if (!token) {
+        throw new Error('Token is not available');
+      }
+      return fetchDocList(filters, page, token);
+    },
 
     staleTime: 60000,
   });

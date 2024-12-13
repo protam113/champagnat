@@ -1,37 +1,78 @@
 'use client';
-
-import React, { useRef } from 'react';
+// import { TextParallaxContentExample } from '@/app/components/animate/scroll/TextParallaxContent';
+import Heading from '@/app/components/design/Heading';
+import React, { useState, useRef } from 'react';
+import { HistoryMonasteryData } from '@/lib/historyMonasteryData';
+import { ClipLoader } from 'react-spinners';
+import Container from '@/app/components/Container/container';
+import history from '@/assets/image/history.jpg';
+import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { FiArrowUpRight } from 'react-icons/fi';
-import {
-  TextParallaxContentProps,
-  StickyImageProps,
-  OverlayCopyProps,
-} from '@/types/types';
+import { TextParallaxContentProps, OverlayCopyProps } from '@/types/types';
 
-export const TextParallaxContentExample = () => {
+const History = () => {
+  const [refreshKey] = useState(0); // State để làm mới dữ liệu
+
+  const {
+    queueData: data,
+    isLoading,
+    isError,
+  } = HistoryMonasteryData(refreshKey);
+  console.log('🚀 ~ History ~ data:', data);
+
+  if (isLoading)
+    return (
+      <div className="text-center">
+        <ClipLoader size="20" loading={isLoading} />
+      </div>
+    );
+  if (isError || !data) return <div>Error loading queue data.</div>;
+  return (
+    <div>
+      <Container>
+        <Heading name="Giới Thiệu Về Hội Dòng" />
+        <div className="flex items-center justify-between my-10">
+          {/* Nội dung bên trái */}
+          <div className="text-left w-1/2 pr-8">
+            <div className="text-18 italic text-black">
+              <b className="text-24">&#34;</b> Với niềm tin và lòng kiên trì,
+              chúng ta cùng nhau xây dựng một cộng đồng vững mạnh, lan tỏa giá
+              trị tốt đẹp và gắn kết những tâm hồn trong một hành trình chung
+              đầy ý nghĩa. <b className="text-24"> &#34;</b>
+            </div>
+          </div>
+
+          {/* Hình ảnh bên phải */}
+          <div className="relative w-1/2 h-64">
+            <Image
+              src={history}
+              alt="banner"
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg"
+            />
+          </div>
+        </div>
+
+        <p
+          className="content"
+          dangerouslySetInnerHTML={{
+            __html: data.about.replace(/\"/g, ''), // Xóa tất cả dấu "
+          }}
+        />
+      </Container>
+    </div>
+  );
+};
+
+export const HistoryContent = () => {
   return (
     <div className="">
       <TextParallaxContent
-        imgUrl="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2671&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        subheading="Collaborate"
-        heading="Built for all of us."
+        subheading="Về Chúng TôiTôi"
+        heading="Đôi Nét Về Hội Dòng Anh Em Đức Maria"
       >
-        <ExampleContent />
-      </TextParallaxContent>
-      <TextParallaxContent
-        imgUrl="https://images.unsplash.com/photo-1530893609608-32a9af3aa95c?q=80&w=2564&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        subheading="Quality"
-        heading="Never compromise."
-      >
-        <ExampleContent />
-      </TextParallaxContent>
-      <TextParallaxContent
-        imgUrl="https://images.unsplash.com/photo-1504610926078-a1611febcad3?q=80&w=2416&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        subheading="Modern"
-        heading="Dress for the best."
-      >
-        <ExampleContent />
+        <History />
       </TextParallaxContent>
     </div>
   );
@@ -40,28 +81,23 @@ export const TextParallaxContentExample = () => {
 const IMG_PADDING = 12;
 
 const TextParallaxContent: React.FC<TextParallaxContentProps> = ({
-  imgUrl,
   subheading,
   heading,
   children,
 }) => {
   return (
-    <div
-      style={{
-        paddingLeft: IMG_PADDING,
-        paddingRight: IMG_PADDING,
-      }}
-    >
+    <div style={{ paddingLeft: IMG_PADDING, paddingRight: IMG_PADDING }}>
       <div className="relative h-[150vh]">
-        <StickyImage imgUrl={imgUrl} />
+        <StickyImage />
         <OverlayCopy heading={heading} subheading={subheading} />
       </div>
-      {children}
+      {/* Đảm bảo children được render ở đây */}
+      <div className="mt-8">{children}</div>
     </div>
   );
 };
 
-const StickyImage: React.FC<StickyImageProps> = ({ imgUrl }) => {
+const StickyImage: React.FC = () => {
   const targetRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -73,17 +109,13 @@ const StickyImage: React.FC<StickyImageProps> = ({ imgUrl }) => {
 
   return (
     <motion.div
+      ref={targetRef}
       style={{
-        backgroundImage: `url(${imgUrl})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        height: `calc(100vh - ${IMG_PADDING * 2}px)`,
-        top: IMG_PADDING,
         scale,
       }}
-      ref={targetRef}
-      className="sticky z-0 overflow-hidden rounded-3xl"
+      className="sticky z-0 overflow-hidden rounded-3xl relative w-full h-full" // Đảm bảo có "relative" và kích thước
     >
+      <Image src={history} alt="Sticky image" fill className="object-cover" />
       <motion.div
         className="absolute inset-0 bg-neutral-950/70"
         style={{
@@ -126,24 +158,3 @@ export default function Title({ name }: { name: string }) {
     <h1 className="col-span-1 text-3xl font-bold md:col-span-4">{name}</h1>
   );
 }
-
-const ExampleContent = () => (
-  <div className="mx-auto grid max-w-5xl grid-cols-1 gap-8 px-4 pb-24 pt-12 md:grid-cols-12">
-    <Title name="Bài Viết" />
-    <div className="col-span-1 md:col-span-8">
-      <p className="mb-4 text-xl text-neutral-600 md:text-2xl">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi,
-        blanditiis soluta eius quam modi aliquam quaerat odit deleniti minima
-        maiores voluptate est ut saepe accusantium maxime doloremque nulla
-        consectetur possimus.
-      </p>
-      <p className="mb-8 text-xl text-neutral-600 md:text-2xl">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium
-        reiciendis blanditiis aliquam aut fugit sint.
-      </p>
-      <button className="w-full rounded bg-neutral-900 px-9 py-4 text-xl text-white transition-colors hover:bg-neutral-700 md:w-fit">
-        Learn more <FiArrowUpRight className="inline" />
-      </button>
-    </div>
-  </div>
-);

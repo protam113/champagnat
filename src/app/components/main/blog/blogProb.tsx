@@ -40,7 +40,7 @@ const BlogProb: React.FC<BlogCardProps> = ({
           {author} • {date}
         </p>
         <h3 className="text-lg font-semibold my-2">{title}</h3>
-        <p className="text-gray-700 text-sm">{description}</p>
+        <p className="text-gray-700 text-sm line-clamp-4">{description}</p>
         <div className="flex flex-wrap gap-2 mt-4">
           {categories.map((category) => (
             <span

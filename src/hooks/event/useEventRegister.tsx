@@ -71,6 +71,9 @@ const CreateEventRegistion = async (
   }
 
   try {
+    if (!endpoints.eventRegister) {
+      throw null;
+    }
     // Gửi FormData tới backend
     const response = await handleAPI(
       `${endpoints.eventRegister.replace(':id', eventId)}`,

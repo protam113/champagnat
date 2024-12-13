@@ -5,13 +5,16 @@ import { handleAPI } from '@/apis/axiosClient';
 import { endpoints } from '@/apis/api';
 import { useAuth } from '@/context/authContext';
 import { useEffect, useState } from 'react';
-import { BLogDetail } from '@/types/types';
+import { DocDetail } from '@/types/types';
 
 const fetchDocumetDetail = async (
   postId: string,
   token?: string, // Token là tùy chọn
-): Promise<BLogDetail> => {
+): Promise<DocDetail> => {
   try {
+    if (!endpoints.document) {
+      throw null;
+    }
     // Gửi request với token nếu có, không thì bỏ qua
     const response = await handleAPI(
       `${endpoints.document.replace(':id', postId)}`,
@@ -41,8 +44,8 @@ const useDocumentDetail = (postId: string) => {
     fetchToken();
   }, [getToken]);
 
-  return useQuery<BLogDetail, Error>({
-    queryKey: ['blogDetail', token, postId],
+  return useQuery<DocDetail, Error>({
+    queryKey: ['docDetail', token, postId],
     queryFn: async () => fetchDocumetDetail(postId, token || undefined), // Không ép buộc token
     enabled: !!postId, // Chỉ gọi API khi có token và blogId
     staleTime: 60000, // Đặt stale time để không yêu cầu API mỗi lần

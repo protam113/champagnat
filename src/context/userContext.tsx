@@ -60,7 +60,11 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const cachedData = getCachedUserInfo();
     if (cachedData) {
       setUserInfo(cachedData);
-      setUserRoleId(cachedData.role ? cachedData.role.id : null); // Set role ID directly
+      setUserRoleId(
+        cachedData.role && typeof cachedData.role.id === 'number'
+          ? cachedData.role.id
+          : null,
+      );
       userInfoFetchedRef.current = true;
       setLoading(false);
       console.log('User info from cache:', cachedData);
@@ -71,12 +75,15 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
     if (!token) {
       setUserInfo(null);
-      setUserRoleId(null); // Reset role ID
+      setUserRoleId(null);
       setLoading(false);
       return;
     }
 
     try {
+      if (!endpoints.currentUser) {
+        throw null;
+      }
       const response = await handleAPI(
         endpoints.currentUser,
         'GET',
@@ -84,12 +91,12 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         token,
       );
 
-      // Access the user data directly
-      const userData: UserInfo = response; // Change if your API structure is different
+      const userData: UserInfo = response;
 
-      setUserInfo(userData); // Update userInfo state
-      setUserRoleId(userData.role ? userData.role.id : null); // Store role ID directly
-      cacheUserInfo(userData); // Cache user data
+      const roleId =
+        userData.role && userData.role.id ? Number(userData.role.id) : null;
+      setUserRoleId(roleId);
+      cacheUserInfo(userData);
     } catch (err: any) {
       setError(err.response?.data || err.message);
     } finally {
@@ -101,10 +108,9 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     fetchUserInfo();
   }, [fetchUserInfo]);
 
-  // User context value with userRoleId instead of userRoles
   const value: UserContextType = {
     userInfo,
-    userRoleId, // Provide the role ID directly
+    userRoleId,
     loading,
     error,
     refreshUserInfo: fetchUserInfo,
@@ -113,7 +119,6 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 
-// Custom hook to access user context
 export const useUser = () => {
   const context = useContext(UserContext);
   if (context === undefined) {

@@ -8,7 +8,7 @@ interface ContainerProps {
 
 const HomeContainer: React.FC<ContainerProps> = ({ children }) => {
   return (
-    <article className="container mx-auto" style={{ width: '1400px' }}>
+    <article className="mx-auto mt-4" style={{ width: '1420px' }}>
       {children}
     </article>
   );

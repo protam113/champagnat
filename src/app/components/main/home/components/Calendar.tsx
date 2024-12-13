@@ -73,7 +73,7 @@ const CatholicCalendarTable: React.FC = () => {
   return (
     <div
       style={{
-        maxHeight: '500px',
+        maxHeight: '750px',
         overflowY: 'auto',
         padding: '8px',
         border: '1px solid #ddd',

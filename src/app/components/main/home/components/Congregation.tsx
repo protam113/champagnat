@@ -1,9 +1,11 @@
 'use client'; // Ensures this is a client component
 
 import React, { useState } from 'react';
-import { BlogList } from '@/lib/blogList'; // Đảm bảo rằng bạn đã có BlogList API
+import { BlogList } from '@/lib/blogList';
 import BlogProb from '../../blog/blogProb';
 import formatDate from '@/utils/formatDate';
+import { LoadingOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
 
 export const Congregation = () => {
   const [currentPage] = useState(1);
@@ -17,15 +19,15 @@ export const Congregation = () => {
   } = BlogList(currentPage, '', refreshKey);
 
   // Kiểm tra dữ liệu
-  if (isLoading) return <p>Loading...</p>;
-  if (isError) return <p>Error loading news...</p>;
+  if (isLoading) return <Spin indicator={<LoadingOutlined spin />} />;
+  if (isError) return null;
 
   const latestPosts = blogs?.slice(0, 6) || [];
 
   return (
     <>
       <div className="pt-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-10">
           {latestPosts.map((blog, index) => (
             <BlogProb
               key={index}

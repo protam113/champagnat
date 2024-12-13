@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import logo from '@/assets/image 2.svg';
+import logo from '@/assets/image/logo.svg';
 import Link from 'next/link';
 import { IoIosArrowDown } from 'react-icons/io';
 import { FiMenu } from 'react-icons/fi';
