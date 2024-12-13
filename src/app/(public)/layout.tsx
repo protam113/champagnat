@@ -7,6 +7,7 @@ import DefaultLayout from '@/app/components/DefaultLayout';
 import { useAuthStore } from '@/store/authStore';
 import Loading from '@/app/components/design/Loading';
 import ScrollToTopButton from '../components/button/ScrollToTopButton';
+// import { UserProvider } from '@/context/userContext';
 
 export default function DashboardLayout({
   children,
@@ -34,9 +35,11 @@ export default function DashboardLayout({
   }
 
   return (
+    // <UserProvider>
     <DefaultLayout>
       {children}
       <ScrollToTopButton />
     </DefaultLayout>
+    // </UserProvider>
   );
 }

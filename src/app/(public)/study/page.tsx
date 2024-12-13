@@ -1,9 +1,10 @@
 'use client';
 
 import React, { useState } from 'react';
-import Slider from '../components/main/study/studySlider';
-import StudyProb from '../components/main/study/StudyProb';
+
 import { Layout, theme } from 'antd';
+import Slider from '@/app/components/main/study/studySlider';
+import StudyProb from '@/app/components/main/study/StudyProb';
 
 const { Content } = Layout;
 

@@ -60,9 +60,6 @@ const useEventList = (
   return useQuery<FetchEventListResponse, Error>({
     queryKey: ['eventList', filters, page, token, refreshKey], // Thêm refreshKey vào queryKey
     queryFn: async () => {
-      if (!token) {
-        throw new Error('Token is not available');
-      }
       return fetchEventList(filters, page, token || undefined);
     },
     staleTime: 60000,

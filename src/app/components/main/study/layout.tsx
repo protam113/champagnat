@@ -1,7 +1,5 @@
 'use client';
 import React, { ReactNode } from 'react';
-import Header from '@/app/components/DefaultLayout/components/Header';
-import Footer from '../../DefaultLayout/components/Footer';
 import SidebarStudy from './sidebarStudy';
 import { Layout, theme } from 'antd';
 import Breadcrumb from '../../design/BreackCumb';
@@ -19,7 +17,6 @@ const LayoutPage: React.FC<PrivateLayoutProps> = ({ children }) => {
 
   return (
     <Layout>
-      <Header />
       <SidebarStudy />
       <Content style={{ padding: '0 48px' }} className="bg-zinc-400">
         <Breadcrumb />
@@ -34,7 +31,6 @@ const LayoutPage: React.FC<PrivateLayoutProps> = ({ children }) => {
           {children}
         </div>
       </Content>
-      <Footer />
     </Layout>
   );
 };

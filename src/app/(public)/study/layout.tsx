@@ -2,11 +2,11 @@
 'use client';
 
 import React, { useEffect, useState } from 'react'; // , { useEffect }
-import LayoutPage from '../components/main/study/layout';
-import Loading from '../components/design/Loading';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
 import { message } from 'antd';
+import LayoutPage from '@/app/components/main/study/layout';
+import Loading from '@/app/components/design/Loading';
 
 export default function PrivateLayout({
   children,
