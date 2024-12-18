@@ -14,6 +14,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 const Hero = () => {
   const [currentPage] = useState(1);
   const [refreshKey] = useState(0);
+  const [slideItems, setSlideItems] = useState(4); // Số lượng bài mặc định trên mỗi slide
 
   // Lấy dữ liệu tin tức từ API
   const {
@@ -24,16 +25,38 @@ const Hero = () => {
 
   const [isClient, setIsClient] = useState(false);
 
-  // Chia dữ liệu tin tức thành các slide với mỗi slide chứa 4 phần tử
+  // Chia dữ liệu tin tức thành các slide với số lượng bài tương ứng
   const slides = [];
   if (newsData) {
-    for (let i = 0; i < newsData.length; i += 4) {
-      slides.push(newsData.slice(i, i + 4));
+    for (let i = 0; i < newsData.length; i += slideItems) {
+      slides.push(newsData.slice(i, i + slideItems));
     }
   }
 
   useEffect(() => {
     setIsClient(true); // Đảm bảo rằng code chỉ chạy trên client
+
+    // Thay đổi số lượng bài trên mỗi slide khi kích thước cửa sổ thay đổi
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setSlideItems(1); // Mobile: 1 bài mỗi slide
+      } else if (window.innerWidth <= 1024) {
+        setSlideItems(2); // Tablet: 2 bài mỗi slide
+      } else {
+        setSlideItems(4); // Desktop: 4 bài mỗi slide
+      }
+    };
+
+    // Lắng nghe sự thay đổi kích thước cửa sổ
+    window.addEventListener('resize', handleResize);
+
+    // Gọi hàm một lần để thiết lập giá trị ban đầu
+    handleResize();
+
+    // Dọn dẹp khi component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
   if (!isClient) {
@@ -119,7 +142,7 @@ const Hero = () => {
               <div className="flex flex-wrap justify-between px-4" key={index}>
                 {slide.map((news, newsIndex) => (
                   <div
-                    className="bg-primary-800 p-4 w-full sm:w-1/2 md:w-1/4"
+                    className="bg-primary-800 p-4 w-full sm:w-1/2 md:w-2/4 lg:w-1/4"
                     key={newsIndex}
                   >
                     <p className="text-gray-300 text-xs font-bold">

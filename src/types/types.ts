@@ -16,6 +16,20 @@ export interface OverlayCopyProps {
   heading: string;
 }
 
+/**
+drawer Interface
+**/
+
+
+export interface FeastDrawerProps {
+  visible: boolean;
+  onClose: () => void;
+  selectedDate: string | null;
+  selectedFeast: any;
+  scheduleId: string
+}
+
+
 /*
   NhaDong History Interface
 */
@@ -38,7 +52,7 @@ export interface DonationDetail {
   link: string;
   image: string; // Chỉnh sửa để phù hợp với giá trị null trong JSON
   visibility: string;
-  status:string;
+  status: string;
   created_date: string
   updated_date: string
 }
@@ -51,7 +65,7 @@ interface DonationList {
   link: string;
   image: string; // Chỉnh sửa để phù hợp với giá trị null trong JSON
   visibility: string;
-  status:string;
+  status: string;
   created_date: string
   updated_date: string
 }
@@ -128,7 +142,7 @@ interface CategoryList {
   id: string;
   name: string;
   model: string;
-  file: string;
+  image: string;
 }
 
 // Khai Báo Các Thuộc Tính Không Có trong trường hiển thị

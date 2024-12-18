@@ -16,16 +16,14 @@ const LayoutPage: React.FC<PrivateLayoutProps> = ({ children }) => {
   } = theme.useToken();
 
   return (
-    <Layout>
+    <Layout style={{ background: '#ffffff' }}>
       <SidebarStudy />
-      <Content style={{ padding: '0 48px' }} className="bg-zinc-400">
+      <Content style={{ padding: '0 48px' }}>
         <Breadcrumb />
         <div
           style={{
-            background: colorBgContainer,
             minHeight: 280,
             padding: 24,
-            borderRadius: borderRadiusLG,
           }}
         >
           {children}

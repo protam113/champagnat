@@ -24,8 +24,8 @@ export const Invitation = () => {
 
   return (
     <>
-      <div className="pt-10">
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-10">
+      <div className="py-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-5">
           {latestPosts.map((blog, index) => (
             <MissionProb
               key={index}

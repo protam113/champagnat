@@ -20,7 +20,7 @@ export const NavItems = () => {
     {
       key: 2,
       label: 'Tin Tức',
-      link: '/new',
+      link: '/news',
     },
     {
       key: 10,
@@ -30,7 +30,7 @@ export const NavItems = () => {
     {
       id: 3,
       label: 'Hội Dòng',
-      link: '/hoi_dong',
+      // link: '/hoi_dong',
       children: [
         {
           id: 13,

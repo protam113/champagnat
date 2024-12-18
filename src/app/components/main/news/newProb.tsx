@@ -23,8 +23,8 @@ const NewProb: React.FC<NewCardProps> = ({
 }) => {
   return (
     <Link
-      href={`/new/${id}`}
-      className="rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-300 hover:scale-105" // Thêm hiệu ứng hover
+      href={`/news/${id}`}
+      className="rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-300 hover:scale-105 hover:text-amber-500" // Thêm hiệu ứng hover
     >
       <div className="relative h-48 w-full">
         <Image
@@ -35,24 +35,21 @@ const NewProb: React.FC<NewCardProps> = ({
         />
       </div>
       <div className="p-4">
-        <p className="text-gray-500 text-sm">
-          {author} • {date}
-        </p>
-        <h3 className="text-lg font-semibold my-2">{title}</h3>
-        <p className="text-gray-700 text-sm line-clamp-4">{description}</p>
-        <div className="flex flex-wrap gap-2 mt-4">
+        <div className="flex flex-wrap gap-2 mb-4">
           {categories.map((category) => (
             <span
               key={category}
-              className="text-xs bg-gray-200 text-gray-600 rounded-full px-2 py-1"
+              className="text-12 bg-primary-800 text-white rounded-full px-2 py-1"
             >
               {category}
             </span>
           ))}
         </div>
-        <a href="#" className="flex items-center text-blue-500 text-sm mt-4">
-          Read More <FaExternalLinkAlt className="ml-1" />
-        </a>
+        <div className="text-gray-500 text-sm">
+          {author} • {date}
+        </div>
+        <h3 className="text-lg font-semibold my-2">{title}</h3>
+        <p className="text-gray-700 text-sm line-clamp-4">{description}</p>
       </div>
     </Link>
   );

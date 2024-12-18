@@ -12,7 +12,7 @@ interface Category {
   image: string; // Đường dẫn tới hình ảnh
 }
 
-const BlogTag = ({
+const NewsTag = ({
   onFilterChange,
   setRefreshKey,
 }: {
@@ -27,11 +27,9 @@ const BlogTag = ({
   // Fetching categories
   const { queueData, isLoading, isError } = CategoriesList(
     currentPage,
-    'blog',
+    'news',
     0, // Sử dụng refreshKey tại đây
   );
-
-  console.log(queueData);
 
   // Handle loading state or error (optional)
   if (isError) {
@@ -62,36 +60,33 @@ const BlogTag = ({
       {queueData?.map((category: Category) => (
         <div
           key={category.id}
-          className={`relative flex flex-col items-center justify-center rounded-lg cursor-pointer border border-[#142857] ${
-            selectedCategory === category.id
-              ? 'bg-primary-500 text-white'
-              : 'bg-white text-[#142857]'
-          } transition-all duration-300 ease-in-out hover:bg-[#142857] hover:text-white 
-          sm:text-sm md:text-base lg:text-lg`}
+          className={`relative flex flex-col items-center justify-center cursor-pointer border border-[#142857] transition-all duration-300 ease-in-out hover:bg-[#142857] hover:text-white hover:scale-105`}
           onClick={() => handleCategoryChange(category.id)}
         >
-          {!isMobile && category.image ? ( // Chỉ hiển thị hình nếu không phải mobile
-            <div className="w-60 h-40 relative">
+          {!isMobile && category.image ? (
+            <div className="w-60 h-40 relative overflow-hidden">
               <Image
                 src={category.image}
                 alt={category.name}
                 fill
                 style={{ objectFit: 'cover' }}
-                className="rounded-md"
+                className="transition-transform duration-300 hover:scale-110"
               />
               <div
-                className="absolute text-16 bottom-0 left-0 w-full text-white text-center p-2 rounded-b-md z-10"
+                className="absolute text-16 bottom-0 left-0 w-full text-white text-center p-2 rounded-b-lg z-10 transition-colors duration-300"
                 style={{
-                  backgroundColor: 'rgba(0, 0, 0, 0.1)', // Nền mờ nhẹ
-                  backdropFilter: 'blur(2px)', // Làm mờ phần nền phía sau
-                  WebkitBackdropFilter: 'blur(2px)', // Hỗ trợ cho trình duyệt Webkit (Safari, iOS)
+                  backgroundColor: 'rgba(0, 0, 0, 0.2)',
+                  backdropFilter: 'blur(2px)',
+                  WebkitBackdropFilter: 'blur(2px)',
                 }}
               >
                 {category.name}
               </div>
             </div>
           ) : (
-            <div className="text-center p-2">{category.name}</div> // Chỉ hiển thị tên
+            <div className="text-center text-primary-500 p-2">
+              {category.name}
+            </div>
           )}
         </div>
       ))}
@@ -99,4 +94,4 @@ const BlogTag = ({
   );
 };
 
-export default BlogTag;
+export default NewsTag;

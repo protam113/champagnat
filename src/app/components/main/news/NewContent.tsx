@@ -3,12 +3,12 @@
 import { useState } from 'react';
 import Tittle from '@/app/components/design/Tittle';
 import formatDate from '@/utils/formatDate';
-import BlogTag from '@/app/components/main/blog/BlogCategoryTag';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
 import { NewsList } from '@/lib/newList';
 import { ClipLoader } from 'react-spinners';
 import NewProb from './newProb';
+import NewsTag from './NewCatetoryTag';
 
 const NewContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -49,7 +49,7 @@ const NewContent = () => {
       <Container>
         <Tittle name="TẤT CẢ TIN TỨC" />
         <div className="mt-6 mb-4">
-          <BlogTag
+          <NewsTag
             onFilterChange={handleFilterChange}
             setRefreshKey={setRefreshKey}
           />

@@ -69,7 +69,7 @@ export const HistoryContent = () => {
   return (
     <div className="">
       <TextParallaxContent
-        subheading="Về Chúng TôiTôi"
+        subheading="Về Chúng Tôi"
         heading="Đôi Nét Về Hội Dòng Anh Em Đức Maria"
       >
         <History />

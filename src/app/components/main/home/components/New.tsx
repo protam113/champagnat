@@ -8,7 +8,7 @@ export const News = () => {
   return (
     <>
       {/* Phần nội dung: Hình ảnh, text và lịch */}
-      <div className="flex justify-between pt-5 gap-4">
+      <div className="flex justify-between py-10 gap-4">
         {/* Phần nội dung */}
         <div className="flex-[4]">
           <Image src={news} alt="news" height={200} width={1100} />

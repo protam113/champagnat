@@ -37,7 +37,7 @@ const Intro = () => {
             <Image
               src={money} // Đảm bảo chọn hình ảnh phù hợp
               alt="Quyên góp"
-              className="rounded-lg shadow-lg transition-all duration-500 transform group-hover:scale-105"
+              className="rounded-lg transition-all duration-500 transform group-hover:scale-105"
               width={800}
               height={400}
             />

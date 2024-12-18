@@ -6,6 +6,7 @@ import BlogProb from '../../blog/blogProb';
 import formatDate from '@/utils/formatDate';
 import { LoadingOutlined } from '@ant-design/icons';
 import { Spin } from 'antd';
+import Container from '@/app/components/Container/container';
 
 export const Congregation = () => {
   const [currentPage] = useState(1);
@@ -26,8 +27,8 @@ export const Congregation = () => {
 
   return (
     <>
-      <div className="pt-10">
-        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-10">
+      <div className="py-10">
+        <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-5">
           {latestPosts.map((blog, index) => (
             <BlogProb
               key={index}

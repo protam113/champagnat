@@ -17,6 +17,13 @@ const config: Config = {
           "0%": { transform: "rotate(0deg)" },
           "100%": { transform: "rotate(360deg)" },
         },
+        'slide-in-left': {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(0)' },
+        }
+      },
+      animation: {
+        'slide-in-left': 'slide-in-left 0.3s ease-out',
       },
       container: {
         center: true,

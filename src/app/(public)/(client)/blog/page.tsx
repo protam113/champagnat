@@ -1,9 +1,9 @@
 'use client';
 
-import Newsletter from '@/app/components/main/blog/newletter';
 import Heading from '@/app/components/design/Heading';
 import RecentBlogPosts from '@/app/components/main/blog/RecentBlogPosts';
 import BlogContent from '@/app/components/main/blog/BlogContent';
+import Contact from '@/app/components/design/formResgister';
 
 const BlogPage = () => {
   return (
@@ -21,8 +21,7 @@ const BlogPage = () => {
 
       <BlogContent />
 
-      {/* Newsletter section */}
-      <Newsletter />
+      <Contact />
     </main>
   );
 };

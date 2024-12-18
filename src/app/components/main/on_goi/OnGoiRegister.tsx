@@ -1,5 +1,4 @@
-'use client'; // Ensures this is a client component
-
+'use client';
 import React, { useState } from 'react';
 import {
   Form,
@@ -11,7 +10,7 @@ import {
   UploadFile,
   UploadProps,
 } from 'antd';
-import { FaUser, FaPhone, FaEnvelope, FaIdCard } from 'react-icons/fa'; // React Icons
+import { FaUser, FaPhone, FaEnvelope, FaIdCard } from 'react-icons/fa';
 import { useEventRegistion } from '@/hooks/event/useEventRegister';
 import dayjs from 'dayjs';
 import Container from '../../Container/container';
@@ -24,12 +23,13 @@ const OnGoiRegister = ({ ongoiId }: { ongoiId: string }) => {
   const [previewImage, setPreviewImage] = useState<string>('');
   const [previewOpen, setPreviewOpen] = useState<boolean>(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [blogData, setBlogData] = useState<any>({}); // Định nghĩa blogData để lưu trữ dữ liệu
+  const [blogData, setBlogData] = useState<any>({});
+
   const handleChange: UploadProps['onChange'] = ({ fileList }) => {
     setFileList(fileList);
     setBlogData({
       ...blogData,
-      image: fileList.map((file) => file.originFileObj as RcFile), // Lưu mảng file
+      image: fileList.map((file) => file.originFileObj as RcFile),
     });
   };
 
@@ -77,18 +77,14 @@ const OnGoiRegister = ({ ongoiId }: { ongoiId: string }) => {
           : null,
     };
 
-    // Gửi yêu cầu đăng ký sự kiện
     mutate(formattedValues);
   };
 
   return (
     <Container>
       <div className="mt-12 p-6 bg-primary-500 text-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-bold">Đăng ký nhận bản tin</h2>
-        <p className="mt-4 text-sm">
-          Nhận thông báo về các bài viết mới nhất và cập nhật blog!
-        </p>
-        <div className="mt-4 flex">
+        <h2 className="text-24 text-center font-bold">Đăng Ký Nhận Ơn Gọi</h2>
+        <div className="mt-4">
           <Form
             name="event-register"
             onFinish={onFinish}
@@ -96,283 +92,329 @@ const OnGoiRegister = ({ ongoiId }: { ongoiId: string }) => {
             layout="vertical"
             form={form}
           >
-            <Form.Item label="Hình ảnh chính">
-              <Upload
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={handlePreview}
-                onChange={handleChange}
-                beforeUpload={() => false} // Ngăn tự động tải lên
+            <div className="grid grid-cols-4 gap-3">
+              <Form.Item
+                label={<span className="text-white">Hình ảnh chính</span>}
+                className="col-span-4"
               >
-                {fileList.length >= 1 ? null : uploadButton}
-              </Upload>
+                <Upload
+                  listType="picture-card"
+                  fileList={fileList}
+                  onPreview={handlePreview}
+                  onChange={handleChange}
+                  beforeUpload={() => false}
+                >
+                  {fileList.length >= 1 ? null : uploadButton}
+                </Upload>
+                {previewImage && (
+                  <Image
+                    alt="Hình ảnh xem trước bài viết"
+                    wrapperStyle={{ display: 'none' }}
+                    preview={{
+                      visible: previewOpen,
+                      onVisibleChange: (visible) => setPreviewOpen(visible),
+                    }}
+                    src={previewImage}
+                  />
+                )}
+              </Form.Item>
 
-              {previewImage && (
-                <Image
-                  alt="Hình ảnh xem trước bài viết"
-                  wrapperStyle={{ display: 'none' }}
-                  preview={{
-                    visible: previewOpen,
-                    onVisibleChange: (visible) => setPreviewOpen(visible),
-                  }}
-                  src={previewImage}
+              <Form.Item
+                label={<span className="text-white">Họ và tên đệm</span>}
+                name="first_name"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập họ và tên!' },
+                ]}
+              >
+                <Input
+                  prefix={<FaUser className="text-gray-500 mr-2" />}
+                  placeholder="Nhập họ và tên"
+                  className="border-gray-300 rounded-md"
                 />
-              )}
-            </Form.Item>
-            <Form.Item
-              label="Họ và tên đệm"
-              name="first_name"
-              rules={[{ required: true, message: 'Vui lòng nhập họ và tên!' }]}
-            >
-              <Input
-                prefix={<FaUser className="text-gray-500 mr-2" />}
-                placeholder="Nhập họ và tên"
-                className="border-gray-300 rounded-md"
-              />
-            </Form.Item>
-            <Form.Item
-              label="Tên"
-              name="last_name"
-              rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
-            >
-              <Input
-                prefix={<FaIdCard className="text-gray-500 mr-2" />}
-                placeholder="Nhập tên"
-                className="border-gray-300 rounded-md"
-              />
-            </Form.Item>
-            <Form.Item
-              label="Số điện thoại"
-              name="phone_number"
-              rules={[
-                { required: true, message: 'Vui lòng nhập số điện thoại!' },
-                { pattern: /^[0-9]+$/, message: 'Số điện thoại không hợp lệ!' },
-              ]}
-            >
-              <Input
-                prefix={<FaPhone className="text-gray-500 mr-2" />}
-                placeholder="Nhập số điện thoại"
-                className="border-gray-300 rounded-md"
-              />
-            </Form.Item>
+              </Form.Item>
 
-            <Form.Item
-              label="Email"
-              name="email"
-              rules={[
-                { required: true, message: 'Vui lòng nhập email!' },
-                { type: 'email', message: 'Email không hợp lệ!' },
-              ]}
-            >
-              <Input
-                prefix={<FaEnvelope className="text-gray-500 mr-2" />}
-                placeholder="Nhập email"
-                className="border-gray-300 rounded-md"
-              />
-            </Form.Item>
-            <Form.Item
-              label="Ngày sinh"
-              name="dob"
-              rules={[{ required: true, message: 'Vui lòng chọn ngày sinh!' }]}
-            >
-              <DatePicker format="YYYY-MM-DD" className="w-full" />
-            </Form.Item>
-            <Form.Item
-              label="Địa Chỉ"
-              name="location"
-              rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
-            >
-              <Input placeholder="Nhập địa chỉ" />
-            </Form.Item>
-            <Form.Item
-              label="Họ và tên đệm của bố"
-              name="dad_first_name"
-              rules={[
-                { required: true, message: 'Vui lòng nhập tên người đỡ đầu!' },
-              ]}
-            >
-              <Input placeholder="Nhập tên người đỡ đầu" />
-            </Form.Item>
-            <Form.Item
-              label="Tên của bố "
-              name="dad_last_name"
-              rules={[
-                { required: true, message: 'Vui lòng nhập tên người đỡ đầu!' },
-              ]}
-            >
-              <Input placeholder="Nhập tên người đỡ đầu" />
-            </Form.Item>
-            <Form.Item
-              label="Họ và tên đệm của mẹ"
-              name="mom_first_name"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập họ và tên đệm của mẹ!',
-                },
-              ]}
-            >
-              <Input placeholder="Nhập họ và tên đệm của mẹ" />
-            </Form.Item>
-            <Form.Item
-              label="Tên của mẹ"
-              name="mom_last_name"
-              rules={[{ required: true, message: 'Vui lòng nhập tên của mẹ!' }]}
-            >
-              <Input placeholder="Nhập tên của mẹ" />
-            </Form.Item>
-            <Form.Item
-              label="Giáo Xứ"
-              name="parish_hometown"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập giáo Xứ!',
-                },
-              ]}
-            >
-              <Input placeholder="Nhập giáo Xứ!" />
-            </Form.Item>
-            <Form.Item
-              label="Tên anh chị em"
-              name="brothers_and_sisters_name"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập tên anh chị em!',
-                },
-              ]}
-            >
-              <Input placeholder="Nhập tên anh chị em" />
-            </Form.Item>
-            <Form.Item
-              label="năm sinh của anh chị em"
-              name="brothers_and_sisters_year"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập năm sinh!',
-                },
-              ]}
-            >
-              <DatePicker format="YYYY-MM-DD" className="w-full" />
-            </Form.Item>
-            <Form.Item
-              label="Ngày rửa tội"
-              name="baptism_day"
-              rules={[{ required: true, message: 'Vui lòng ngày rửa tội!' }]}
-            >
-              <DatePicker format="YYYY-MM-DD" className="w-full" />
-            </Form.Item>
-            <Form.Item
-              label="Người đỡ đầu rửa tội"
-              name="baptismal_sponsor"
-              rules={[
-                { required: true, message: 'Vui lòng nhập tên người đỡ đầu!' },
-              ]}
-            >
-              <Input placeholder="Nhập tên người đỡ đầu" />
-            </Form.Item>
-            <Form.Item
-              label="Người rửa tội"
-              name="pardoner"
-              rules={[
-                { required: true, message: 'Vui lòng nhập tên người rửa tội!' },
-              ]}
-            >
-              <Input placeholder="Nhập tên người đỡ đầu" />
-            </Form.Item>
-            <Form.Item
-              label="Người rửa tội"
-              name="baptism_day_form"
-              rules={[
-                { required: true, message: 'Vui lòng nhập tên người rửa tội!' },
-              ]}
-            >
-              <Input placeholder="Nhập tên người đỡ đầu" />
-            </Form.Item>
-            <Form.Item
-              label="Nơi Rửa Tội"
-              name="baptismal_at"
-              rules={[
-                { required: true, message: 'Vui lòng nhập tên người đỡ đầu!' },
-              ]}
-            >
-              <Input placeholder="Nhập tên người đỡ đầu" />
-            </Form.Item>
-            <Form.Item
-              label="Ngày Lần đầu nhận Mình Thánh Chúa"
-              name="first_communion_day"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng ngày Lần đầu nhận Mình Thánh Chúa!',
-                },
-              ]}
-            >
-              <DatePicker format="YYYY-MM-DD" className="w-full" />
-            </Form.Item>
+              <Form.Item
+                label={<span className="text-white">Tên</span>}
+                name="last_name"
+                rules={[{ required: true, message: 'Vui lòng nhập tên!' }]}
+              >
+                <Input
+                  prefix={<FaIdCard className="text-gray-500 mr-2" />}
+                  placeholder="Nhập tên"
+                  className="border-gray-300 rounded-md"
+                />
+              </Form.Item>
 
-            <Form.Item
-              label="Người đỡ đầu thêm sức"
-              name="confirmation_sponsor"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập người đỡ đầu thêm sức!',
-                },
-              ]}
-            >
-              <Input placeholder="Nhập người đỡ đầu thêm sức" />
-            </Form.Item>
-            <Form.Item
-              label="Cha thêm sức"
-              name="confirmation_form"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập Cha thêm sức!',
-                },
-              ]}
-            >
-              <Input placeholder="Nhập Cha thêm sức" />
-            </Form.Item>
-            <Form.Item
-              label="Nơi thêm sức"
-              name="confirmation_at"
-              rules={[
-                {
-                  required: true,
-                  message: 'Vui lòng nhập nơi thêm sức!',
-                },
-              ]}
-            >
-              <Input placeholder="Nhập nơi thêm sức thêm sức" />
-            </Form.Item>
-            <Form.Item
-              label="Ngày thêm sức"
-              name="confirmation_mass"
-              rules={[{ required: true, message: 'Vui lòng ngày thêm sức!' }]}
-            >
-              <DatePicker format="YYYY-MM-DD" className="w-full" />
-            </Form.Item>
+              <Form.Item
+                label={<span className="text-white">Số điện thoại</span>}
+                name="phone_number"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập số điện thoại!' },
+                  {
+                    pattern: /^[0-9]+$/,
+                    message: 'Số điện thoại không hợp lệ!',
+                  },
+                ]}
+              >
+                <Input
+                  prefix={<FaPhone className="text-gray-500 mr-2" />}
+                  placeholder="Nhập số điện thoại"
+                  className="border-gray-300 rounded-md"
+                />
+              </Form.Item>
 
-            <Form.Item label="Quá trình học giáo lý" name="learning_process">
-              <Input placeholder="Quá trình học giáo lý" />
-            </Form.Item>
+              <Form.Item
+                label={<span className="text-white">Email</span>}
+                name="email"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập email!' },
+                  { type: 'email', message: 'Email không hợp lệ!' },
+                ]}
+              >
+                <Input
+                  prefix={<FaEnvelope className="text-gray-500 mr-2" />}
+                  placeholder="Nhập email"
+                  className="border-gray-300 rounded-md"
+                />
+              </Form.Item>
 
-            <Form.Item
-              label="Mã ơn gọi tu sĩ (nếu có)"
-              name="religious_vocation_id"
-            >
-              <Input placeholder="Mã ơn gọi tu sĩ (nếu có)" />
-            </Form.Item>
+              <Form.Item
+                label={<span className="text-white">Ngày sinh</span>}
+                name="dob"
+                rules={[
+                  { required: true, message: 'Vui lòng chọn ngày sinh!' },
+                ]}
+              >
+                <DatePicker format="YYYY-MM-DD" className="w-full" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Địa Chỉ</span>}
+                name="location"
+                rules={[{ required: true, message: 'Vui lòng nhập địa chỉ!' }]}
+              >
+                <Input placeholder="Nhập địa chỉ" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Họ và tên đệm của bố</span>}
+                name="dad_first_name"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập họ và tên đệm của bố!',
+                  },
+                ]}
+              >
+                <Input placeholder="Nhập họ và tên đệm của bố" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Tên của bố</span>}
+                name="dad_last_name"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập tên của bố!' },
+                ]}
+              >
+                <Input placeholder="Nhập tên của bố" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Họ và tên đệm của mẹ</span>}
+                name="mom_first_name"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập họ và tên đệm của mẹ!',
+                  },
+                ]}
+              >
+                <Input placeholder="Nhập họ và tên đệm của mẹ" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Tên của mẹ</span>}
+                name="mom_last_name"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập tên của mẹ!' },
+                ]}
+              >
+                <Input placeholder="Nhập tên của mẹ" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Giáo Xứ</span>}
+                name="parish_hometown"
+                rules={[{ required: true, message: 'Vui lòng nhập giáo Xứ!' }]}
+              >
+                <Input placeholder="Nhập giáo Xứ" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Tên anh chị em</span>}
+                name="brothers_and_sisters_name"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập tên anh chị em!' },
+                ]}
+              >
+                <Input placeholder="Nhập tên anh chị em" />
+              </Form.Item>
+
+              <Form.Item
+                label={
+                  <span className="text-white">Năm sinh của anh chị em</span>
+                }
+                name="brothers_and_sisters_year"
+                rules={[{ required: true, message: 'Vui lòng nhập năm sinh!' }]}
+              >
+                <DatePicker format="YYYY-MM-DD" className="w-full" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Ngày rửa tội</span>}
+                name="baptism_day"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập ngày rửa tội!' },
+                ]}
+              >
+                <DatePicker format="YYYY-MM-DD" className="w-full" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Người đỡ đầu rửa tội</span>}
+                name="baptismal_sponsor"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập tên người đỡ đầu!',
+                  },
+                ]}
+              >
+                <Input placeholder="Nhập tên người đỡ đầu" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Người rửa tội</span>}
+                name="pardoner"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập tên người rửa tội!',
+                  },
+                ]}
+              >
+                <Input placeholder="Nhập tên người rửa tội" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Người rửa tội</span>}
+                name="baptism_day_form"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập tên người rửa tội!',
+                  },
+                ]}
+              >
+                <Input placeholder="Nhập tên người rửa tội" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Nơi Rửa Tội</span>}
+                name="baptismal_at"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập nơi rửa tội!' },
+                ]}
+              >
+                <Input placeholder="Nhập nơi rửa tội" />
+              </Form.Item>
+
+              <Form.Item
+                label={
+                  <span className="text-white">
+                    Ngày Lần đầu nhận Mình Thánh Chúa
+                  </span>
+                }
+                name="first_communion_day"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập ngày Lần đầu nhận Mình Thánh Chúa!',
+                  },
+                ]}
+              >
+                <DatePicker format="YYYY-MM-DD" className="w-full" />
+              </Form.Item>
+
+              <Form.Item
+                label={
+                  <span className="text-white">Người đỡ đầu thêm sức</span>
+                }
+                name="confirmation_sponsor"
+                rules={[
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập người đỡ đầu thêm sức!',
+                  },
+                ]}
+              >
+                <Input placeholder="Nhập người đỡ đầu thêm sức" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Cha thêm sức</span>}
+                name="confirmation_form"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập Cha thêm sức!' },
+                ]}
+              >
+                <Input placeholder="Nhập Cha thêm sức" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Nơi thêm sức</span>}
+                name="confirmation_at"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập nơi thêm sức!' },
+                ]}
+              >
+                <Input placeholder="Nhập nơi thêm sức" />
+              </Form.Item>
+
+              <Form.Item
+                label={<span className="text-white">Ngày thêm sức</span>}
+                name="confirmation_mass"
+                rules={[
+                  { required: true, message: 'Vui lòng nhập ngày thêm sức!' },
+                ]}
+              >
+                <DatePicker format="YYYY-MM-DD" className="w-full" />
+              </Form.Item>
+
+              <Form.Item
+                label={
+                  <span className="text-white">Quá trình học giáo lý</span>
+                }
+                name="learning_process"
+              >
+                <Input placeholder="Quá trình học giáo lý" />
+              </Form.Item>
+
+              <Form.Item
+                label={
+                  <span className="text-white">Mã ơn gọi tu sĩ (nếu có)</span>
+                }
+                name="religious_vocation_id"
+              >
+                <Input placeholder="Mã ơn gọi tu sĩ (nếu có)" />
+              </Form.Item>
+            </div>
 
             <Form.Item>
               <Button
                 type="primary"
                 htmlType="submit"
-                className="w-full bg-blue-500 hover:bg-blue-600"
+                className="w-m bg-blue-500 hover:bg-blue-600"
               >
                 Đăng Ký
               </Button>

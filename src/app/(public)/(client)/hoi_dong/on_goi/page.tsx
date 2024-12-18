@@ -28,7 +28,7 @@ const OnGoiPage = () => {
   return (
     <Container>
       {/* Programs Section */}
-      <section className=" py-12 px-4">
+      <section className="">
         <Heading name="Các Chương Trình Ơn Gọi" />
         <p className="mt-2 text-16 text-center text-gray-600">
           Chúng tôi mời bạn cùng khám phá hành trình ơn gọi của mình và tìm thấy

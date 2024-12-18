@@ -4,13 +4,14 @@ import React, { useState } from 'react';
 import Heading from '@/app/components/design/Heading';
 // import HeroSectionTextHover from '@/app/components/animate/hero/hero-section-text-hover';
 // import InteractiveGrid from '@/app/components/animate/background/interactive-grid';
-import CarouselHero from '@/app/components/animate/hero/carousel';
+// import CarouselHero from '@/app/components/animate/hero/carousel';
 import { EventList } from '@/lib/eventList';
 import Tittle from '@/app/components/design/Tittle';
 import EventProb from '@/app/components/main/event/eventPost';
 import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '@/app/components/Container/container';
+import Contact from '@/app/components/design/formResgister';
 
 const Page = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -23,19 +24,18 @@ const Page = () => {
     isLoading,
     isError,
   } = EventList(currentPage, 'event', refreshKey);
-  console.log('🚀 ~ Page ~ event:', event);
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading news...</p>;
 
   const totalPages = next ? currentPage + 1 : currentPage;
-
   return (
     <Container>
-      <Heading name="Event" />
-      <CarouselHero
+      <Heading name="Dòng Chảy Hoạt Động & Sự Kiện" />
+      {/* <CarouselHero
         events={event.map((item) => ({ id: item.id, image: item.image || '' }))}
-      />
+      /> */}
+
       <div className="max-w-6xl mx-auto px-4 py-8">
         <Tittle name="CÁC SỰ KIỆN SẮP DIỄN RA" />
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -79,23 +79,9 @@ const Page = () => {
           </button>
         </div>
       </div>
-      {/* <HeroSectionTextHover /> */}
 
-      {/* <InteractiveGrid>
-
-        <div className="text-center text-white">
-          <h2 className="text-3xl font-semibold">
-            Khám Phá Không Gian Sáng Tạo
-          </h2>
-          <p className="mt-4 text-base">
-            Cùng chúng tôi tạo nên trải nghiệm độc đáo và đắm chìm trong không
-            gian tương tác đầy màu sắc.
-          </p>
-          <button className="mt-6 px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
-            Bắt Đầu Hành Trình
-          </button>
-        </div>
-      </InteractiveGrid> */}
+      {/* Hợp tác tổ chức sự kiện */}
+      <Contact />
     </Container>
   );
 };

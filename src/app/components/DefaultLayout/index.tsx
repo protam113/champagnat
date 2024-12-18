@@ -9,7 +9,7 @@ interface DefaultLayoutProps {
 
 const DefaultLayout: React.FC<DefaultLayoutProps> = ({ children }) => {
   return (
-    <div className="relative bg-white">
+    <div className="relative ">
       {/* Thêm lớp relative cho container */}
       <TopHeader />
       <Header /> {/* Đặt Navbar với z-index cao */}

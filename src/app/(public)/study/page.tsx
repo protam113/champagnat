@@ -29,9 +29,7 @@ const StudyPage = () => {
     <div>
       <Layout
         style={{
-          padding: '24px 0',
-          background: colorBgContainer,
-          borderRadius: borderRadiusLG,
+          background: '#ffffff',
         }}
       >
         <Slider

@@ -27,7 +27,7 @@ type NavItem = {
 
 export const TopHeader = () => {
   return (
-    <div className="w-full px-8 mx-auto flex items-center justify-start py-4 text-black text-sm bg-white">
+    <div className="w-full px-8 mx-auto flex items-center justify-start py-4 text-black lg:text-14 text-12 bg-white">
       <div className="flex items-center gap-1">
         <MdOutlineMail className="h-5 w-5" /> xlr.devteam03@devteam03gmail.com
         <FaPhoneVolume className="ml-5" />
@@ -131,7 +131,10 @@ export default function Navbar() {
         <h1>
           <Image src={logo} alt="logo" height={80} width={120} />
         </h1>
-        {isSideMenuOpen && <MobileNav closeSideMenu={closeSideMenu} />}
+        <MobileNav
+          closeSideMenu={closeSideMenu}
+          isSideMenuOpen={isSideMenuOpen}
+        />
 
         {/* Nav items */}
         <div className="hidden md:flex items-center justify-center flex-grow gap-10 transition-all">
@@ -205,7 +208,7 @@ function SingleNavItem(d: NavItem) {
       href={d.link ?? '#'}
       className="relative px-2 py-3 transition-all"
     >
-      <p className="flex cursor-pointer items-center gap-2 text-black group-hover:text-black">
+      <p className="flex cursor-pointer items-center gap-2 text-white hover:text-yellow-500">
         <span>{d.label || 'Default Label'}</span> {/* Use a default string */}
         {d.children && (
           <IoIosArrowDown
@@ -214,7 +217,7 @@ function SingleNavItem(d: NavItem) {
         )}
       </p>
       {isItemOpen && d.children && (
-        <p className="w-auto flex-col gap-1 rounded-lg bg-white py-3 transition-all flex">
+        <p className="w-auto flex-col gap-1 rounded-md text-primary-500 bg-white py-3 transition-all flex">
           {d.children.map((ch, i) => (
             <Link
               key={i}
@@ -230,35 +233,93 @@ function SingleNavItem(d: NavItem) {
   );
 }
 
-function MobileNav({ closeSideMenu }: { closeSideMenu: () => void }) {
+function MobileNav({
+  closeSideMenu,
+  isSideMenuOpen,
+}: {
+  closeSideMenu: () => void;
+  isSideMenuOpen: boolean;
+}) {
   const navItems = NavItems();
+  const { userInfo } = useUser() || {};
+  const { logout } = useAuth();
+  const [open, setOpen] = useState(false);
+
+  const showDrawer = () => {
+    setOpen(true);
+  };
+
+  const onClose = () => {
+    setOpen(false);
+  };
 
   return (
-    <div className="fixed left-0 top-0 flex h-full min-h-screen w-full justify-end bg-pr md:hidden text-black">
-      <div className="h-full w-[65%] bg-white px-4 py-4">
-        <section className="flex justify-end">
-          <AiOutlineClose
-            onClick={closeSideMenu}
-            className="cursor-pointer text-4xl"
-          />
-        </section>
-        <div className="flex flex-col text-14 text-black gap-2 transition-all">
-          {navItems.map((d, i) => (
-            <SingleNavItem key={i} label={d.label} link={d.link}>
-              {d.children}
-            </SingleNavItem>
-          ))}
-        </div>
-        <section className="flex flex-col gap-8 mt-4 items-center">
-          <button className="h-fit text-neutral-400 transition-all hover:text-black/90">
-            Login
-          </button>
+    <>
+      <div
+        className={`fixed left-0 top-0 flex h-full min-h-screen w-full md:hidden bg-black/50 transition-all duration-300 ${
+          isSideMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
+        }`}
+      >
+        <div
+          className={`h-full w-[65%] bg-primary-500 text-white px-4 py-4 transition-transform duration-300 ${
+            isSideMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          } ml-auto`}
+        >
+          <section className="flex justify-end">
+            <AiOutlineClose
+              onClick={closeSideMenu}
+              className="cursor-pointer text-4xl"
+            />
+          </section>
+          <div className="flex flex-col text-14 text-white gap-2 transition-all">
+            {navItems.map((d, i) => (
+              <SingleNavItem key={i} label={d.label} link={d.link}>
+                {d.children}
+              </SingleNavItem>
+            ))}
+          </div>
+          {userInfo ? (
+            <section className="flex flex-col gap-6 mt-6 items-center">
+              {/* Xem thông tin cá nhân */}
+              <button
+                className="w-full max-w-[200px] rounded-xl border-2 border-neutral-400 px-4 py-2 text-white transition-all hover:border-black hover:text-black/90"
+                onClick={showDrawer}
+              >
+                Thông tin cá nhân
+              </button>
 
-          <button className="w-full max-w-[200px] rounded-xl border-2 border-neutral-400 px-4 py-2 text-neutral-400 transition-all hover:border-black hover:text-black/90">
-            Register
-          </button>
-        </section>
+              {/* Học tập */}
+              <button className="w-full max-w-[200px] rounded-xl border-2 border-neutral-400 px-4 py-2 text-white transition-all hover:border-black hover:text-black/90">
+                <Link href="/study" className="whitespace-nowrap">
+                  Học Tập
+                </Link>
+              </button>
+
+              {/* Đăng xuất */}
+              <button
+                className="w-full max-w-[200px] rounded-xl bg-blue-500 px-4 py-2 text-white transition-all hover:bg-blue-600"
+                onClick={() => {
+                  logout();
+                  closeSideMenu();
+                }}
+              >
+                Đăng xuất
+              </button>
+            </section>
+          ) : (
+            // Nếu chưa đăng nhập
+            <section className="flex flex-col gap-6 mt-6 items-center">
+              <button className="h-fit text-neutral-400 transition-all hover:text-black/90">
+                Login
+              </button>
+              <button className="w-full max-w-[200px] rounded-xl border-2 border-neutral-400 px-4 py-2 text-neutral-400 transition-all hover:border-black hover:text-black/90">
+                Register
+              </button>
+            </section>
+          )}
+        </div>
       </div>
-    </div>
+      <ProfileDrawer open={open} onClose={onClose} userInfo={userInfo} />
+    </>
   );
 }

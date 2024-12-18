@@ -1,7 +1,6 @@
 'use client';
 
 import Image from 'next/image';
-import { FaExternalLinkAlt } from 'react-icons/fa';
 import React, { useState } from 'react';
 import { BlogList } from '@/lib/blogList';
 import formatDate from '@/utils/formatDate';
@@ -47,22 +46,33 @@ const RecentBlogPosts = () => {
         <Tittle name="BÀI VIẾT GẦN ĐÂY" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {/* Bài viết nổi bật bên trái */}
-          <div className="cursor-pointer lg:col-span-2 rounded-lg shadow-lg overflow-hidden bg-white ">
+          <div className="cursor-pointer lg:col-span-2 rounded-lg shadow-lg overflow-hidden bg-white hover:text-amber-500 ">
             <div className="h-full flex flex-col">
               {/* Hình ảnh bài viết nổi bật */}
-              <div className="relative w-full h-60">
+              <div className="relative w-full h-60 overflow-hidden group">
                 {latestPost?.image && (
                   <Image
                     src={latestPost.image}
                     alt={latestPost.title || 'No Title'}
-                    layout="fill" // Giữ tỷ lệ ảnh phù hợp với container
-                    objectFit="cover" // Đảm bảo ảnh không bị kéo dãn
-                    className="rounded-t-lg"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-t-lg transform transition-transform duration-300 group-hover:scale-110"
                   />
                 )}
               </div>
+
               {/* Nội dung bài viết nổi bật */}
-              <div className="p-6 flex-1 flex flex-col">
+              <div className="p-6 flex-1 flex flex-col ">
+                <div className="flex flex-wrap gap-2 mb-2">
+                  {latestPost.categories.map((category) => (
+                    <span
+                      key={category.id}
+                      className="text-xs bg-primary-800 text-white rounded-full px-2 py-1"
+                    >
+                      {category.name}
+                    </span>
+                  ))}
+                </div>
                 <p className="text-gray-500 text-sm">
                   {latestPost.user.username} •{' '}
                   {formatDate(latestPost.created_date)}
@@ -71,23 +81,6 @@ const RecentBlogPosts = () => {
                 <p className="text-gray-700 text-sm flex-grow line-clamp-4">
                   {latestPost.description}
                 </p>
-                <div className="flex flex-wrap gap-2 mt-2">
-                  {latestPost.categories.map((category) => (
-                    <span
-                      key={category.id}
-                      className="text-xs bg-gray-200 text-gray-600 rounded-full px-2 py-1"
-                    >
-                      {category.name}
-                    </span>
-                  ))}
-                </div>
-
-                <a
-                  href="#"
-                  className="flex items-center text-blue-500 text-sm mt-4"
-                >
-                  Read More <FaExternalLinkAlt className="ml-1" />
-                </a>
               </div>
             </div>
           </div>
@@ -97,9 +90,9 @@ const RecentBlogPosts = () => {
             {otherPosts.slice(0, 3).map((post, index) => (
               <div
                 key={index}
-                className="flex rounded-lg shadow-lg overflow-hidden bg-white h-auto hover:shadow-2xl hover:scale-105 transform transition-all duration-300"
+                className="flex rounded-lg shadow-lg overflow-hidden bg-white h-auto hover:shadow-2xl hover:scale-105 hover:text-yellow-500 transform transition-all duration-300"
               >
-                <div className="relative w-1/3 h-full">
+                <div className="relative w-1/3 h-40 md:h-48 lg:h-40">
                   {post?.image && (
                     <Image
                       src={post.image}
@@ -111,20 +104,20 @@ const RecentBlogPosts = () => {
                   )}
                 </div>
                 <div className="p-4 flex-1">
-                  <p className="text-gray-500 text-sm">
-                    {post.user.username} • {formatDate(post.created_date)}
-                  </p>
-                  <h4 className="text-base font-semibold">{post.title}</h4>
-                  <div className="flex flex-wrap gap-2 mt-2">
+                  <div className="flex flex-wrap gap-2 mb-2">
                     {post.categories.map((category) => (
                       <span
                         key={category.id}
-                        className="text-xs bg-gray-200 text-gray-600 rounded-full px-2 py-1"
+                        className="text-xs bg-primary-800 text-white rounded-full px-2 py-1"
                       >
                         {category.name}
                       </span>
                     ))}
                   </div>
+                  <p className="text-gray-500 text-sm">
+                    {post.user.username} • {formatDate(post.created_date)}
+                  </p>
+                  <h2 className="text-14 font-semibold">{post.title}</h2>
                 </div>
               </div>
             ))}

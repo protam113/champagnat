@@ -1,9 +1,9 @@
 'use client';
 
-import RecentNewPosts from '@/app/components/main/new/RecentNewPosts';
+import RecentNewPosts from '@/app/components/main/news/RecentNewPosts';
 import Heading from '@/app/components/design/Heading';
-import Newsletter from '@/app/components/main/new/newLetter';
-import NewContent from '@/app/components/main/new/NewContent';
+import NewContent from '@/app/components/main/news/NewContent';
+import Contact from '@/app/components/design/formResgister';
 
 const New = () => {
   return (
@@ -21,7 +21,7 @@ const New = () => {
 
       <NewContent />
 
-      <Newsletter />
+      <Contact />
     </main>
   );
 };
