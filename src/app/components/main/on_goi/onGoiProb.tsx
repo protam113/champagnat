@@ -1,8 +1,7 @@
-import { FaExternalLinkAlt } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 import { EventProps } from '@/types/types';
-
+import logo from '@/assets/image/logo_default.png';
 const OnGoiProb: React.FC<EventProps> = ({ id, title, date, image }) => {
   return (
     <Link
@@ -11,7 +10,7 @@ const OnGoiProb: React.FC<EventProps> = ({ id, title, date, image }) => {
     >
       <div className="relative h-48 w-full">
         <Image
-          src={image}
+          src={image || logo}
           alt={title}
           fill // Tương ứng với layout="fill"
           className="object-cover rounded-t-lg" // Tailwind CSS cho hình ảnh

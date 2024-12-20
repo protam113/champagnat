@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { Spin } from 'antd';
+import { message, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
 import { useBlogDetail } from '@/hooks/blog/useBlogDetail';
@@ -12,7 +12,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { BlogList } from '@/lib/blogList';
 import Tittle from '@/app/components/design/Tittle';
-
+import { BsFillShareFill } from 'react-icons/bs';
 const Page = () => {
   const { id: blogIdParam } = useParams();
   const postId = Array.isArray(blogIdParam) ? blogIdParam[0] : blogIdParam;
@@ -51,6 +51,21 @@ const Page = () => {
     return <p className="text-gray-500">Không tìm thấy bài viết nào.</p>;
   }
 
+  const handleShare = () => {
+    const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+
+    navigator.clipboard
+      .writeText(shareUrl)
+      .then(() => {
+        message.success('Link copied successfully!');
+      })
+      .catch((err) => {
+        // Handle errors if clipboard access fails
+        console.error('Failed to copy the URL: ', err);
+        alert('Failed to copy the link.');
+      });
+  };
+
   return (
     <Container>
       <div className="grid grid-cols-12 gap-8">
@@ -64,6 +79,13 @@ const Page = () => {
                 {blog.categories?.map((category) => category.name).join(', ')}
               </span>
               <span>{formatDate(blog.created_date)}</span>
+
+              <button
+                onClick={handleShare}
+                className="px-4 py-2 ml-4 bg-blue-500 text-white rounded-md shadow-md hover:bg-primary-500 transition"
+              >
+                <BsFillShareFill />
+              </button>
             </div>
 
             <div className="text-center mt-2 text-16">
@@ -92,7 +114,6 @@ const Page = () => {
                 __html: blog.content.replace(/\"/g, ''), // Xóa tất cả dấu "
               }}
             />
-
             {/* Source */}
             <div className="mt-6">
               <p className="text-gray-500 font-semibold">Nguồn:</p>

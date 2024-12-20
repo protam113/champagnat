@@ -6,7 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { DocList } from '@/lib/docList';
-
+import logo from '@/assets/image/logo_default.png';
 const StudyProb = ({
   refreshKey,
   category,
@@ -37,7 +37,7 @@ const StudyProb = ({
   return (
     <>
       {isLoading ? (
-        <div className="flex justify-center items-center py-20">
+        <div className="flex justify-center items-center">
           {/* Skeleton Loading */}
           <div className="animate-pulse">
             <div className="bg-gray-200 h-10 w-80 mb-4"></div>
@@ -55,7 +55,7 @@ const StudyProb = ({
         <>
           {/* Grid Layout */}
           <motion.div
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3"
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
@@ -64,13 +64,14 @@ const StudyProb = ({
               <Link
                 href={`/study/${post.id}`}
                 key={post.id}
-                className="border rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300"
+                className="border rounded-lg overflow-hidden shadow-md hover:shadow-xl  transition-transform  duration-300 hover:scale-110"
               >
                 <div className="relative">
                   <Image
-                    src={post.image || '/path/to/default-image.jpg'}
+                    src={post.image || logo}
                     alt={post.title}
-                    className="w-full h-48 object-cover"
+                    style={{ objectFit: 'cover' }}
+                    className="w-full h-48 object-cover "
                     width={400}
                     height={300}
                   />

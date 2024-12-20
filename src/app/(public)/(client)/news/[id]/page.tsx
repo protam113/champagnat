@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { Spin } from 'antd';
+import { message, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
 import BlogCommentsSection from '@/app/components/main/blog/comment/CommentsSection';
@@ -12,6 +12,7 @@ import Link from 'next/link';
 import { useNewsDetail } from '@/hooks/news/useNewsDetail';
 import { NewsList } from '@/lib/newList';
 import Tittle from '@/app/components/design/Tittle';
+import { BsFillShareFill } from 'react-icons/bs';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();
@@ -50,6 +51,20 @@ const Page = () => {
   if (!blog) {
     return <p className="text-gray-500">Không tìm thấy bài viết nào.</p>;
   }
+  const handleShare = () => {
+    const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+
+    navigator.clipboard
+      .writeText(shareUrl)
+      .then(() => {
+        message.success('Link copied successfully!');
+      })
+      .catch((err) => {
+        // Handle errors if clipboard access fails
+        console.error('Failed to copy the URL: ', err);
+        alert('Failed to copy the link.');
+      });
+  };
 
   return (
     <Container>
@@ -64,6 +79,12 @@ const Page = () => {
                 {blog.categories?.map((category) => category.name).join(', ')}
               </span>
               <span>{formatDate(blog.created_date)}</span>
+              <button
+                onClick={handleShare}
+                className="px-4 py-2 ml-4 bg-blue-500 text-white rounded-md shadow-md hover:bg-primary-500 transition"
+              >
+                <BsFillShareFill />
+              </button>
             </div>
 
             <div className="text-center mt-2 text-16">

@@ -5,7 +5,7 @@ import { CategoriesList } from '@/lib/categoriesList';
 import { ClipLoader } from 'react-spinners';
 import Image from 'next/image';
 import { useMediaQuery } from 'react-responsive';
-
+import logo from '@/assets/image/logo_default.png';
 interface Category {
   id: string;
   name: string;
@@ -62,27 +62,22 @@ const BlogTag = ({
       {queueData?.map((category: Category) => (
         <div
           key={category.id}
-          className={`relative flex flex-col items-center justify-center rounded-lg cursor-pointer border border-[#142857] ${
-            selectedCategory === category.id
-              ? 'bg-primary-500 text-white'
-              : 'bg-white text-[#142857]'
-          } transition-all duration-300 ease-in-out hover:bg-[#142857] hover:text-white 
-          sm:text-sm md:text-base lg:text-lg`}
+          className={`relative flex flex-col items-center justify-center cursor-pointer border border-primary-500 bg-primary-500  `}
           onClick={() => handleCategoryChange(category.id)}
         >
-          {!isMobile && category.image ? ( // Chỉ hiển thị hình nếu không phải mobile
-            <div className="w-60 h-40 relative">
+          {!isMobile && (category.image || logo) ? (
+            <div className="w-52 h-32 relative overflow-hidden">
               <Image
-                src={category.image}
+                src={category.image || logo}
                 alt={category.name}
                 fill
                 style={{ objectFit: 'cover' }}
-                className="rounded-md"
+                className="transition-transform duration-300 hover:scale-110"
               />
               <div
                 className="absolute text-16 bottom-0 left-0 w-full text-white text-center p-2 rounded-b-md z-10"
                 style={{
-                  backgroundColor: 'rgba(0, 0, 0, 0.1)', // Nền mờ nhẹ
+                  backgroundColor: 'rgba(0, 0, 0, 0.3)', // Nền mờ nhẹ
                   backdropFilter: 'blur(2px)', // Làm mờ phần nền phía sau
                   WebkitBackdropFilter: 'blur(2px)', // Hỗ trợ cho trình duyệt Webkit (Safari, iOS)
                 }}

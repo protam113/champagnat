@@ -20,7 +20,7 @@ import Loading from '../../design/Loading';
 
 type NavItem = {
   label: string | undefined; // Allow undefined
-  link: string;
+  link?: string;
   children?: NavItem[];
   iconImage?: string;
 };
@@ -29,9 +29,9 @@ export const TopHeader = () => {
   return (
     <div className="w-full px-8 mx-auto flex items-center justify-start py-4 text-black lg:text-14 text-12 bg-white">
       <div className="flex items-center gap-1">
-        <MdOutlineMail className="h-5 w-5" /> xlr.devteam03@devteam03gmail.com
+        <MdOutlineMail className="h-5 w-5" /> maristvietnam@gmail.com
         <FaPhoneVolume className="ml-5" />
-        (+84) 377-783437
+        0384543634 - 0345817993
       </div>
     </div>
   );
@@ -101,11 +101,11 @@ export default function Navbar() {
   const { userInfo } = useUser() || {}; // Provide a default empty object if useUser returns null
   const [animationParent] = useAutoAnimate();
   const [isSideMenuOpen, setSideMenue] = useState(false);
-  const [isMounted, setIsMounted] = useState(false);
+  // const [isMounted, setIsMounted] = useState(false);
   const navItems = NavItems();
-  useEffect(() => {
-    setIsMounted(true); // Set to true after component mounts
-  }, []);
+  // useEffect(() => {
+  //   setIsMounted(true); // Set to true after component mounts
+  // }, []);
 
   function openSideMenu() {
     setSideMenue(true);
@@ -115,10 +115,10 @@ export default function Navbar() {
     setSideMenue(false);
   }
 
-  if (!isMounted) {
-    // Render nothing on the server to prevent hydration issues
-    return <Loading />;
-  }
+  // if (!isMounted) {
+  //   // Render nothing on the server to prevent hydration issues
+  //   return <Loading />;
+  // }
 
   return (
     <div className="sticky top-0 mx-auto flex w-full justify-between px-8 py-3 text-14 bg-primary-500 z-10">

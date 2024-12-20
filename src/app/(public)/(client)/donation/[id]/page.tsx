@@ -36,52 +36,43 @@ const Page = () => {
 
   return (
     <Container>
-      <div className="grid grid-cols-12 gap-8">
-        {/* Bài viết chi tiết (bên trái) */}
-        <div className="col-span-12 lg:col-span-8">
-          <div className="flex flex-col gap-4">
-            <h1 className="text-24 font-semibold text-center">{blog.title}</h1>
-
-            <div className="text-center text-gray-500 text-sm">
-              <span>{formatDate(blog.created_date)}</span>
-            </div>
-
-            <div className="text-center mt-2 text-16">
-              <p>{blog.description}</p>
-            </div>
-
-            {/* Image */}
-            {blog.image && (
-              <div className="mt-8 w-full max-w-3xl mx-auto">
-                <Image
-                  src={blog.image}
-                  alt={blog.title}
-                  className="rounded-2xl object-cover"
-                  width={800}
-                  height={450}
-                />
-              </div>
-            )}
+      <div className="flex flex-col gap-8 items-center">
+        {/* detail */}
+        <div className="flex flex-col gap-8 lg:w-3/5">
+          <h1 className="text-24 font-semibold text-center">{blog.title}</h1>
+          <div className="flex items-center gap-2 text-gray-400 text-sm justify-center">
+            <span>{formatDate(blog.created_date)}</span>
           </div>
+          <div className="lg:text-16 flex flex-col gap-6 text-justify">
+            <p>{blog.description}</p>
+          </div>
+        </div>
 
-          {/* Content */}
-          <div className="flex flex-col gap-8 mt-12">
+        {/* Image */}
+        {blog.image && (
+          <div className="mt-8 w-full max-w-3xl mx-auto">
+            <Image
+              src={blog.image}
+              alt={blog.title}
+              className="rounded-2xl object-cover"
+              width={800}
+              height={450}
+            />
+          </div>
+        )}
+
+        {/* content */}
+        <div className="flex flex-col md:flex-row gap-12 justify-center">
+          {/* text */}
+          <div className="lg:text-lg flex flex-col gap-6 text-justify w-full md:w-3/5">
             <div
-              className="content text-lg text-justify"
+              className="content"
               dangerouslySetInnerHTML={{
                 __html: blog.content.replace(/\"/g, ''), // Xóa tất cả dấu "
               }}
             />
-
-            {/* Source */}
-            <div className="mt-6">
-              <p className="text-gray-500 font-semibold">Nguồn:</p>
-              <p className="text-blue-800">{blog.link}</p>
-            </div>
           </div>
         </div>
-
-        {/* Các bài viết gợi ý (bên phải) */}
       </div>
     </Container>
   );

@@ -8,6 +8,7 @@ import formatDate from '@/utils/formatDate';
 import Container from '../../Container/container';
 import Tittle from '../../design/Tittle';
 import { FaCross } from '@/lib/iconLib';
+import Link from 'next/link';
 
 const RecentBlogPosts = () => {
   const [currentPage] = useState(1);
@@ -46,7 +47,10 @@ const RecentBlogPosts = () => {
         <Tittle name="BÀI VIẾT GẦN ĐÂY" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {/* Bài viết nổi bật bên trái */}
-          <div className="cursor-pointer lg:col-span-2 rounded-lg shadow-lg overflow-hidden bg-white hover:text-amber-500 ">
+          <Link
+            href={`/blog/${latestPost.id}`}
+            className="cursor-pointer lg:col-span-2 rounded-lg shadow-lg overflow-hidden bg-white hover:text-amber-500 "
+          >
             <div className="h-full flex flex-col">
               {/* Hình ảnh bài viết nổi bật */}
               <div className="relative w-full h-60 overflow-hidden group">
@@ -83,7 +87,7 @@ const RecentBlogPosts = () => {
                 </p>
               </div>
             </div>
-          </div>
+          </Link>
 
           {/* Các bài viết khác bên phải */}
           <div className="cursor-pointer flex flex-col space-y-4">
