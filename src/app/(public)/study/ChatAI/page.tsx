@@ -2,12 +2,13 @@
 
 // Page.tsx
 import React, { useState, useEffect } from 'react';
-import ChatSidebar from '@/app/components/main/study/chatAI/chatSideBar';
 import { useChat, useChatList } from '@/hooks/chatAI/useChat';
-import ChatInput from '@/app/components/main/study/chatAI/ChatInput';
-import ChatFont from '@/app/components/main/study/chatAI/chatFont';
-import Container from '@/app/components/Container/container';
+
 import ReactMarkdown from 'react-markdown';
+import Container from '@/components/Container/container';
+import ChatSidebar from '@/components/main/study/chatAI/chatSideBar';
+import ChatFont from '@/components/main/study/chatAI/chatFont';
+import ChatInput from '@/components/main/study/chatAI/ChatInput';
 const Page = () => {
   // const [chatView, setChatView] = useState(false);
   const [refreshKey, setRefreshKey] = useState<number>(0);

@@ -4,12 +4,12 @@ import { useParams } from 'next/navigation';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
-import Container from '@/app/components/Container/container';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useMissionDetail } from '@/hooks/misssion/useMissionDetail';
 import { MissionList } from '@/lib/missionList';
-import Tittle from '@/app/components/design/Tittle';
+import Container from '@/components/Container/container';
+import Tittle from '@/components/design/Tittle';
 
 const Page = () => {
   const { id: suvuIdParam } = useParams();

@@ -1,7 +1,7 @@
+import Container from '@/components/Container/container';
+import Heading from '@/components/design/Heading';
+import SuvuContent from '@/components/main/su_vu/SuvuContent';
 import React from 'react';
-import Container from '@/app/components/Container/container';
-import SuvuContent from '@/app/components/main/su_vu/SuvuContent';
-import Heading from '@/app/components/design/Heading';
 
 const SuVuPage = () => {
   return (

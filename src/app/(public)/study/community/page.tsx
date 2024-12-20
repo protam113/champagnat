@@ -7,8 +7,8 @@ import { FaSync } from 'react-icons/fa'; // Import refresh icon
 import { GroupList } from '@/lib/groupList';
 import dayjs from 'dayjs';
 import { EyeOutlined } from '@ant-design/icons';
-import Heading from '@/app/components/design/Heading';
-import GroupDetailDrawer from '@/app/components/drawer/GroupDetailDrawer';
+import Heading from '@/components/design/Heading';
+import GroupDetailDrawer from '@/components/drawer/GroupDetailDrawer';
 
 const Page: React.FC = () => {
   const [selectedKeys, setSelectedKeys] = useState<number[]>([]);

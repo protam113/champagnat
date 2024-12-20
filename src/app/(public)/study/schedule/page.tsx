@@ -1,4 +1,4 @@
-import CatholicCalendarTable from '@/app/components/table/schedule';
+import CatholicCalendarTable from '@/components/table/schedule';
 import React from 'react';
 
 const Page = () => {

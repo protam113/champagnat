@@ -2,28 +2,24 @@
 
 import React, { useState } from 'react';
 
-import { Layout, theme } from 'antd';
-import Slider from '@/app/components/main/study/studySlider';
-import StudyProb from '@/app/components/main/study/StudyProb';
+import { Layout } from 'antd';
+import Slider from '@/components/main/study/studySlider';
+import StudyProb from '@/components/main/study/StudyProb';
 
 const { Content } = Layout;
 
 const StudyPage = () => {
-  const [category, setCategory] = useState<string>(''); // Tag hiện tại
-  const [refreshKey, setRefreshKey] = useState(0); // Để làm mới dữ liệu
+  const [category, setCategory] = useState<string>('');
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const handleTagChange = (selectedTag: string) => {
-    setCategory(selectedTag); // Cập nhật tag
+    setCategory(selectedTag);
   };
 
   const handleResetFilter = () => {
     setCategory(''); // Reset tag
     setRefreshKey((prev) => prev + 1); // Tăng refreshKey để làm mới
   };
-
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
 
   return (
     <div>

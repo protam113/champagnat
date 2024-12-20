@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { PiEyeSlash } from 'react-icons/pi';
 import { RxEyeOpen } from 'react-icons/rx';
 import { useRouter } from 'next/navigation';
-import Heading from '@/app/components/design/Heading';
 import { useChangePassword } from '@/hooks/auth/usePassword'; // Giả sử bạn đã có hook để thay đổi mật khẩu
+import Heading from '@/components/design/Heading';
 
 const Page = () => {
   const router = useRouter();

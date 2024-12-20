@@ -5,14 +5,16 @@ import { message, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
 import { useBlogDetail } from '@/hooks/blog/useBlogDetail';
-import BlogCommentsSection from '@/app/components/main/blog/comment/CommentsSection';
-import Comment from '@/app/components/main/blog/comment/Comment';
-import Container from '@/app/components/Container/container';
 import Image from 'next/image';
 import Link from 'next/link';
 import { BlogList } from '@/lib/blogList';
-import Tittle from '@/app/components/design/Tittle';
 import { BsFillShareFill } from 'react-icons/bs';
+import Container from '@/components/Container/container';
+import Tittle from '@/components/design/Tittle';
+import Header from '@/components/design/Header';
+import Comment from '@/components/main/blog/comment/Comment';
+import BlogCommentsSection from '@/components/main/blog/comment/CommentsSection';
+
 const Page = () => {
   const { id: blogIdParam } = useParams();
   const postId = Array.isArray(blogIdParam) ? blogIdParam[0] : blogIdParam;
@@ -21,8 +23,6 @@ const Page = () => {
   const { queueData: blogs } = BlogList(1, '', 0);
 
   const relatedBlogs = blogs.filter((relatedPost) => {
-    // Kiểm tra xem có danh mục trùng với bài viết hiện tại không
-    // Đồng thời kiểm tra bài viết không phải là bài hiện tại (so sánh ID)
     return (
       relatedPost.id !== blog?.id &&
       relatedPost.categories.some((relatedCategory) =>
@@ -115,7 +115,7 @@ const Page = () => {
               }}
             />
             {/* Source */}
-            <div className="mt-6">
+            <div className="mt-6 mb-6">
               <p className="text-gray-500 font-semibold">Nguồn:</p>
               <p className="text-blue-800">{blog.link}</p>
             </div>
@@ -158,7 +158,7 @@ const Page = () => {
           </div>
         </div>
       </div>
-
+      <Header name="Bình Luận" />
       <Comment postId={blog.id} model="blog" />
       <BlogCommentsSection postId={blog.id} PostModel="blog" />
     </Container>

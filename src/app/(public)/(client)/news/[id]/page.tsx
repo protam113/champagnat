@@ -4,15 +4,16 @@ import { useParams } from 'next/navigation';
 import { message, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
-import BlogCommentsSection from '@/app/components/main/blog/comment/CommentsSection';
-import Comment from '@/app/components/main/blog/comment/Comment';
-import Container from '@/app/components/Container/container';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import { useNewsDetail } from '@/hooks/news/useNewsDetail';
 import { NewsList } from '@/lib/newList';
-import Tittle from '@/app/components/design/Tittle';
 import { BsFillShareFill } from 'react-icons/bs';
+import Container from '@/components/Container/container';
+import Tittle from '@/components/design/Tittle';
+import Comment from '@/components/main/blog/comment/Comment';
+import BlogCommentsSection from '@/components/main/blog/comment/CommentsSection';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();

@@ -9,7 +9,7 @@ import { RxEyeOpen } from 'react-icons/rx';
 
 import { useAuth } from '@/context/authContext';
 import { useRouter } from 'next/navigation';
-import Loading from '@/app/components/design/Loading';
+import Loading from '@/components/design/Loading';
 
 const LoginPage = () => {
   const { login } = useAuth();

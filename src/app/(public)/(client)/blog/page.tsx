@@ -1,9 +1,9 @@
 'use client';
 
-import Heading from '@/app/components/design/Heading';
-import RecentBlogPosts from '@/app/components/main/blog/RecentBlogPosts';
-import BlogContent from '@/app/components/main/blog/BlogContent';
-import Contact from '@/app/components/design/formResgister';
+import Contact from '@/components/design/formResgister';
+import Heading from '@/components/design/Heading';
+import BlogContent from '@/components/main/blog/BlogContent';
+import RecentBlogPosts from '@/components/main/blog/RecentBlogPosts';
 
 const BlogPage = () => {
   return (

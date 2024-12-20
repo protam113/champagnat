@@ -1,10 +1,10 @@
 'use client';
 
 import { Form, Input, Button, Upload } from 'antd';
-import Heading from '@/app/components/design/Heading';
 import { useUpdateProfile } from '@/hooks/auth/useProfile';
 import { useUser } from '@/context/userContext';
 import { UploadOutlined } from '@ant-design/icons';
+import Heading from '@/components/design/Heading';
 
 const Page: React.FC = () => {
   const [form] = Form.useForm();

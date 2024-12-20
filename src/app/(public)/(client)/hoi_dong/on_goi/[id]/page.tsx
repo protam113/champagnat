@@ -5,9 +5,9 @@ import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
 import Image from 'next/image';
-import Container from '@/app/components/Container/container';
 import { useEventDetail } from '@/hooks/event/useEventDetail';
-import OnGoiRegister from '@/app/components/main/on_goi/OnGoiRegister';
+import Container from '@/components/Container/container';
+import OnGoiRegister from '@/components/main/on_goi/OnGoiRegister';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();

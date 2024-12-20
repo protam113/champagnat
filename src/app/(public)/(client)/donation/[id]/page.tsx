@@ -4,9 +4,9 @@ import { useParams } from 'next/navigation';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
-import Container from '@/app/components/Container/container';
 import Image from 'next/image';
 import { useDonateDetail } from '@/hooks/donate/useDonateDetail';
+import Container from '@/components/Container/container';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();

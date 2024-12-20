@@ -18,6 +18,8 @@
     "crypto-js": "^4.2.0",
     "date-fns": "^4.1.0",
     "framer-motion": "^11.11.11",
+    "lodash": "^4.17.21",
+    "lodash.debounce": "^4.0.8",
     "lucide-react": "^0.468.0",
     "next": "^14.2.16",
     "next-crypto": "^1.0.8",
@@ -30,6 +32,7 @@
     "react-slick": "^0.30.2",
     "react-slideshow-image": "^4.3.2",
     "react-spinners": "^0.15.0",
+    "sharp": "^0.33.5",
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^2.5.5",
     "zustand": "^5.0.2"

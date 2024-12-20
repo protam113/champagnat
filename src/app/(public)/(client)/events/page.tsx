@@ -1,17 +1,14 @@
 'use client';
 
 import React, { useState } from 'react';
-import Heading from '@/app/components/design/Heading';
-// import HeroSectionTextHover from '@/app/components/animate/hero/hero-section-text-hover';
-// import InteractiveGrid from '@/app/components/animate/background/interactive-grid';
-// import CarouselHero from '@/app/components/animate/hero/carousel';
 import { EventList } from '@/lib/eventList';
-import Tittle from '@/app/components/design/Tittle';
-import EventProb from '@/app/components/main/event/eventPost';
 import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
-import Container from '@/app/components/Container/container';
-import Contact from '@/app/components/design/formResgister';
+import Container from '@/components/Container/container';
+import Heading from '@/components/design/Heading';
+import Tittle from '@/components/design/Tittle';
+import EventProb from '@/components/main/event/eventPost';
+import Contact from '@/components/design/formResgister';
 
 const Page = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -32,9 +29,6 @@ const Page = () => {
   return (
     <Container>
       <Heading name="Dòng Chảy Hoạt Động & Sự Kiện" />
-      {/* <CarouselHero
-        events={event.map((item) => ({ id: item.id, image: item.image || '' }))}
-      /> */}
 
       <div className="max-w-6xl mx-auto px-4 py-8">
         <Tittle name="CÁC SỰ KIỆN SẮP DIỄN RA" />

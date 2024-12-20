@@ -76,10 +76,7 @@ const CreateComment = async (newComment: NewComment, token?: string) => {
   for (const key in newComment) {
     const value = newComment[key as keyof NewComment];
 
-    if (key === 'content') {
-      // Xử lý content nếu là object hoặc JSON string
-      formData.append(key, JSON.stringify(value));
-    } else if (value) {
+    if (value) {
       // Thêm các trường khác
       formData.append(key, value as string);
     }

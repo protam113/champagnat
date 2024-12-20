@@ -1,4 +1,4 @@
-import { HistoryContent } from '@/app/components/animate/scroll/TextParallaxContent';
+import { HistoryContent } from '@/components/animate/scroll/TextParallaxContent';
 
 const Page = () => {
   return (

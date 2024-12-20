@@ -5,12 +5,13 @@ import { message, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
 import { useDocumentDetail } from '@/hooks/document/useDocumentDetail';
-import BlogCommentsSection from '@/app/components/main/blog/comment/CommentsSection';
-import Comment from '@/app/components/main/blog/comment/Comment';
-import Container from '@/app/components/Container/container';
+
 import Image from 'next/image';
 import CategoryDoc from './CategoryDoc';
 import { BsFillShareFill } from 'react-icons/bs';
+import Container from '@/components/Container/container';
+import Comment from '@/components/main/blog/comment/Comment';
+import BlogCommentsSection from '@/components/main/blog/comment/CommentsSection';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();
@@ -107,8 +108,8 @@ const Page = () => {
       <CategoryDoc category={blog.category.id} />
 
       {/* Comments */}
-      <Comment postId={blog.id} model="blog" />
-      <BlogCommentsSection postId={blog.id} PostModel="blog" />
+      <Comment postId={blog.id} model="document" />
+      <BlogCommentsSection postId={blog.id} PostModel="document" />
     </Container>
   );
 };

@@ -1,8 +1,8 @@
 // src/layout/DashboardLayout.tsx
 'use client';
 
-import React from 'react'; // , { useEffect }
-import ClientLayout from '@/app/components/DefaultLayout/Homlayout';
+import ClientLayout from '@/components/DefaultLayout/Homlayout';
+import React from 'react';
 
 export default function DashboardLayout({
   children,

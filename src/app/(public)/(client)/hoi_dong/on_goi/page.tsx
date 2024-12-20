@@ -1,12 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import Container from '@/app/components/Container/container';
 import { EventList } from '@/lib/eventList';
-import OnGoiProb from '@/app/components/main/on_goi/onGoiProb';
 import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
-import Heading from '@/app/components/design/Heading';
+import Container from '@/components/Container/container';
+import Heading from '@/components/design/Heading';
+import OnGoiProb from '@/components/main/on_goi/onGoiProb';
 
 const OnGoiPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
