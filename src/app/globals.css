@@ -195,11 +195,8 @@ body {
 }
 
 @media (max-width: 768px) {
-  .slick-prev {
-    left: 10px;
-  }
-
+  .slick-prev,
   .slick-next {
-    right: 10px;
+    display: none !important;
   }
 }

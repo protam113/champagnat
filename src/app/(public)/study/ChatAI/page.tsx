@@ -1,17 +1,17 @@
 'use client';
 
-// Page.tsx
 import React, { useState, useEffect } from 'react';
 import { useChat, useChatList } from '@/hooks/chatAI/useChat';
-
-import ReactMarkdown from 'react-markdown';
-import Container from '@/components/Container/container';
+// import ReactMarkdown from 'react-markdown';
+// import Container from '@/components/Container/container';
 import ChatSidebar from '@/components/main/study/chatAI/chatSideBar';
 import ChatFont from '@/components/main/study/chatAI/chatFont';
 import ChatInput from '@/components/main/study/chatAI/ChatInput';
+import ChatMessage from '@/components/main/study/chatAI/ChatMessage';
+
 const Page = () => {
-  // const [chatView, setChatView] = useState(false);
   const [refreshKey, setRefreshKey] = useState<number>(0);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { data, isLoading, isError } = useChatList(refreshKey);
   const { mutate } = useChat();
   const [userInput, setUserInput] = useState('');
@@ -43,43 +43,72 @@ const Page = () => {
       ]);
       setUserInput('');
       mutate({ content: userInput });
-      // setChatView(true);
     }
   };
 
   return (
-    <Container>
-      <div className="pt-10 flex">
-        <ChatSidebar setRefreshKey={setRefreshKey} />
+    <div className="h-screen flex flex-col bg-gray-50">
+      {/* Header for mobile */}
+      <div className="md:hidden bg-white border-b px-4 py-2 flex items-center">
+        <button
+          onClick={() => setIsSidebarOpen(true)}
+          className="p-2 hover:bg-gray-100 rounded-lg"
+        >
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+        <h1 className="ml-4 text-xl font-bold text-primary-500">MaristChat</h1>
+      </div>
 
-        <div className="flex-1 flex flex-col bg-white px-4">
-          <div className="flex flex-col flex-1 overflow-hidden">
-            <div className="flex-1 p-4 space-y-4 overflow-y-auto max-h-[calc(100vh-50px)] transition-all duration-300">
-              {isLoading ? (
-                <p className="text-gray-500">Đang tải dữ liệu...</p>
-              ) : isError ? (
-                <p className="text-red-500">Có lỗi xảy ra khi tải dữ liệu.</p>
-              ) : chatHistory.length > 0 ? (
-                chatHistory.map((chat, index) => (
-                  <div
+      <div className="flex-1 flex overflow-hidden">
+        <ChatSidebar
+          setRefreshKey={setRefreshKey}
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+        />
+
+        {/* Overlay for mobile sidebar */}
+        {isSidebarOpen && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+            onClick={() => setIsSidebarOpen(false)}
+          />
+        )}
+
+        <main className="flex-1 flex flex-col overflow-hidden">
+          <div className="flex-1 overflow-y-auto px-4 py-4">
+            {isLoading ? (
+              <div className="flex items-center justify-center h-full">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500" />
+              </div>
+            ) : isError ? (
+              <div className="text-center text-red-500 mt-4">
+                Có lỗi xảy ra khi tải dữ liệu.
+              </div>
+            ) : chatHistory.length > 0 ? (
+              <div className="max-w-3xl mx-auto space-y-4">
+                {chatHistory.map((chat, index) => (
+                  <ChatMessage
                     key={index}
-                    className={`${
-                      chat.sender === 'user'
-                        ? ' text-white bg-primary-500 p-2 rounded-lg w-max text-right ml-auto'
-                        : ' text-black bg-gray-200 p-2 rounded-lg w-full mr-auto'
-                    }`}
-                  >
-                    {chat.sender === 'system' ? (
-                      <ReactMarkdown>{chat.message}</ReactMarkdown> // Hiển thị markdown cho hệ thống
-                    ) : (
-                      chat.message
-                    )}
-                  </div>
-                ))
-              ) : (
-                <ChatFont />
-              )}
-            </div>
+                    message={chat.message}
+                    sender={chat.sender}
+                  />
+                ))}
+              </div>
+            ) : (
+              <ChatFont />
+            )}
           </div>
 
           <ChatInput
@@ -87,9 +116,9 @@ const Page = () => {
             handleInputChange={handleInputChange}
             handleSendMessage={handleSendMessage}
           />
-        </div>
+        </main>
       </div>
-    </Container>
+    </div>
   );
 };
 

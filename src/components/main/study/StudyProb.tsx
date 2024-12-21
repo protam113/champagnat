@@ -1,125 +1,105 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { DocList } from '@/lib/docList';
 import logo from '@/assets/image/logo_default.png';
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
-const StudyProb = ({
-  refreshKey,
-  category,
-}: {
+interface StudyContentProps {
   refreshKey: number;
   category: string;
-}) => {
+}
+
+const StudyContent = ({ refreshKey, category }: StudyContentProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-
-  const { queueData, isLoading, isError } = DocList(
-    currentPage,
-    category,
-    refreshKey,
-  );
-
-  const handleNextPage = () => {
-    if (queueData.length > 0) {
-      setCurrentPage((prev) => prev + 1);
-    }
-  };
-
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage((prev) => prev - 1);
-    }
-  };
+  const { queueData, isLoading } = DocList(currentPage, category, refreshKey);
 
   return (
-    <>
-      {isLoading ? (
-        <div className="flex justify-center items-center">
-          <div className="animate-pulse">
-            <div className="bg-gray-200 h-10 w-80 mb-4"></div>
-            <div className="bg-gray-200 h-60 w-80 mb-4"></div>
-          </div>
-        </div>
-      ) : isError ? (
-        <div className="text-center text-lg text-red-500">
-          Có lỗi xảy ra khi tải bài viết.
-          <button className="mt-4 px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600">
-            Thử lại
-          </button>
-        </div>
-      ) : (
-        <motion.div
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-        >
-          {queueData.map((post) => (
-            <Link
-              href={`/study/${post.id}`}
-              key={post.id}
-              className="border rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-transform duration-300 hover:scale-105"
-            >
-              <div className="relative">
-                <Image
-                  src={post.image || logo}
-                  alt={post.title}
-                  style={{ objectFit: 'cover' }}
-                  className="w-full h-48 object-cover"
-                  width={400}
-                  height={300}
-                />
-              </div>
-              <div className="p-4">
-                <div className="flex flex-wrap gap-2 text-xs text-gray-500 uppercase font-semibold">
-                  {Array.isArray(post.categories) &&
-                    post.categories.map((category, index) => (
+    <div className="flex-1">
+      {/* Grid Layout */}
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {isLoading
+          ? // Skeleton loading
+            Array(6)
+              .fill(0)
+              .map((_, i) => (
+                <div
+                  key={i}
+                  className="animate-pulse bg-white rounded-xl overflow-hidden"
+                >
+                  <div className="h-48 bg-gray-200" />
+                  <div className="p-4 space-y-3">
+                    <div className="h-4 bg-gray-200 rounded w-2/3" />
+                    <div className="h-4 bg-gray-200 rounded" />
+                    <div className="h-4 bg-gray-200 rounded w-4/5" />
+                  </div>
+                </div>
+              ))
+          : queueData?.map((post: any) => (
+              <Link
+                href={`/study/${post.id}`}
+                key={post.id}
+                className="group bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-md transition-shadow"
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <Image
+                    src={post.image || logo}
+                    alt={post.title}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  {/* Category tags */}
+                  {/* <div className="absolute bottom-3 left-3 flex flex-wrap gap-2">
+                    {post.categories?.map((cat: any, idx: number) => (
                       <span
-                        key={index}
-                        className="bg-gray-200 text-gray-800 px-2 py-1 rounded-full"
+                        key={idx}
+                        className="px-3 py-1 text-xs font-medium bg-white/90 text-gray-800 rounded-full"
                       >
-                        {category.name}
+                        {cat.name}
                       </span>
                     ))}
+                  </div> */}
                 </div>
-                <h2 className="text-lg font-bold text-gray-800 mt-2">
-                  {post.title}
-                </h2>
-              </div>
-            </Link>
-          ))}
-        </motion.div>
-      )}
 
-      <div className="flex justify-center mt-8 items-center gap-4">
-        <button
-          onClick={handlePrevPage}
-          disabled={currentPage === 1}
-          className={`flex items-center justify-center w-6 h-6 bg-gray-300 rounded-full hover:bg-gray-400 ${
-            currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
-        >
-          <FaArrowLeft />
-        </button>
-        <span className="text-16 font-semibold">{currentPage}</span>
-        <button
-          onClick={handleNextPage}
-          disabled={queueData.length === 0 || queueData.length < 10}
-          className={`flex items-center justify-center w-6 h-6 bg-gray-300 rounded-full hover:bg-gray-400 ${
-            queueData.length === 0 || queueData.length < 10
-              ? 'opacity-50 cursor-not-allowed'
-              : ''
-          }`}
-        >
-          <FaArrowRight />
-        </button>
+                <div className="p-4">
+                  <h3 className="font-semibold text-lg mb-2 group-hover:text-primary-600 transition-colors">
+                    {post.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm line-clamp-2">
+                    {post.description}
+                  </p>
+                </div>
+              </Link>
+            ))}
       </div>
-    </>
+
+      {!isLoading && queueData?.length > 0 && (
+        <div className="mt-8 flex justify-center cursor-pointer">
+          <div className="inline-flex items-center gap-4">
+            <button
+              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+              disabled={currentPage === 1}
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-white border-2 border-gray-200 hover:border-primary-500 hover:text-primary-500 disabled:opacity-50 disabled:hover:border-gray-200 disabled:hover:text-gray-400 transition-all duration-300"
+            >
+              <FaChevronLeft className="w-4 h-4" />
+            </button>
+            <span className="w-6 h-6 flex items-center justify-center rounded-full bg-primary-500 text-white font-medium">
+              {currentPage}
+            </span>
+            <button
+              onClick={() => setCurrentPage((p) => p + 1)}
+              disabled={queueData.length < 10}
+              className="w-8 h-8 flex items-center justify-center rounded-full bg-white border-2 border-gray-200 hover:border-primary-500 hover:text-primary-500 disabled:opacity-50 disabled:hover:border-gray-200 disabled:hover:text-gray-400 transition-all duration-300"
+            >
+              <FaChevronRight className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default StudyProb;
+export default StudyContent;

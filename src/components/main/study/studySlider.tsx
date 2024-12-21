@@ -1,103 +1,128 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Layout, Menu, Typography, Button } from 'antd';
+import { useEffect } from 'react';
+import { IoClose } from 'react-icons/io5';
 import { CategoriesList } from '@/lib/categoriesList';
-import { IoDocumentText } from '@/lib/iconLib';
-import { CategoryProps } from '@/types/types';
-import { FiMenu } from 'react-icons/fi';
 
-const { Sider } = Layout;
-const { Title } = Typography;
+interface FilterSidebarProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onTagChange: (id: string) => void;
+  onResetFilter: () => void;
+  selectedCategory: string;
+}
 
-const Slider = ({ handleTagChange, onResetFilter }: CategoryProps) => {
-  const [currentPage] = useState(1);
-  const [model] = useState<string>('document');
-  const { queueData, isLoading, isError } = CategoriesList(
-    currentPage,
-    model,
-    0,
-  );
+const FilterSidebar = ({
+  isOpen,
+  onClose,
+  onTagChange,
+  onResetFilter,
+  selectedCategory,
+}: FilterSidebarProps) => {
+  const { queueData: categories, isLoading } = CategoriesList(1, 'document', 0);
 
-  const menuItems = isLoading
-    ? [{ key: 'loading', label: 'Đang tải...' }]
-    : isError
-      ? [{ key: 'error', label: 'Lỗi tải danh mục' }]
-      : Array.isArray(queueData)
-        ? queueData.map((category: any) => ({
-            key: category.id,
-            label: category.name,
-            icon: <IoDocumentText />,
-            onClick: () => handleTagChange(category.id),
-          }))
-        : [];
+  // Prevent scroll when modal is open on mobile
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
 
   return (
-    <Sider
-      width={240}
-      breakpoint="lg"
-      collapsedWidth="0"
-      style={{
-        background: '#ffffff',
-        boxShadow: '2px 0 5px rgba(0, 0, 0, 0.1)',
-        height: '100vh',
-        position: 'sticky',
-        top: 0,
-        overflow: 'hidden',
-      }}
-    >
+    <>
+      {/* Desktop Sidebar */}
+      <div className="hidden lg:block w-72 ">
+        <div className="bg-primary-500 text-white shadow-sm p-4">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-lg font-semibold">Danh Mục</h2>
+            <button
+              onClick={onResetFilter}
+              className="text-14 bg-primary-600 p-2 rounded-md hover:text-yellow-300"
+            >
+              Đặt lại
+            </button>
+          </div>
+          <div className="space-y-2">
+            {isLoading
+              ? Array(5)
+                  .fill(0)
+                  .map((_, i) => (
+                    <div
+                      key={i}
+                      className="animate-pulse h-10 bg-gray-100 rounded-lg"
+                    />
+                  ))
+              : categories?.map((category: any) => (
+                  <button
+                    key={category.id}
+                    onClick={() => onTagChange(category.id)}
+                    className={`w-full text-left bg-primary-500 px-4 py-2 rounded-lg transition-colors ${
+                      selectedCategory === category.id
+                        ? 'bg-primary-50 text-primary-600'
+                        : 'hover:text-yellow-500'
+                    }`}
+                  >
+                    {category.name}
+                  </button>
+                ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Filter Modal */}
       <div
-        style={{
-          padding: '16px',
-          background: '#ffffff',
-          textAlign: 'center',
-          borderBottom: '1px solid #f0f0f0',
-        }}
+        className={`lg:hidden fixed inset-0 bg-black bg-opacity-50 z-50 transition-opacity ${
+          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={onClose}
       >
-        <Button
-          onClick={onResetFilter}
-          type="primary"
-          className="transition-all duration-300"
+        <div
+          className={`absolute right-0 top-0 h-full w-80 bg-white transform transition-transform ${
+            isOpen ? 'translate-x-0' : 'translate-x-full'
+          }`}
+          onClick={(e) => e.stopPropagation()}
         >
-          Reset
-        </Button>
+          <div className="p-4">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-24 font-semibold">Danh Mục</h2>
+              <button onClick={onClose} className="p-2">
+                <IoClose className="text-xl" />
+              </button>
+            </div>
+            <button
+              onClick={() => {
+                onResetFilter();
+                onClose();
+              }}
+              className="w-max mb-4 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700"
+            >
+              Đặt lại
+            </button>
+            <div className="space-y-2">
+              {categories?.map((category: any) => (
+                <button
+                  key={category.id}
+                  onClick={() => onTagChange(category.id)}
+                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors ${
+                    selectedCategory === category.id
+                      ? 'bg-primary-50 text-primary-600'
+                      : 'hover:bg-gray-50'
+                  }`}
+                >
+                  {category.name}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
-      <div
-        style={{
-          background: '#ffffff',
-          borderBottom: '1px solid #f0f0f0',
-        }}
-      >
-        <Title
-          level={4}
-          style={{
-            margin: 0,
-            display: 'flex',
-            alignItems: 'center',
-            gap: 6,
-            backgroundColor: '#0f314b',
-            padding: '5px',
-            color: '#ffffff',
-          }}
-        >
-          <FiMenu />
-          Danh Mục
-        </Title>
-      </div>
-      <div style={{ background: '#ffffff' }}>
-        <Menu
-          mode="inline"
-          selectedKeys={[]}
-          style={{
-            height: 'calc(100% - 100px)',
-            overflowY: 'auto',
-            backgroundColor: 'transparent',
-          }}
-          items={menuItems}
-        />
-      </div>
-    </Sider>
+    </>
   );
 };
 
-export default Slider;
+export default FilterSidebar;

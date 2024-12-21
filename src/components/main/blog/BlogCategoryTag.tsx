@@ -1,11 +1,9 @@
-'use client';
-
 import React, { useState } from 'react';
 import { CategoriesList } from '@/lib/categoriesList';
 import { ClipLoader } from 'react-spinners';
 import Image from 'next/image';
 import { useMediaQuery } from 'react-responsive';
-import Slider from 'react-slick';
+import Slider, { Settings } from 'react-slick'; // Import Settings
 import logo from '@/assets/image/logo_default.png';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -87,12 +85,16 @@ const BlogTag = ({
     );
   };
 
-  const settings = {
+  const settings: Settings = {
     dots: false,
-    infinite: false,
-    speed: 500,
+    infinite: true,
+    speed: 300,
     slidesToShow: isMobile ? 2 : 4,
     slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+    lazyLoad: 'ondemand', // Ensure 'lazyLoad' is correctly typed
+    swipeToSlide: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
     responsive: [

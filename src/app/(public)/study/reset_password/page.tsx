@@ -77,17 +77,6 @@ const Page = () => {
               placeholder="Nhập mật khẩu cũ"
               required
             />
-            <button
-              type="button"
-              onClick={toggleShowPassword}
-              className="absolute right-2 top-10"
-            >
-              {showPassword ? (
-                <PiEyeSlash className="h-5 w-5 text-gray-600" />
-              ) : (
-                <RxEyeOpen className="h-5 w-5 text-gray-600" />
-              )}
-            </button>
           </div>
 
           {/* Mật khẩu mới */}

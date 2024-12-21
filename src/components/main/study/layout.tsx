@@ -19,7 +19,7 @@ const LayoutPage: React.FC<PrivateLayoutProps> = ({ children }) => {
         <Content>
           {' '}
           <Breadcrumb />
-          <div className="p-8">{children}</div>
+          <div>{children}</div>
         </Content>
       </Container>
     </Layout>
