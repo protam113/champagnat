@@ -17,6 +17,21 @@ export interface OverlayCopyProps {
 }
 
 /**
+Register Interface
+**/
+
+
+export interface Register {
+  username: string;
+  password: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  phone_number: number;
+}
+
+
+/**
 drawer Interface
 **/
 

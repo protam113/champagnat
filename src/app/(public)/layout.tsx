@@ -12,22 +12,19 @@ export default function DashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const { loading, checkAuth } = useAuthStore(); // Sử dụng hook từ store của bạn
+  const { loading, checkAuth } = useAuthStore();
   const [tokenChecked, setTokenChecked] = useState(false);
 
-  // Kiểm tra trạng thái xác thực khi mount
   useEffect(() => {
-    checkAuth(); // Kiểm tra xác thực khi mount trang
+    checkAuth();
   }, [checkAuth]);
 
-  // Cập nhật tokenChecked sau khi kiểm tra xong
   useEffect(() => {
     if (!loading) {
-      setTokenChecked(true); // Token đã được kiểm tra
+      setTokenChecked(true);
     }
   }, [loading]);
 
-  // Nếu đang loading, hiển thị Loading spinner
   if (loading || !tokenChecked) {
     return <Loading />;
   }

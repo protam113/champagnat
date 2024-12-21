@@ -37,8 +37,6 @@ const Footer = () => {
                 Bản Đồ
               </h2>
               <div className="relative pt-52 ">
-                {' '}
-                {/* Tỷ lệ khung 16:9 */}
                 <iframe
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d332.662125043758!2d106.45101828260943!3d10.990855226120695!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310b2d60e4c833bd%3A0xfbe630fea0a95d8a!2sMARIST%20BROTHERS%20COMMUNITY!5e1!3m2!1sen!2s!4v1734406653011!5m2!1sen!2s"
                   className="absolute top-0 left-0 w-full h-full rounded-lg border-0"

@@ -4,15 +4,7 @@ import { handleAPI } from '@/apis/axiosClient';
 import { endpoints } from '@/apis/api';
 import { useMutation } from '@tanstack/react-query';
 import { message } from 'antd';
-
-interface Register {
-  username: string;
-  password: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  phone_number: number;
-}
+import { Register } from '@/types/types';
 
 const validateInputs = (register: Register) => {
   const { username, password, email, first_name, last_name, phone_number } =

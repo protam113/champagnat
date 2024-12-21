@@ -1,5 +1,3 @@
-'use client';
-
 import Container from '@/components/Container/container';
 import DonateContent from '@/components/main/donation/DonateContent';
 import Intro from '@/components/main/donation/intro';

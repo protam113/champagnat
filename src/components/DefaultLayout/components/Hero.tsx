@@ -10,6 +10,7 @@ import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
 import logo from '@/assets/image/logo_default.png';
+import Link from 'next/link';
 // Dữ liệu cho phần tin tức
 
 const Hero = () => {
@@ -61,12 +62,16 @@ const Hero = () => {
   }, []);
 
   if (!isClient) {
-    return null; // Không render component trên server
+    return null;
   }
 
   // Hiển thị khi đang tải
   if (isLoading) {
-    return <Spin indicator={<LoadingOutlined spin />} />;
+    return (
+      <div className="absolute inset-0 flex items-center justify-center">
+        <Spin indicator={<LoadingOutlined spin />} />
+      </div>
+    );
   }
 
   // Hiển thị khi có lỗi
@@ -84,7 +89,7 @@ const Hero = () => {
         arrows={false}
       >
         {newsData.map((news, index) => (
-          <div className="each-slide" key={index}>
+          <Link href={`/news/${news.id}`} className="each-slide" key={index}>
             <div className="relative w-full h-[400px]">
               <Image
                 src={news.image || logo}
@@ -95,7 +100,7 @@ const Hero = () => {
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
-          </div>
+          </Link>
         ))}
       </Slide>
 
@@ -160,11 +165,14 @@ const Hero = () => {
                       {news.title}
                     </p>
                     <hr className="border-t-1 border-white mt-2 mb-3" />
-                    <div className="relative flex items-center gap-1 text-primary-100 group">
+                    <Link
+                      href={`/news/${news.id}`}
+                      className="relative flex items-center gap-1 text-primary-100 group"
+                    >
                       <i>Tiếp tục đọc</i>{' '}
                       <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-1/2"></span>
                       <FaLongArrowAltRight className="arrow-icon" />
-                    </div>
+                    </Link>
                   </div>
                 ))}
               </div>

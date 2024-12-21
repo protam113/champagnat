@@ -19,11 +19,11 @@ const Intro = () => {
             thay đổi thế giới. &#34;
           </p>
           <p className="transition-all duration-300 transform hover:scale-105">
-            Tổ chức của chúng tôi luôn nỗ lực hỗ trợ cộng đồng gặp khó khăn, từ
-            việc cung cấp học bổng cho học sinh nghèo đến việc xây dựng cơ sở hạ
-            tầng và chăm sóc sức khỏe cho những người cần giúp đỡ. Chúng tôi tin
-            rằng những hành động nhỏ, những đóng góp giản dị sẽ tạo nên sự khác
-            biệt lớn lao trong cuộc sống của người khác.
+            Chúng tôi luôn nỗ lực hỗ trợ cộng đồng gặp khó khăn, từ việc cung
+            cấp học bổng cho học sinh nghèo đến việc xây dựng cơ sở hạ tầng và
+            chăm sóc sức khỏe cho những người cần giúp đỡ. Chúng tôi tin rằng
+            những hành động nhỏ, những đóng góp giản dị sẽ tạo nên sự khác biệt
+            lớn lao trong cuộc sống của người khác.
           </p>
           {/* Thêm câu chuyện cảm hứng */}
           <p className="font-semibold text-lg text-primary-600 mt-4">

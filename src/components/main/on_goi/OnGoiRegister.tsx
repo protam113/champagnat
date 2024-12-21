@@ -16,6 +16,7 @@ import dayjs from 'dayjs';
 import Container from '../../Container/container';
 import { RcFile } from 'antd/es/upload';
 import { PiPlusDuotone } from 'react-icons/pi';
+import ContentSection from '../ContentSection';
 
 const OnGoiRegister = ({ ongoiId }: { ongoiId: string }) => {
   const [form] = Form.useForm();
@@ -24,12 +25,14 @@ const OnGoiRegister = ({ ongoiId }: { ongoiId: string }) => {
   const [previewOpen, setPreviewOpen] = useState<boolean>(false);
   const [fileList, setFileList] = useState<UploadFile[]>([]);
   const [blogData, setBlogData] = useState<any>({});
+  const [content, setContent] = useState('');
 
   const handleChange: UploadProps['onChange'] = ({ fileList }) => {
     setFileList(fileList);
     setBlogData({
       ...blogData,
       image: fileList.map((file) => file.originFileObj as RcFile),
+      learning_process: content,
     });
   };
 
@@ -397,7 +400,10 @@ const OnGoiRegister = ({ ongoiId }: { ongoiId: string }) => {
                 }
                 name="learning_process"
               >
-                <Input placeholder="Quá trình học giáo lý" />
+                <ContentSection
+                  onChange={setContent}
+                  initialContent={content}
+                />
               </Form.Item>
 
               <Form.Item

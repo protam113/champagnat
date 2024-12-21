@@ -127,9 +127,9 @@ export default function Navbar() {
         className="flex items-center justify-between w-full"
       >
         {/* logo */}
-        <h1>
+        <Link href="/">
           <Image src={logo} alt="logo" height={80} width={120} />
-        </h1>
+        </Link>
         <MobileNav
           closeSideMenu={closeSideMenu}
           isSideMenuOpen={isSideMenuOpen}

@@ -8,13 +8,16 @@ import { useEffect, useState } from 'react';
 import { message } from 'antd';
 import { ChangePassword, VerifyCode, ResetPassword } from '@/types/types';
 
+/**
+Hàm Đổi Mật Khẩu Khi Đã Đăng Nhập
+**/
+
 const ChangePasswordAuth = async (
   changePassword: ChangePassword,
   token: string,
 ) => {
   const formData = new FormData();
 
-  // Duyệt qua các thuộc tính của `newBlog` và xử lý
   for (const key in changePassword) {
     const value = changePassword[key as keyof ChangePassword];
 
@@ -72,6 +75,10 @@ const useChangePassword = () => {
   });
 };
 
+/**
+Hàm Nhận Verify code khi quên mật khẩu
+**/
+
 const GetVerifyCode = async (verifyCode: VerifyCode, token?: string) => {
   const formData = new FormData();
 
@@ -127,6 +134,10 @@ const useGetVerifyCode = () => {
     },
   });
 };
+
+/**
+Hàm cập nhật mật khẩu mới sau khi quên mật khẩu
+**/
 
 const ForgotPasswordAuth = async (
   updatePassword: ResetPassword,
