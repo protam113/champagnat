@@ -34,7 +34,7 @@ const StudyPage = () => {
           refreshKey={refreshKey}
           onResetFilter={handleResetFilter}
         />
-        <Content style={{ padding: '0 24px', minHeight: 280 }}>
+        <Content style={{ padding: '0 24px' }}>
           <StudyProb category={category} refreshKey={refreshKey} />
         </Content>
       </Layout>

@@ -25,7 +25,14 @@ const Page = () => {
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading news...</p>;
 
-  const totalPages = next ? currentPage + 1 : currentPage;
+  const itemsPerPage = 9;
+  const totalPages = Math.ceil(event.length / itemsPerPage);
+
+  const paginatedEvents = event.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage,
+  );
+
   return (
     <Container>
       <Heading name="Dòng Chảy Hoạt Động & Sự Kiện" />
@@ -33,7 +40,7 @@ const Page = () => {
       <div className="max-w-6xl mx-auto px-4 py-8">
         <Tittle name="CÁC SỰ KIỆN SẮP DIỄN RA" />
         <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {event.map((event, index) => (
+          {paginatedEvents.map((event, index) => (
             <EventProb
               key={index}
               id={event.id}

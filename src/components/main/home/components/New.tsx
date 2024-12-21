@@ -8,7 +8,7 @@ export const News = () => {
   return (
     <>
       {/* Phần nội dung: Hình ảnh, text và lịch */}
-      <div className="flex justify-between py-10 gap-4">
+      <div className="flex flex-col lg:flex-row py-10 gap-4">
         {/* Phần nội dung */}
         <div className="flex-[4]">
           <Image src={news} alt="news" height={200} width={1100} />
@@ -34,7 +34,7 @@ export const News = () => {
         </div>
 
         {/* Phần lịch */}
-        <div className="flex-[1]">
+        <div className="flex-[1] lg:flex-[1]">
           <CalendarCustom />
         </div>
       </div>

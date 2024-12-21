@@ -80,7 +80,7 @@ const RecentNewPosts = () => {
                 key={index}
                 className="flex rounded-lg shadow-lg overflow-hidden bg-white hover:shadow-2xl hover:scale-105 transform transition-all duration-300 hover:text-amber-500"
               >
-                <div className="relative w-1/3 h-full">
+                <div className="relative w-1/3 h-40">
                   {post?.image && (
                     <Image
                       src={post.image}

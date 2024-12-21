@@ -1,31 +1,54 @@
 'use client';
 
-import React from 'react';
-import { Layout, Menu } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Layout, Menu, Drawer, Button } from 'antd';
 import Link from 'next/link';
-// import Image from 'next/image';
 import {
   BookOutlined,
   RobotOutlined,
   TeamOutlined,
   KeyOutlined,
   UserOutlined,
+  MenuOutlined,
 } from '@ant-design/icons';
 import { SlCalender } from '@/lib/iconLib';
-// import logo from '@/assets/image/image_logo.png';
 
 const { Header } = Layout;
 
 const SidebarStudy: React.FC = () => {
+  const [visible, setVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
+
+  const showDrawer = () => {
+    setVisible(true);
+  };
+
+  const onClose = () => {
+    setVisible(false);
+  };
+
   const items = [
     {
       key: '1',
-      icon: <BookOutlined style={{ color: 'white' }} />, // Màu biểu tượng
+      icon: <BookOutlined style={{ color: 'white' }} />,
       label: (
         <Link href="/study" style={{ color: 'white' }}>
           Tài Liệu
         </Link>
-      ), // Màu chữ
+      ),
     },
     {
       key: '2',
@@ -88,26 +111,47 @@ const SidebarStudy: React.FC = () => {
           padding: '0 20px',
         }}
       >
-        {/* Logo */}
-        {/* <div
-          style={{ display: 'flex', alignItems: 'center', marginRight: 'auto' }}
-        >
-          <Image src={logo} alt="logo" height={30} width={70} />
-        </div> */}
-
-        {/* Menu */}
-        <Menu
-          mode="horizontal"
-          defaultSelectedKeys={['1']}
-          items={items}
-          className="menu-custom"
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            minWidth: 0,
-            backgroundColor: '#0f314b',
-          }}
-        />
+        {isMobile ? (
+          <>
+            <Button
+              type="primary"
+              onClick={showDrawer}
+              style={{ backgroundColor: '#0f314b', border: 'none' }}
+            >
+              <MenuOutlined style={{ fontSize: '24px', color: 'white' }} />
+            </Button>
+            <Drawer
+              title="Menu"
+              placement="right"
+              onClose={onClose}
+              visible={visible}
+              bodyStyle={{ backgroundColor: '#0f314b', padding: 0 }}
+            >
+              <Menu
+                mode="vertical"
+                defaultSelectedKeys={['1']}
+                items={items}
+                className="menu-custom"
+                style={{
+                  backgroundColor: '#0f314b',
+                }}
+              />
+            </Drawer>
+          </>
+        ) : (
+          <Menu
+            mode="horizontal"
+            defaultSelectedKeys={['1']}
+            items={items}
+            className="menu-custom"
+            style={{
+              flex: 1,
+              justifyContent: 'center',
+              minWidth: 0,
+              backgroundColor: '#0f314b',
+            }}
+          />
+        )}
       </Header>
     </Layout>
   );

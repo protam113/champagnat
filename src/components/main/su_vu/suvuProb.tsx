@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-
+import logo from '@/assets/image/image_logo.png';
 interface SuvuCardProps {
   id: string;
   title: string;
@@ -27,7 +27,7 @@ const SuvuProb: React.FC<SuvuCardProps> = ({
     >
       <div className="relative h-48 w-full">
         <Image
-          src={image}
+          src={image || logo}
           alt={title}
           fill // Tương ứng với layout="fill"
           className="object-cover rounded-t-lg" // Tailwind CSS cho hình ảnh

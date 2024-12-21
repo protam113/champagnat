@@ -18,7 +18,7 @@ export default function DashboardLayout({
   // Kiểm tra trạng thái xác thực khi mount
   useEffect(() => {
     checkAuth(); // Kiểm tra xác thực khi mount trang
-  }, []);
+  }, [checkAuth]);
 
   // Cập nhật tokenChecked sau khi kiểm tra xong
   useEffect(() => {

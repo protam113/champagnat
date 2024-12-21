@@ -20,7 +20,7 @@ export default function PrivateLayout({
   // Kiểm tra trạng thái xác thực khi mount
   useEffect(() => {
     checkAuth(); // Kiểm tra xác thực khi mount trang
-  }, []); // Chỉ chạy 1 lần khi trang load lại
+  }, [checkAuth]); // Chỉ chạy 1 lần khi trang load lại
 
   // Cập nhật tokenChecked sau khi kiểm tra xong
   useEffect(() => {

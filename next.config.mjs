@@ -1,7 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     images: {
-        domains: ['hcm03.vstorage.vngcloud.vn'], // Thêm hostname của ảnh tại đây
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'hcm03.vstorage.vngcloud.vn',
+            },
+        ],
     },
 };
 

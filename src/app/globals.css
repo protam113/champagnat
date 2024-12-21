@@ -115,3 +115,91 @@ body {
     transform: scale(1.2);
   }
 }
+/* CSS cho menu trên desktop và mobile */
+.ant-menu-item-selected {
+  background-color: #053a64 !important; /* Màu nền khi chọn */
+}
+
+.ant-menu-item-selected a {
+  color: white !important; /* Màu chữ khi chọn */
+}
+
+/* Đảm bảo rằng item đã chọn sẽ giữ màu nền */
+/* .ant-menu-item-selected a::before {
+  background-color: #053a64 !important;
+} */
+
+/* CSS cho Drawer */
+.ant-drawer-content-wrapper {
+  width: 250px !important; /* Kích thước mặc định của drawer trên desktop */
+}
+
+.ant-drawer-body {
+  padding: 0 !important; /* Không có padding trong body */
+}
+
+.ant-menu-vertical.ant-menu-root {
+  width: 100% !important; /* Đảm bảo menu chiếm 100% chiều rộng */
+}
+
+.ant-drawer-header {
+  background-color: #0f314b !important; /* Màu nền cho header */
+  border-bottom: 1px solid #1f4060 !important; /* Viền dưới */
+}
+
+.ant-drawer-title {
+  color: white !important; /* Màu chữ cho tiêu đề */
+}
+
+.ant-drawer-close {
+  color: white !important; /* Màu chữ cho nút đóng */
+}
+
+/* Điều chỉnh chiều cao của item trên mobile */
+@media (max-width: 768px) {
+  .ant-menu-item {
+    height: 50px !important;
+    line-height: 50px !important; /* Căn giữa nội dung */
+  }
+}
+/* slick */
+.slick-prev,
+.slick-next {
+  z-index: 1;
+}
+
+.slick-prev {
+  left: -25px;
+}
+
+.slick-next {
+  right: -25px;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  color: #0f314b;
+}
+
+.slick-dots {
+  bottom: -30px;
+}
+
+.slick-dots li button:before {
+  font-size: 12px;
+  color: #0f314b;
+}
+
+.slick-dots li.slick-active button:before {
+  color: #0f314b;
+}
+
+@media (max-width: 768px) {
+  .slick-prev {
+    left: 10px;
+  }
+
+  .slick-next {
+    right: 10px;
+  }
+}

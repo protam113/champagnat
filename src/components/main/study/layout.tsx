@@ -18,16 +18,8 @@ const LayoutPage: React.FC<PrivateLayoutProps> = ({ children }) => {
       <Container>
         <Content>
           {' '}
-          {/* style={{ padding: '0 48px' }} */}
           <Breadcrumb />
-          <div
-            style={{
-              minHeight: 280,
-              padding: 24,
-            }}
-          >
-            {children}
-          </div>
+          <div className="p-8">{children}</div>
         </Content>
       </Container>
     </Layout>

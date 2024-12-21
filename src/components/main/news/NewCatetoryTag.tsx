@@ -64,7 +64,7 @@ const NewsTag = ({
           onClick={() => handleCategoryChange(category.id)}
         >
           {!isMobile && (category.image || logo) ? (
-            <div className="w-60 h-40 relative overflow-hidden">
+            <div className="w-52 h-32 relative overflow-hidden">
               <Image
                 src={category.image || logo}
                 alt={category.name}
@@ -73,7 +73,7 @@ const NewsTag = ({
                 className="transition-transform duration-300 hover:scale-110"
               />
               <div
-                className="absolute text-16 bottom-0 left-0 w-full text-white text-center p-2 rounded-b-lg z-10 transition-colors duration-300"
+                className="absolute text-16 bottom-0 left-0 w-full text-white text-center p-2 rounded-b-lg transition-colors duration-300"
                 style={{
                   backgroundColor: 'rgba(0, 0, 0, 0.3)',
                   backdropFilter: 'blur(2px)',

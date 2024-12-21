@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
-
+import logo from '@/assets/image/logo_default.png';
 interface EventCardProps {
   id: string;
   title: string;
@@ -23,10 +23,10 @@ const VocationProb: React.FC<EventCardProps> = ({
     >
       <div className="relative h-48 w-full">
         <Image
-          src={image || ''}
+          src={image || logo}
           alt={title}
           fill // Tương ứng với layout="fill"
-          className="object-cover rounded-lg" // Tailwind CSS cho hình ảnh
+          className="object-cover rounded-t-lg" // Tailwind CSS cho hình ảnh
         />
       </div>
 

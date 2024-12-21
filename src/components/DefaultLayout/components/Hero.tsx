@@ -9,7 +9,7 @@ import { NewsList } from '@/lib/newList';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
-
+import logo from '@/assets/image/logo_default.png';
 // Dữ liệu cho phần tin tức
 
 const Hero = () => {
@@ -86,14 +86,12 @@ const Hero = () => {
         {newsData.map((news, index) => (
           <div className="each-slide" key={index}>
             <div className="relative w-full h-[400px]">
-              {' '}
-              {/* Chiều cao cố định là 400px */}
               <Image
-                src={news.image || '/placeholder-image.jpg'}
+                src={news.image || logo}
                 alt={`Banner Image ${index + 1}`}
-                className="object-cover banner-image"
-                fill
-                priority // Đảm bảo ảnh quan trọng tải trước
+                className="object-cover"
+                layout="fill"
+                priority
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
