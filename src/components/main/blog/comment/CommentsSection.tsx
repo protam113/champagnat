@@ -63,20 +63,22 @@ const BlogCommentsSection = ({
         {queueData.map((comment) =>
           comment && comment.user ? (
             <div key={comment.id}>
-              <div className="flex  items-center  mb-2">
-                <div className="flex">
+              <div className="flex items-center mb-3">
+                <div className="flex items-center">
                   <Avatar
-                    className="mr-2 w-8 h-8 rounded-full"
+                    className="mr-3 w-10 h-10 rounded-full"
                     src={comment.user.profile_image}
                     alt="avatar"
                   />
-                  <p className="text-sm font-semibold text-black">
-                    {comment.user.first_name} {comment.user.last_name}
-                  </p>
+                  <div className="flex flex-col">
+                    <p className="text-md font-semibold text-gray-800">
+                      {comment.user.first_name} {comment.user.last_name}
+                    </p>
+                    <p className="text-sm text-gray-500">
+                      {formatDate(comment.created_date)}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-sm text-gray-500">
-                  {formatDate(comment.created_date)}
-                </p>
               </div>
 
               <p className="text-sm text-gray-800">{comment.content}</p>

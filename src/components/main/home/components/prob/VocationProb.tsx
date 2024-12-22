@@ -4,18 +4,11 @@ import logo from '@/assets/image/logo_default.png';
 interface EventCardProps {
   id: string;
   title: string;
-  description: string;
   date: string;
   image: string | null;
 }
 
-const VocationProb: React.FC<EventCardProps> = ({
-  id,
-  title,
-  description,
-  date,
-  image,
-}) => {
+const VocationProb: React.FC<EventCardProps> = ({ id, title, date, image }) => {
   return (
     <Link
       href={`/hoi_dong/on_goi/${id}`}
@@ -33,7 +26,6 @@ const VocationProb: React.FC<EventCardProps> = ({
       <div className="p-4">
         <p className="text-gray-500 text-sm">{date}</p>
         <h3 className="text-lg font-semibold my-2">{title}</h3>
-        <p className="text-gray-700 text-sm line-clamp-4">{description}</p>
       </div>
     </Link>
   );

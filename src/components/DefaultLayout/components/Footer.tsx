@@ -1,7 +1,6 @@
 // src/components/Footer.tsx
 import LogoFooter from '@/assets/image/logo.svg';
 import Image from 'next/image';
-import Container from '../../Container/container';
 import Head from 'next/head';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from '@/lib/iconLib';
 const followUs = [
@@ -31,7 +30,7 @@ const Footer = () => {
       </Head>
 
       <footer className="bg-primary-500 mt-20">
-        <Container>
+        <div className="container w-full max-w-[1800px] px-[20px] mx-auto relative">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 py-8">
             <div className="md:col-span-1 lg:col-span-1">
               <h2 className="mb-2 text-14 font-semibold text-white uppercase">
@@ -108,7 +107,7 @@ const Footer = () => {
               </ul>
             </div>
           </div>
-        </Container>
+        </div>
 
         {/* Phần Bản Quyền */}
         <div className="flex flex-col items-center justify-center bg-white py-4 px-2 shadow-md">

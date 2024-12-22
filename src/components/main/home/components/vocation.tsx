@@ -33,7 +33,6 @@ export const Vocation = () => {
               key={index}
               id={blog.id}
               title={blog.title}
-              description={blog.description}
               date={formatDate(blog.created_date)}
               image={blog.image}
             />
