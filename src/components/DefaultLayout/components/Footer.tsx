@@ -3,10 +3,11 @@ import LogoFooter from '@/assets/image/logo.svg';
 import Image from 'next/image';
 import Container from '../../Container/container';
 import Head from 'next/head';
-
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from '@/lib/iconLib';
 const followUs = [
   { name: 'Giới Thiệu', link: '/hoi_dong/about_us' },
   { name: 'Ơn Gọi', link: '/hoi_dong/on_goi' },
+  { name: 'Quyên Góp', link: '/donation' },
 ];
 
 const legal = [
@@ -48,35 +49,36 @@ const Footer = () => {
               </div>
             </div>
             {/* Phần Liên Hệ và Logo */}
-            <div className="text-left">
+            <div className="text-left text-14">
               <div className="pb-5">
                 <Image src={LogoFooter} alt="logo" className="h-24 w-auto" />
               </div>
-              <h2 className="mb-4 text-sm font-semibold text-white uppercase">
-                Liên hệ
-              </h2>
-              <p className="text-white pb-2">
-                Hotline: 0384543634 - 0345817993
-              </p>
-              <p className="text-white pb-2">
-                Email:{' '}
+              <div className="text-white pb-2 flex items-center">
+                <FaPhoneAlt className="mr-2" />
+                <span>0384543634 - 0345817993</span>
+              </div>
+              <div className="text-white pb-2 flex items-center">
+                <FaEnvelope className="mr-2" />
                 <a
                   href="mailto:maristvietnam@gmail.com"
                   className="hover:underline"
                 >
                   maristvietnam@gmail.com
                 </a>
-              </p>
-              <p className="text-white pb-2">
-                3 Đ. Nguyễn Thị Nị, Phước Hiệp, Củ Chi, Hồ Chí Minh, Vietnam
-              </p>
+              </div>
+              <div className="text-white pb-2 flex items-center">
+                <FaMapMarkerAlt className="mr-2" />
+                <span>
+                  3 Đ. Nguyễn Thị Nị, Phước Hiệp, Củ Chi, Hồ Chí Minh, Vietnam
+                </span>
+              </div>
             </div>
 
             {/* Phần Bản Đồ */}
 
             {/* Phần Danh Mục */}
-            <div className="text-left">
-              <h2 className="mb-4 text-14 font-semibold text-white uppercase">
+            <div className="text-left text-14">
+              <h2 className="mb-4  font-semibold text-white uppercase">
                 Về Chúng Tôi
               </h2>
               <ul className="space-y-2">
@@ -91,8 +93,8 @@ const Footer = () => {
             </div>
 
             {/* Phần Chính Sách & Điều Khoản */}
-            <div className="text-left">
-              <h2 className="mb-4 text-14 font-semibold text-white uppercase">
+            <div className="text-left text-14">
+              <h2 className="mb-4 font-semibold text-white uppercase">
                 Chính Sách & Điều Khoản
               </h2>
               <ul className="space-y-2">

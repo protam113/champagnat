@@ -9,9 +9,9 @@ const BlogPage = () => {
   return (
     <main>
       <div className="mb-10 text-center">
-        <Heading name="bài viết blog" />
+        <Heading name="bài viết" />
         <p className="mt-2 text-gray-600">
-          Khám phá những thông tin chi tiết, bài viết và cập nhật mới nhất
+          Bài viết không chỉ để đọc, mà còn để cảm nhận và suy ngẫm.
         </p>
       </div>
 

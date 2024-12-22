@@ -46,7 +46,7 @@ const Contact = () => {
           {/* Left Section: Three Fields */}
           <div className="flex-1 flex flex-col space-y-4">
             <div>
-              <label className="block text-white mb-1" htmlFor="name">
+              <label className="block text-16 text-white mb-1" htmlFor="name">
                 Họ Và Tên
               </label>
               <input
@@ -60,7 +60,7 @@ const Contact = () => {
             </div>
             <div>
               <label
-                className="block text-white font-medium mb-1"
+                className="block text-16 text-white font-medium mb-1"
                 htmlFor="email"
               >
                 Email
@@ -76,7 +76,7 @@ const Contact = () => {
             </div>
             <div>
               <label
-                className="block text-white font-medium mb-1"
+                className="block text-16 text-white font-medium mb-1"
                 htmlFor="phone"
               >
                 Điện Thoại
@@ -109,10 +109,10 @@ const Contact = () => {
                 className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500 h-40 resize-none"
               ></textarea>
             </div>
-            <div className="self-start">
+            <div className="flex justify-center">
               <button
                 type="submit"
-                className="text-18 bg-white py-3 px-5 rounded-lg transform transition-transform duration-300 hover:bg-yellow-500 hover:text-white"
+                className="text-16 bg-white py-2 px-5 rounded-lg transform transition-transform duration-300 hover:bg-yellow-500 hover:text-white"
               >
                 Gửi Liên Hệ
               </button>

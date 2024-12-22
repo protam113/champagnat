@@ -16,6 +16,7 @@ import { GiIronCross } from "react-icons/gi";
 import { IoDocumentText } from "react-icons/io5";
 import { FaSync } from 'react-icons/fa';
 import { SlCalender } from "react-icons/sl";
+import { FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa"
 // Export trực tiếp các icon mà không cần khai báo interface
 export {
   FaCommentDots,
@@ -36,5 +37,6 @@ export {
   IoDocumentText,
   FaArrowLeft, FaArrowRight,
   FaSync,
-  SlCalender
+  SlCalender,
+  FaPhoneAlt, FaMapMarkerAlt 
 };

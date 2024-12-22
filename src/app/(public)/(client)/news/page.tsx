@@ -11,7 +11,8 @@ const New = () => {
       <div className="mb-10 text-center">
         <Heading name="Tin Tức" />
         <p className="mt-2 text-gray-600">
-          Khám phá những tin tức chi tiết và cập nhật mới nhất
+          Cập nhật những tin tức mới nhất, đồng hành cùng nhịp sống của cộng
+          đồng.
         </p>
       </div>
 

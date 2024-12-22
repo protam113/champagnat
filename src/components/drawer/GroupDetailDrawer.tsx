@@ -16,7 +16,7 @@ const GroupDetailDrawer: React.FC<GroupDetail> = ({ open, onClose, group }) => {
       open={open}
       onClose={onClose}
       title="Thông Tin Chi Tiết Cộng Đoàn"
-      width={900}
+      width={1200}
       bodyStyle={{ padding: '24px' }}
     >
       {group.image && (
@@ -41,7 +41,7 @@ const GroupDetailDrawer: React.FC<GroupDetail> = ({ open, onClose, group }) => {
       </Title>
       {/* Nội dung bài viết */}
       <div className="mb-4">
-        <strong className="text-xl text-gray-900">Số Lượng Thành Viên</strong>
+        <strong className="text-16 text-gray-900">Số Lượng Thành Viên</strong>
         <div className="space-y-4 mt-2">
           <p className="text-gray-600">{group.member_count}</p>
         </div>
