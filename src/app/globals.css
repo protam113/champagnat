@@ -130,16 +130,16 @@ body {
 } */
 
 /* CSS cho Drawer */
-.ant-drawer-content-wrapper {
-  width: 250px !important; /* Kích thước mặc định của drawer trên desktop */
-}
+/* .ant-drawer-content-wrapper {
+  width: 250px !important;
+} */
 
-.ant-drawer-body {
-  padding: 0 !important; /* Không có padding trong body */
-}
+/* .ant-drawer-body {
+  padding: 0 !important; 
+} */
 
 .ant-menu-vertical.ant-menu-root {
-  width: 100% !important; /* Đảm bảo menu chiếm 100% chiều rộng */
+  width: 100% !important;
 }
 
 .ant-drawer-header {

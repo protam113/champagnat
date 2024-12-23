@@ -13,7 +13,10 @@ const PushButton: React.FC<PushButtonProps> = ({ href, label }) => {
   return (
     <header className="bg-primary-500 py-3 rounded-lg flex items-center justify-between">
       <h2 className="text-white font-semibold pl-4">{label}</h2>
-      <button className="text-white font-semibold pr-4" onClick={handlePush}>
+      <button
+        className="text-white font-semibold pr-4 hover:opacity-80 transition-opacity duration-200"
+        onClick={handlePush}
+      >
         Xem thêm
       </button>
     </header>

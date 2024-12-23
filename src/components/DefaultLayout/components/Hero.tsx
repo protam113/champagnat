@@ -171,7 +171,7 @@ const Hero = () => {
                     >
                       <i>Tiếp tục đọc</i>{' '}
                       <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-1/2"></span>
-                      <FaLongArrowAltRight className="arrow-icon" />
+                      <FaLongArrowAltRight className="arrow-icon transform transition-transform duration-300 group-hover:translate-x-2" />
                     </Link>
                   </div>
                 ))}

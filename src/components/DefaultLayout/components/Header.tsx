@@ -208,7 +208,7 @@ function SingleNavItem(d: NavItem) {
       className="relative px-2 py-3 transition-all"
     >
       <p className="flex cursor-pointer items-center gap-2 text-white hover:text-yellow-500">
-        <span>{d.label || 'Default Label'}</span> {/* Use a default string */}
+        <span>{d.label}</span> {/* Use a default string */}
         {d.children && (
           <IoIosArrowDown
             className={`text-xs transition-all ${isItemOpen && 'rotate-180'}`}

@@ -23,10 +23,12 @@ const DonateProb: React.FC<EventCardProps> = ({
     >
       <div className="relative h-48 w-full">
         <Image
-          src={image || ''}
+          src={image || '/placeholder-image.jpg'}
           alt={title}
-          fill // Tương ứng với layout="fill"
-          className="object-cover rounded-t-lg" // Tailwind CSS cho hình ảnh
+          fill
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          className="object-cover rounded-t-lg"
         />
       </div>
 

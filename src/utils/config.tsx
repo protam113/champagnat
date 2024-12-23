@@ -8,14 +8,6 @@ export const NavItems = () => {
       key: 1,
       label: 'Trang Chủ',
       link: '/',
-      // children: [
-      //   {
-      //     id: 13,
-      //     label: "Giới Thiệu",
-      //     link: "/hoi_dong/about_us",
-      //     icon: MdGroups,
-      //   },
-      // ],
     },
     {
       key: 2,
@@ -23,29 +15,29 @@ export const NavItems = () => {
       link: '/news',
     },
     {
-      key: 10,
+      key: 3,
       label: 'Bài Viết',
       link: '/blog',
     },
     {
-      id: 3,
+      id: 4,
       label: 'Hội Dòng',
       // link: '/hoi_dong',
       children: [
         {
-          id: 13,
+          id: 5,
           label: 'Giới Thiệu Chung',
           link: '/hoi_dong/about_us',
           icon: MdGroups,
         },
         {
-          id: 9,
+          id: 6,
           label: 'Ơn Gọi',
           link: '/hoi_dong/on_goi',
           icon: MdOutlineEventNote,
         },
         {
-          id: 11,
+          id: 7,
           label: 'Sứ Vụ',
           link: '/hoi_dong/su_vu',
           icon: MdOutlineEventNote,
@@ -53,27 +45,22 @@ export const NavItems = () => {
       ],
     },
     {
-      id: 4,
+      id: 8,
       label: 'Hoạt Động',
       link: '/events',
     },
     {
-      id: 6,
+      id: 9,
       label: 'Quyên Góp',
       link: '/donation',
     },
-    // {
-    //   id: 15,
-    //   label: "Học Tập",
-    //   link: "/study",
-    // },
     {
-      id: 13,
+      id: 10,
       // label: "Login",
       link: '/login',
     },
     {
-      id: 14,
+      id: 11,
       // label: "Register",
       link: '/register',
     },

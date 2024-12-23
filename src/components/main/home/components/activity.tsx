@@ -25,7 +25,7 @@ export const Activity = () => {
   return (
     <>
       <div className="pt-10">
-        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-5">
           {latestPosts.map((blog, index) => (
             <EventProb
               key={index}

@@ -9,6 +9,7 @@ import SuvuProb from './suvuProb';
 import SuvuTag from './SuvuCatetoryTag';
 import { MissionList } from '@/lib/missionList';
 import Tittle from '@/components/design/Tittle';
+import { motion } from 'framer-motion';
 
 const SuvuContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -54,7 +55,15 @@ const SuvuContent = () => {
             setRefreshKey={setRefreshKey}
           />
         </div>
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        {/* Add motion for smooth transition of the content grid */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {su_vu.map((suvu, index) => (
             <SuvuProb
               key={index}
@@ -67,7 +76,8 @@ const SuvuContent = () => {
               image={suvu.image}
             />
           ))}
-        </div>
+        </motion.div>
+
         <div className="flex justify-center mt-8 items-center space-x-2">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}

@@ -9,6 +9,7 @@ import { ClipLoader } from 'react-spinners';
 import NewProb from './newProb';
 import NewsTag from './NewCatetoryTag';
 import Tittle from '@/components/design/Tittle';
+import { motion } from 'framer-motion';
 
 const NewContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -55,7 +56,14 @@ const NewContent = () => {
           />
         </div>
 
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Animating news list with framer-motion */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {news.map((blog, index) => (
             <NewProb
               key={index}
@@ -68,7 +76,7 @@ const NewContent = () => {
               image={blog.image}
             />
           ))}
-        </div>
+        </motion.div>
 
         <div className="flex justify-center mt-8 items-center space-x-2">
           <button

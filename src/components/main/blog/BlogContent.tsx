@@ -10,6 +10,7 @@ import { ClipLoader } from 'react-spinners';
 import Tittle from '@/components/design/Tittle';
 import BlogTag from './BlogCategoryTag';
 import BlogProb from './blogProb';
+import { motion } from 'framer-motion';
 
 const BlogContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -29,17 +30,14 @@ const BlogContent = () => {
   // Kiểm tra dữ liệu
   if (isLoading)
     return (
-      <div>
-        <div className="text-center">
-          <ClipLoader size="20" loading={isLoading} />
-        </div>
+      <div className="text-center">
+        <ClipLoader size="20" loading={isLoading} />
       </div>
     );
   if (isError) return <p>Error loading news...</p>;
 
   // Cập nhật thể loại được chọn
   const handleFilterChange = (categories: string[]) => {
-    // Update the selected category, should only have 1 or none
     setSelectedCategory(categories[0] || null);
   };
 
@@ -55,7 +53,14 @@ const BlogContent = () => {
             setRefreshKey={setRefreshKey}
           />
         </div>
-        <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          key={currentPage}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {blogs.map((blog, index) => (
             <BlogProb
               key={index}
@@ -68,14 +73,12 @@ const BlogContent = () => {
               image={blog.image}
             />
           ))}
-        </div>
+        </motion.div>
         <div className="flex justify-center mt-8 items-center space-x-2">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             disabled={currentPage === 1}
-            className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-              currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
+            className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             <FaArrowLeft />
           </button>
@@ -91,9 +94,7 @@ const BlogContent = () => {
           <button
             onClick={() => setCurrentPage((prev) => prev + 1)}
             disabled={!next}
-            className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-              !next ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
+            className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${!next ? 'opacity-50 cursor-not-allowed' : ''}`}
           >
             <FaArrowRight />
           </button>
