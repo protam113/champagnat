@@ -108,7 +108,10 @@ const LoginPage = () => {
             </Link>
           </p>
           <p className="text-sm text-gray-600">
-            <Link href={'/reset'} className="text-indigo-500 hover:underline">
+            <Link
+              href={'/forgot_password'}
+              className="text-indigo-500 hover:underline"
+            >
               Quên mật khẩu
             </Link>
           </p>

@@ -26,7 +26,7 @@ type NavItem = {
 
 export const TopHeader = () => {
   return (
-    <div className="w-full px-8 mx-auto flex items-center justify-start py-4 text-black lg:text-14 text-12 bg-white">
+    <div className="w-full px-5 mx-auto flex items-center justify-start py-4 text-black lg:text-14 text-12 bg-white">
       <div className="flex items-center gap-1">
         <MdOutlineMail className="h-5 w-5" /> maristvietnam@gmail.com
         <FaPhoneVolume className="ml-5" />
@@ -258,11 +258,13 @@ function MobileNav({
         className={`fixed left-0 top-0 flex h-full min-h-screen w-full md:hidden bg-black/50 transition-all duration-300 ${
           isSideMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
+        onClick={closeSideMenu}
       >
         <div
           className={`h-full w-[65%] bg-primary-500 text-white px-4 py-4 transition-transform duration-300 ${
             isSideMenuOpen ? 'translate-x-0' : 'translate-x-full'
           } ml-auto`}
+          onClick={(e) => e.stopPropagation()}
         >
           <section className="flex justify-end">
             <AiOutlineClose
@@ -307,12 +309,12 @@ function MobileNav({
             </section>
           ) : (
             // Nếu chưa đăng nhập
-            <section className="flex flex-col gap-6 mt-6 items-center">
-              <button className="h-fit text-neutral-400 transition-all hover:text-black/90">
-                Login
+            <section className="flex flex-col gap-4 mt-6 items-center">
+              <button className="w-max rounded-xl bg-primary-400 px-4 py-2 text-white font-bold transition-colors duration-300 ease-in-out hover:bg-yellow-500">
+                <Link href="/login">Đăng nhập</Link>
               </button>
-              <button className="w-full max-w-[200px] rounded-xl border-2 border-neutral-400 px-4 py-2 text-neutral-400 transition-all hover:border-black hover:text-black/90">
-                Register
+              <button className="w-max rounded-xl border-2 border-primary-400 px-4 py-2 text-white font-bold transition-colors duration-300 ease-in-out hover:bg-primary-400">
+                <Link href="/register">Đăng ký</Link>
               </button>
             </section>
           )}

@@ -1,6 +1,6 @@
-import { useEditor, EditorContent } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import TextEditorMenuBar from "./RichText/TextEditorMenuBar";
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import TextEditorMenuBar from './RichText/TextEditorMenuBar';
 // import Underline from "@tiptap/extension-underline";
 
 type TextEditorProps = {
@@ -24,7 +24,7 @@ export default function ContentSection({
     editorProps: {
       attributes: {
         class:
-          "min-h-[150px] cursor-text rounded-md border p-5 ring-offset-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ",
+          'min-h-[150px] bg-white text-black cursor-text rounded-md border p-5 ring-offset-background focus-within:outline-none focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 ',
       },
     },
     immediatelyRender: false,

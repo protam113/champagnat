@@ -3,7 +3,7 @@
 import React, { useState, useRef } from 'react';
 import { HistoryMonasteryData } from '@/lib/historyMonasteryData';
 import { ClipLoader } from 'react-spinners';
-import history from '@/assets/image/history.jpg';
+import history from '@/assets/image/about.jpg';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { TextParallaxContentProps, OverlayCopyProps } from '@/types/types';
@@ -34,11 +34,10 @@ const History = () => {
         <div className="flex items-center justify-between my-10">
           {/* Nội dung bên trái */}
           <div className="text-left w-1/2 pr-8">
-            <div className="text-18 italic text-black">
-              <b className="text-24">&#34;</b> Với niềm tin và lòng kiên trì,
-              chúng ta cùng nhau xây dựng một cộng đồng vững mạnh, lan tỏa giá
-              trị tốt đẹp và gắn kết những tâm hồn trong một hành trình chung
-              đầy ý nghĩa. <b className="text-24"> &#34;</b>
+            <div className="text-28 italic text-black font-bold">
+              <b className="text-28">&#34;</b> Đến với Chúa Giê-su nhờ Mẹ Maria.
+              <br />
+              Đến với Mẹ Maria vì Chúa Giê-su. <b className="text-24"> &#34;</b>
             </div>
           </div>
 
@@ -117,7 +116,7 @@ const StickyImage: React.FC = () => {
     >
       <Image src={history} alt="Sticky image" fill className="object-cover" />
       <motion.div
-        className="absolute inset-0 bg-neutral-950/70"
+        className="absolute inset-0 bg-neutral-950/30"
         style={{
           opacity,
         }}

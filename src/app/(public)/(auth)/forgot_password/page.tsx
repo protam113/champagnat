@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 const Page = () => {
   const [email, setEmail] = useState('');
   const [new_password, setNewPassword] = useState('');
+  const [confirm_password, setConfirmPassword] = useState('');
   const [code, setCode] = useState('');
   const [step, setStep] = useState(1);
   const { mutate: GetVerifyCode } = useGetVerifyCode();
@@ -29,33 +30,34 @@ const Page = () => {
       console.error('Password reset failed', error);
     }
   };
+  const isPasswordMatch = new_password === confirm_password;
 
   return (
-    <div className="bg-primary-900">
-      <div className="min-h-screen flex flex-col items-center justify-center py-6 px-4">
-        <div className="border border-gray-300 bg-white rounded-lg p-6 max-w-md max-md:mx-auto">
+    <div className="bg-white">
+      <div className="min-h-max flex flex-col items-center justify-center py-6 px-4">
+        <div className="border border-gray-300 bg-white shadow-lg rounded-lg p-6 max-w-md max-md:mx-auto">
           {step === 1 ? (
             // Form 1: Enter email to send verification code
             <form onSubmit={handleSendCode} className="space-y-4">
               <div className="mb-8">
-                <h3 className="text-gray-800 text-3xl font-extrabold">
-                  Forgot your password&amp;#63;
+                <h3 className="text-gray-800 text-28  font-bold">
+                  Bạn quên mật khẩu?
                 </h3>
                 <p className="text-gray-500 text-sm mt-4 leading-relaxed">
-                  Enter your email and we&apos;ll send you a verification code
-                  to reset your password.
+                  Nhập địa chỉ email của bạn và chúng tôi sẽ gửi cho bạn một mã
+                  xác minh để đặt lại mật khẩu.
                 </p>
               </div>
 
               <div>
-                <label className="text-gray-800 text-sm mb-2 block">
-                  Email Address
+                <label className="text-gray-800 text-14 mb-2 block">
+                  Địa chỉ Email
                 </label>
                 <input
                   type="email"
                   required
                   className="w-full text-sm text-black border border-gray-300 px-4 py-3 rounded-lg outline-blue-600"
-                  placeholder="Enter your email"
+                  placeholder="Nhập địa chỉ email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
@@ -64,9 +66,9 @@ const Page = () => {
               <div className="!mt-8">
                 <button
                   type="submit"
-                  className="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                  className="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-primary-500 hover:bg-blue-700 focus:outline-none"
                 >
-                  Send Verification Code
+                  Gửi mã xác minh
                 </button>
               </div>
             </form>
@@ -74,24 +76,24 @@ const Page = () => {
             // Form 2: Enter code and new password to reset
             <form onSubmit={handleResetPassword} className="space-y-4">
               <div className="mb-8">
-                <h3 className="text-gray-800 text-3xl font-extrabold">
-                  Reset your password
+                <h3 className="text-gray-800 text-26 font-bold">
+                  Đặt lại mật khẩu của bạn
                 </h3>
                 <p className="text-gray-500 text-sm mt-4 leading-relaxed">
-                  Enter the verification code we sent to your email and your new
-                  password.
+                  Nhập mã xác minh mà chúng tôi đã gửi đến email của bạn và mật
+                  khẩu mới của bạn
                 </p>
               </div>
 
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">
-                  Verification Code
+                  Mã xác minh
                 </label>
                 <input
                   type="text"
                   required
                   className="w-full text-sm text-black border border-gray-300 px-4 py-3 rounded-lg outline-blue-600"
-                  placeholder="Enter verification code"
+                  placeholder="Nhập mã xác minh"
                   value={code}
                   onChange={(e) => setCode(e.target.value)}
                 />
@@ -99,24 +101,38 @@ const Page = () => {
 
               <div>
                 <label className="text-gray-800 text-sm mb-2 block">
-                  New Password
+                  Mật khẩu mới
                 </label>
                 <input
                   type="password"
                   required
                   className="w-full text-sm text-black border border-gray-300 px-4 py-3 rounded-lg outline-blue-600"
-                  placeholder="Enter new password"
+                  placeholder="Nhập mật khẩu mới"
                   value={new_password}
                   onChange={(e) => setNewPassword(e.target.value)}
                 />
               </div>
-
+              <div>
+                <label className="text-gray-800 text-sm mb-2 block">
+                  Xác nhận Mật Khẩu Mới
+                </label>
+                <input
+                  type="password"
+                  required
+                  className={`w-full text-sm text-black border px-4 py-3 rounded-lg outline-blue-600 ${
+                    !isPasswordMatch ? 'border-red-500' : 'border-gray-300'
+                  }`}
+                  placeholder="Confirm new password"
+                  value={confirm_password}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
               <div className="!mt-8">
                 <button
                   type="submit"
-                  className="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
+                  className="w-full shadow-xl py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-primary-500 hover:bg-blue-700 focus:outline-none"
                 >
-                  Reset Password
+                  Cập nhật
                 </button>
               </div>
             </form>

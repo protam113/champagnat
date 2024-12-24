@@ -40,9 +40,7 @@ const Page = () => {
       <div className="flex flex-col gap-8">
         {/* detail */}
         <div className="flex flex-col gap-4">
-          <h1 className="text-xl md:text-3xl xl:text-4xl 2xl:text-5xl font-semibold text-center">
-            {blog.title}
-          </h1>
+          <h1 className="text-24 font-semibold text-center">{blog.title}</h1>
 
           <div className=" text-center text-gray-500 text-sm">
             {/* <span className="text-blue-800 mr-4 text-16">
@@ -67,7 +65,7 @@ const Page = () => {
 
         {/* Content */}
         <div className="flex flex-col gap-8 mt-12">
-          <h2 className="text-2xl font-semibold">Chi tiết bài viết</h2>
+          <h2 className="text-22 font-semibold">Chi tiết bài viết</h2>
           <div
             className="content text-lg text-justify"
             dangerouslySetInnerHTML={{

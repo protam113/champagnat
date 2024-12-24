@@ -46,23 +46,26 @@ export const NavItems = () => {
     },
     {
       id: 8,
-      label: 'Hoạt Động',
-      link: '/events',
+      label: 'Sự Kiện',
+      children: [
+        {
+          id: 11,
+          label: 'Ơn Gọi',
+          link: '/on_goi',
+          icon: MdOutlineEventNote,
+        },
+        {
+          id: 10,
+          label: 'Sự Kiện',
+          link: '/events',
+          icon: MdGroups,
+        },
+      ],
     },
     {
       id: 9,
       label: 'Quyên Góp',
       link: '/donation',
-    },
-    {
-      id: 10,
-      // label: "Login",
-      link: '/login',
-    },
-    {
-      id: 11,
-      // label: "Register",
-      link: '/register',
     },
   ];
 };

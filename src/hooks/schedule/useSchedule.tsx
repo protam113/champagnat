@@ -7,13 +7,9 @@ import { ScheduleList, Filters } from '@/types/types';
 
 // Hàm fetch dữ liệu lịch
 const fetchScheduleList = async (
-  token: string,
   filters: Filters,
+  token?: string,
 ): Promise<ScheduleList> => {
-  if (!token) {
-    throw new Error('No token provided');
-  }
-
   try {
     // Lọc bỏ các giá trị không hợp lệ
     const validFilters = Object.fromEntries(
@@ -38,7 +34,7 @@ const fetchScheduleList = async (
       `${endpoints.schedules}${queryString ? `?${queryString}` : ''}`,
       'GET',
       null,
-      token,
+      token || null,
     );
 
     return response;
@@ -52,13 +48,11 @@ const fetchScheduleList = async (
 const useScheduleList = (filters: Filters = {}, refreshKey: number) => {
   const { getToken } = useAuth();
   const [token, setToken] = useState<string | null>(null);
-  const [isReady, setIsReady] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchToken = async () => {
       const userToken = await getToken();
       setToken(userToken);
-      setIsReady(true);
     };
     fetchToken();
   }, [getToken]);
@@ -66,12 +60,8 @@ const useScheduleList = (filters: Filters = {}, refreshKey: number) => {
   return useQuery<ScheduleList, Error>({
     queryKey: ['scheduleList', token, filters, refreshKey],
     queryFn: async () => {
-      if (!token) {
-        throw new Error('Token is not available');
-      }
-      return fetchScheduleList(token, filters);
+      return fetchScheduleList(filters, token || undefined);
     },
-    enabled: isReady && !!token,
     staleTime: 60000,
   });
 };

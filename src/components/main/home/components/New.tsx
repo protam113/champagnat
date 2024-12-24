@@ -1,7 +1,7 @@
 'use client'; // Ensures this is a client component
 
 import Image from 'next/image';
-import news from '@/assets/image/history.jpg';
+import news from '@/assets/image/hero.jpg';
 import CalendarCustom from './Calendar';
 
 export const News = () => {
@@ -27,9 +27,9 @@ export const News = () => {
                   height={400}
                 />
               </div>
-              <div className="mt-12 lg:mt-0">
-                <div className="text-1414 max-w-prose mx-auto lg:max-w-none">
-                  <p className="text-lg text-stone-700">
+              <div className="lg:mt-0">
+                <div className="max-w-prose mx-auto lg:max-w-none">
+                  <p className="text-22 text-stone-700">
                     <strong>Dòng Anh Em Đức Maria</strong> được thành lập năm
                     1817 tại một ngôi làng ở vùng Loire, La Valla, nước Pháp.{' '}
                   </p>
@@ -43,7 +43,7 @@ export const News = () => {
                       1902, trước khi bị nhà nước giải thể, Dòng Anh Em Đức
                       Maria đã rất mạnh với khoảng 600 cơ sở giáo dục tiểu học
                       và trung học (các trường giáo xứ, trường công nghiệp,
-                      trường nội trú, nhà đào tạo...) do khoảng 4,300 Sư Huynh
+                      trường nội trú, nhà đào tạo...) do khoảng 3,000 Sư Huynh
                       điều hành. Trong số các dòng tu huynh được thành lập trong
                       thế kỷ 19, từ năm 1815 đến 1830 (Dòng De la Mennais, Dòng
                       Marianists, Dòng St Gabriel),{' '}

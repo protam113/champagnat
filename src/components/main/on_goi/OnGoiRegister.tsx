@@ -85,9 +85,11 @@ const OnGoiRegister = ({ ongoiId }: { ongoiId: string }) => {
 
   return (
     <Container>
-      <div className="mt-12 p-6 bg-primary-500 text-white rounded-lg shadow-lg">
-        <h2 className="text-24 text-center font-bold">Đăng Ký Nhận Ơn Gọi</h2>
-        <div className="mt-4">
+      <div className="mt-6 md:mt-12 p-3 md:p-6 bg-primary-500 text-white rounded-lg shadow-lg">
+        <h2 className="text-20 md:text-24 text-center font-bold mb-4">
+          Đăng Ký Nhận Ơn Gọi
+        </h2>
+        <div className="mt-2 md:mt-4">
           <Form
             name="event-register"
             onFinish={onFinish}
@@ -95,10 +97,10 @@ const OnGoiRegister = ({ ongoiId }: { ongoiId: string }) => {
             layout="vertical"
             form={form}
           >
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
               <Form.Item
                 label={<span className="text-white">Hình ảnh chính</span>}
-                className="col-span-4"
+                className="col-span-1 md:col-span-2 lg:col-span-4"
               >
                 <Upload
                   listType="picture-card"
@@ -396,31 +398,32 @@ const OnGoiRegister = ({ ongoiId }: { ongoiId: string }) => {
 
               <Form.Item
                 label={
-                  <span className="text-white">Quá trình học giáo lý</span>
-                }
-                name="learning_process"
-              >
-                <ContentSection
-                  onChange={setContent}
-                  initialContent={content}
-                />
-              </Form.Item>
-
-              <Form.Item
-                label={
                   <span className="text-white">Mã ơn gọi tu sĩ (nếu có)</span>
                 }
                 name="religious_vocation_id"
               >
                 <Input placeholder="Mã ơn gọi tu sĩ (nếu có)" />
               </Form.Item>
+
+              <Form.Item
+                label={
+                  <span className="text-white">Quá trình học giáo lý</span>
+                }
+                name="learning_process"
+                className="col-span-1 md:col-span-2 lg:col-span-4"
+              >
+                <ContentSection
+                  onChange={setContent}
+                  initialContent={content}
+                />
+              </Form.Item>
             </div>
 
-            <Form.Item>
+            <Form.Item className="mt-4">
               <Button
                 type="primary"
                 htmlType="submit"
-                className="w-m bg-blue-500 hover:bg-blue-600"
+                className="w-m md:w-auto bg-blue-500 hover:bg-blue-600"
               >
                 Đăng Ký
               </Button>
