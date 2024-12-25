@@ -6,9 +6,9 @@
 
 
 
-import {useGroupMember} from "@/hooks/group/useGroupMember";
+import { useGroupMember } from "@/hooks/group/useGroupMember";
 
-export const GroupMemberList = (currentPage: number,groupId:string, refreshKey: number) => {
+export const GroupMemberList = (currentPage: number, groupId: string, refreshKey: number) => {
     const { data, isLoading, isError } = useGroupMember(
         currentPage,
         refreshKey, // Xóa dấu phẩy dư
@@ -17,5 +17,5 @@ export const GroupMemberList = (currentPage: number,groupId:string, refreshKey: 
 
     const queueData = data?.results || [];
 
-    return { queueData, isLoading, isError };
+    return { queueData, next: data?.next, isLoading, isError };
 };

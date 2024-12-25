@@ -35,10 +35,10 @@ const History = () => {
           {/* Nội dung bên trái */}
           <div className="text-left w-full md:w-1/2 pr-0 md:pr-8">
             <div className="text-lg md:text-2xl lg:text-28 italic text-black font-bold text-center md:text-left">
-              <b className="text-lg md:text-2xl lg:text-28">&#34;</b>
+              <b className="text-lg md:text-2xl lg:text-28">&#34; </b>
               Đến với Chúa Giê-su nhờ Mẹ Maria.
               <br />
-              Đến với Mẹ Maria vì Chúa Giê-su.{' '}
+              Đến với Mẹ Maria vì Chúa Giê-su.
               <b className="text-lg md:text-2xl lg:text-24">&#34;</b>
             </div>
           </div>

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { DocList } from '@/lib/docList';
 import logo from '@/assets/image/logo_default.png';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 
 interface StudyContentProps {
   refreshKey: number;
@@ -14,8 +14,12 @@ interface StudyContentProps {
 
 const StudyContent = ({ refreshKey, category }: StudyContentProps) => {
   const [currentPage, setCurrentPage] = useState(1);
-  const { queueData, isLoading } = DocList(currentPage, category, refreshKey);
-
+  const { queueData, next, isLoading } = DocList(
+    currentPage,
+    category,
+    refreshKey,
+  );
+  const totalPages = next ? currentPage + 1 : currentPage;
   return (
     <div className="flex-1">
       {/* Grid Layout */}
@@ -76,26 +80,34 @@ const StudyContent = ({ refreshKey, category }: StudyContentProps) => {
       </div>
 
       {!isLoading && queueData?.length > 0 && (
-        <div className="mt-8 flex justify-center cursor-pointer">
-          <div className="inline-flex items-center gap-4">
+        <div className="flex justify-center mt-8 items-center space-x-2">
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
+              currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
+            <FaArrowLeft />
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => (
             <button
-              onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-              disabled={currentPage === 1}
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-white border-2 border-gray-200 hover:border-primary-500 hover:text-primary-500 disabled:opacity-50 disabled:hover:border-gray-200 disabled:hover:text-gray-400 transition-all duration-300"
+              key={i}
+              onClick={() => setCurrentPage(i + 1)}
+              className={`w-6 h-6 text-10 rounded-full hover:bg-gray-300 ${currentPage === i + 1 ? 'bg-primary-500 text-white' : 'bg-gray-200'}`}
             >
-              <FaChevronLeft className="w-4 h-4" />
+              {i + 1}
             </button>
-            <span className="w-6 h-6 flex items-center justify-center rounded-full bg-primary-500 text-white font-medium">
-              {currentPage}
-            </span>
-            <button
-              onClick={() => setCurrentPage((p) => p + 1)}
-              disabled={queueData.length < 10}
-              className="w-8 h-8 flex items-center justify-center rounded-full bg-white border-2 border-gray-200 hover:border-primary-500 hover:text-primary-500 disabled:opacity-50 disabled:hover:border-gray-200 disabled:hover:text-gray-400 transition-all duration-300"
-            >
-              <FaChevronRight className="w-4 h-4" />
-            </button>
-          </div>
+          ))}
+          <button
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+            disabled={!next}
+            className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
+              !next ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
+            <FaArrowRight />
+          </button>
         </div>
       )}
     </div>

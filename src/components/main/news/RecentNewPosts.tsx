@@ -33,7 +33,7 @@ const RecentNewPosts = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
           {/* Bài viết nổi bật bên trái */}
           <Link
-            href={`/blog/${latestPost.id}`}
+            href={`/news/${latestPost.id}`}
             className="cursor-pointer lg:col-span-2 rounded-lg shadow-lg overflow-hidden bg-white hover:text-amber-500 "
           >
             <div className="h-full flex flex-col">
@@ -78,9 +78,9 @@ const RecentNewPosts = () => {
             {otherPosts.slice(0, 3).map((post, index) => (
               <div
                 key={index}
-                className="flex rounded-lg shadow-lg overflow-hidden bg-white hover:shadow-2xl hover:scale-105 transform transition-all duration-300 hover:text-amber-500"
+                className="flex rounded-lg shadow-lg overflow-hidden bg-white h-auto hover:shadow-2xl hover:scale-105 hover:text-yellow-500 transform transition-all duration-300"
               >
-                <div className="relative w-1/3 h-40">
+                <div className="relative w-1/3 h-40 md:h-48 lg:h-40">
                   {post?.image && (
                     <Image
                       src={post.image}
@@ -92,11 +92,7 @@ const RecentNewPosts = () => {
                   )}
                 </div>
                 <div className="p-4 flex-1">
-                  <p className="text-gray-500 text-sm">
-                    {post.user.username} • {formatDate(post.created_date)}
-                  </p>
-                  <h4 className="text-lg font-semibold">{post.title}</h4>
-                  <div className="flex flex-wrap gap-2 mt-2">
+                  <div className="flex flex-wrap gap-2 mb-2">
                     {post.categories.map((category) => (
                       <span
                         key={category.id}
@@ -106,6 +102,10 @@ const RecentNewPosts = () => {
                       </span>
                     ))}
                   </div>
+                  <p className="text-gray-500 text-sm">
+                    {post.user.username} • {formatDate(post.created_date)}
+                  </p>
+                  <h2 className="text-14 font-semibold">{post.title}</h2>
                 </div>
               </div>
             ))}

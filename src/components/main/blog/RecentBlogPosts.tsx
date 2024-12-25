@@ -112,7 +112,7 @@ const RecentBlogPosts = () => {
                     {post.categories.map((category) => (
                       <span
                         key={category.id}
-                        className="text-xs bg-primary-800 text-white rounded-full px-2 py-1"
+                        className="text-12 bg-primary-800 text-white rounded-full px-2 py-1"
                       >
                         {category.name}
                       </span>
