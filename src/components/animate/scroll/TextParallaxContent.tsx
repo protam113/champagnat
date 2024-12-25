@@ -1,5 +1,5 @@
 'use client';
-// import { TextParallaxContentExample } from '@/app/components/animate/scroll/TextParallaxContent';
+
 import React, { useState, useRef } from 'react';
 import { HistoryMonasteryData } from '@/lib/historyMonasteryData';
 import { ClipLoader } from 'react-spinners';
@@ -11,14 +11,13 @@ import Container from '@/components/Container/container';
 import Heading from '@/components/design/Heading';
 
 const History = () => {
-  const [refreshKey] = useState(0); // State để làm mới dữ liệu
+  const [refreshKey] = useState(0);
 
   const {
     queueData: data,
     isLoading,
     isError,
   } = HistoryMonasteryData(refreshKey);
-  console.log('🚀 ~ History ~ data:', data);
 
   if (isLoading)
     return (
@@ -27,36 +26,40 @@ const History = () => {
       </div>
     );
   if (isError || !data) return <div>Error loading queue data.</div>;
+
   return (
     <div>
       <Container>
         <Heading name="Giới Thiệu Về Hội Dòng" />
-        <div className="flex items-center justify-between my-10">
+        <div className="flex flex-col md:flex-row items-center justify-between my-6 md:my-10 gap-6 md:gap-0">
           {/* Nội dung bên trái */}
-          <div className="text-left w-1/2 pr-8">
-            <div className="text-28 italic text-black font-bold">
-              <b className="text-28">&#34;</b> Đến với Chúa Giê-su nhờ Mẹ Maria.
+          <div className="text-left w-full md:w-1/2 pr-0 md:pr-8">
+            <div className="text-lg md:text-2xl lg:text-28 italic text-black font-bold text-center md:text-left">
+              <b className="text-lg md:text-2xl lg:text-28">&#34;</b>
+              Đến với Chúa Giê-su nhờ Mẹ Maria.
               <br />
-              Đến với Mẹ Maria vì Chúa Giê-su. <b className="text-24"> &#34;</b>
+              Đến với Mẹ Maria vì Chúa Giê-su.{' '}
+              <b className="text-lg md:text-2xl lg:text-24">&#34;</b>
             </div>
           </div>
 
           {/* Hình ảnh bên phải */}
-          <div className="relative w-1/2 h-64">
+          <div className="relative w-full md:w-1/2 h-48 md:h-64">
             <Image
               src={history}
               alt="banner"
               layout="fill"
               objectFit="cover"
               className="rounded-lg"
+              sizes="(max-width: 768px) 100vw, 50vw"
             />
           </div>
         </div>
 
-        <p
-          className="content"
+        <div
+          className="content text-base md:text-lg space-y-4"
           dangerouslySetInnerHTML={{
-            __html: data.about.replace(/\"/g, ''), // Xóa tất cả dấu "
+            __html: data.about.replace(/\"/g, ''),
           }}
         />
       </Container>
@@ -66,7 +69,7 @@ const History = () => {
 
 export const HistoryContent = () => {
   return (
-    <div className="">
+    <div className="w-full">
       <TextParallaxContent
         subheading="Về Chúng Tôi"
         heading="Đôi Nét Về Hội Dòng Anh Em Đức Maria"
@@ -77,21 +80,20 @@ export const HistoryContent = () => {
   );
 };
 
-const IMG_PADDING = 12;
-
 const TextParallaxContent: React.FC<TextParallaxContentProps> = ({
   subheading,
   heading,
   children,
 }) => {
   return (
-    <div style={{ paddingLeft: IMG_PADDING, paddingRight: IMG_PADDING }}>
-      <div className="relative h-[150vh]">
+    <div className="px-4 md:px-12">
+      <div className="relative h-[40vh] md:h-[150vh]">
+        {' '}
+        {/* Giảm chiều cao trên mobile */}
         <StickyImage />
         <OverlayCopy heading={heading} subheading={subheading} />
       </div>
-      {/* Đảm bảo children được render ở đây */}
-      <div className="mt-8">{children}</div>
+      <div className="mt-4 md:mt-8">{children}</div>
     </div>
   );
 };
@@ -112,9 +114,16 @@ const StickyImage: React.FC = () => {
       style={{
         scale,
       }}
-      className="sticky z-0 overflow-hidden rounded-3xl w-full h-full" // Đảm bảo có "relative" và kích thước
+      className="sticky top-0 z-0 overflow-hidden rounded-xl md:rounded-3xl w-full h-[25vh] md:h-full" // Giảm chiều cao hình trên mobile
     >
-      <Image src={history} alt="Sticky image" fill className="object-cover" />
+      <Image
+        src={history}
+        alt="Sticky image"
+        fill
+        className="object-cover"
+        sizes="100vw"
+        priority
+      />
       <motion.div
         className="absolute inset-0 bg-neutral-950/30"
         style={{
@@ -132,7 +141,7 @@ const OverlayCopy: React.FC<OverlayCopyProps> = ({ subheading, heading }) => {
     offset: ['start end', 'end start'],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [250, -250]);
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100]); // Giảm khoảng cách transform
   const opacity = useTransform(scrollYProgress, [0.25, 0.5, 0.75], [0, 1, 0]);
 
   return (
@@ -142,18 +151,16 @@ const OverlayCopy: React.FC<OverlayCopyProps> = ({ subheading, heading }) => {
         opacity,
       }}
       ref={targetRef}
-      className="absolute left-0 top-0 flex h-screen w-full flex-col items-center justify-center text-white"
+      className="absolute left-0 top-0 flex h-[40vh] md:h-screen w-full flex-col items-center justify-center text-white px-4 md:px-0"
     >
-      <p className="mb-2 text-center text-xl md:mb-4 md:text-3xl">
+      <p className="mb-1 md:mb-4 text-center text-sm md:text-xl lg:text-3xl">
         {subheading}
       </p>
-      <p className="text-center text-4xl font-bold md:text-7xl">{heading}</p>
+      <h1 className="text-center text-lg md:text-4xl lg:text-7xl font-bold px-4 leading-tight">
+        {heading}
+      </h1>
     </motion.div>
   );
 };
 
-export default function Title({ name }: { name: string }) {
-  return (
-    <h1 className="col-span-1 text-3xl font-bold md:col-span-4">{name}</h1>
-  );
-}
+export default TextParallaxContent;

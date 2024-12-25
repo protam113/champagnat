@@ -90,7 +90,7 @@ const Hero = () => {
       >
         {newsData.map((news, index) => (
           <Link href={`/news/${news.id}`} className="each-slide" key={index}>
-            <div className="relative w-full h-[400px]">
+            <div className="relative w-full h-[300px] lg:h-[450px]">
               <Image
                 src={news.image || logo}
                 alt={`Banner Image ${index + 1}`}
@@ -147,7 +147,7 @@ const Hero = () => {
               <div className="flex flex-wrap justify-between px-4" key={index}>
                 {slide.map((news, newsIndex) => (
                   <div
-                    className="bg-primary-800 p-4 w-full sm:w-1/2 md:w-1/4"
+                    className="bg-primary-800 p-2 lg:p-4 w-full sm:w-1/2 md:w-1/4"
                     key={newsIndex}
                   >
                     <p className="text-gray-300 text-xs font-bold">

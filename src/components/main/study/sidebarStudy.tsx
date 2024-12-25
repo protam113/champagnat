@@ -18,6 +18,7 @@ const { Header } = Layout;
 const SidebarStudy: React.FC = () => {
   const [visible, setVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [selectedKey, setSelectedKey] = useState('1'); // State to track selected key
 
   useEffect(() => {
     const checkIfMobile = () => {
@@ -45,7 +46,11 @@ const SidebarStudy: React.FC = () => {
       key: '1',
       icon: <BookOutlined style={{ color: 'white' }} />,
       label: (
-        <Link href="/study" style={{ color: 'white' }}>
+        <Link
+          href="/study"
+          style={{ color: 'white' }}
+          onClick={() => setSelectedKey('1')} // Update selected key on click
+        >
           Tài Liệu
         </Link>
       ),
@@ -54,7 +59,11 @@ const SidebarStudy: React.FC = () => {
       key: '2',
       icon: <RobotOutlined style={{ color: 'white' }} />,
       label: (
-        <Link href="/study/ChatAI" style={{ color: 'white' }}>
+        <Link
+          href="/study/ChatAI"
+          style={{ color: 'white' }}
+          onClick={() => setSelectedKey('2')} // Update selected key on click
+        >
           MaristChat
         </Link>
       ),
@@ -63,7 +72,11 @@ const SidebarStudy: React.FC = () => {
       key: '3',
       icon: <TeamOutlined style={{ color: 'white' }} />,
       label: (
-        <Link href="/study/community" style={{ color: 'white' }}>
+        <Link
+          href="/study/community"
+          style={{ color: 'white' }}
+          onClick={() => setSelectedKey('3')} // Update selected key on click
+        >
           Cộng Đoàn
         </Link>
       ),
@@ -72,7 +85,11 @@ const SidebarStudy: React.FC = () => {
       key: '6',
       icon: <SlCalender style={{ color: 'white' }} />,
       label: (
-        <Link href="/study/schedule" style={{ color: 'white' }}>
+        <Link
+          href="/study/schedule"
+          style={{ color: 'white' }}
+          onClick={() => setSelectedKey('6')} // Update selected key on click
+        >
           Lịch Công Giáo
         </Link>
       ),
@@ -81,7 +98,11 @@ const SidebarStudy: React.FC = () => {
       key: '4',
       icon: <KeyOutlined style={{ color: 'white' }} />,
       label: (
-        <Link href="/study/reset_password" style={{ color: 'white' }}>
+        <Link
+          href="/study/reset_password"
+          style={{ color: 'white' }}
+          onClick={() => setSelectedKey('4')} // Update selected key on click
+        >
           Đổi Mật Khẩu
         </Link>
       ),
@@ -90,7 +111,11 @@ const SidebarStudy: React.FC = () => {
       key: '5',
       icon: <UserOutlined style={{ color: 'white' }} />,
       label: (
-        <Link href="/study/update_profile" style={{ color: 'white' }}>
+        <Link
+          href="/study/update_profile"
+          style={{ color: 'white' }}
+          onClick={() => setSelectedKey('5')} // Update selected key on click
+        >
           Cập Nhật Thông Tin
         </Link>
       ),
@@ -104,7 +129,6 @@ const SidebarStudy: React.FC = () => {
           position: 'sticky',
           top: 0,
           zIndex: 1,
-          width: '100%',
           display: 'flex',
           alignItems: 'center',
           backgroundColor: '#0f314b',
@@ -129,7 +153,7 @@ const SidebarStudy: React.FC = () => {
             >
               <Menu
                 mode="vertical"
-                defaultSelectedKeys={['1']}
+                selectedKeys={[selectedKey]} // Bind the selectedKey to menu item selection
                 items={items}
                 className="menu-custom"
                 style={{
@@ -141,7 +165,7 @@ const SidebarStudy: React.FC = () => {
         ) : (
           <Menu
             mode="horizontal"
-            defaultSelectedKeys={['1']}
+            selectedKeys={[selectedKey]} // Bind the selectedKey to menu item selection
             items={items}
             className="menu-custom"
             style={{

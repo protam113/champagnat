@@ -4,13 +4,14 @@ import React, { useState, useEffect } from 'react';
 import { useChat, useChatList } from '@/hooks/chatAI/useChat';
 // import ReactMarkdown from 'react-markdown';
 // import Container from '@/components/Container/container';
-import ChatSidebar from '@/components/main/study/chatAI/chatSideBar';
+// import ChatSidebar from '@/components/main/study/chatAI/chatSideBar';
 import ChatFont from '@/components/main/study/chatAI/chatFont';
 import ChatInput from '@/components/main/study/chatAI/ChatInput';
 import ChatMessage from '@/components/main/study/chatAI/ChatMessage';
+// import DonationSection from '@/components/main/study/chatAI/chatSideBar';
 
 const Page = () => {
-  const [refreshKey, setRefreshKey] = useState<number>(0);
+  const [refreshKey] = useState<number>(0);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const { data, isLoading, isError } = useChatList(refreshKey);
   const { mutate } = useChat();
@@ -50,38 +51,18 @@ const Page = () => {
     <div className="h-screen flex flex-col bg-gray-50">
       {/* Header for mobile */}
       <div className="md:hidden bg-white border-b px-4 py-2 flex items-center">
-        <button
-          onClick={() => setIsSidebarOpen(true)}
-          className="p-2 hover:bg-gray-100 rounded-lg"
-        >
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16M4 18h16"
-            />
-          </svg>
-        </button>
         <h1 className="ml-4 text-xl font-bold text-primary-500">MaristChat</h1>
+      </div>
+      {/* Header for desktop */}
+      <div className="hidden md:flex bg-white border-b px-8 py-4">
+        <h1 className="text-4xl font-bold text-primary-500">MaristChat</h1>
       </div>
 
       <div className="flex-1 flex overflow-hidden">
-        <ChatSidebar
-          setRefreshKey={setRefreshKey}
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
-        />
-
         {/* Overlay for mobile sidebar */}
         {isSidebarOpen && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+            className="fixed inset-0  bg-opacity-50 z-30 md:hidden"
             onClick={() => setIsSidebarOpen(false)}
           />
         )}
@@ -116,6 +97,8 @@ const Page = () => {
             handleInputChange={handleInputChange}
             handleSendMessage={handleSendMessage}
           />
+
+          {/* <DonationSection /> */}
         </main>
       </div>
     </div>

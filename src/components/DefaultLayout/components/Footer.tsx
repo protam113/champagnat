@@ -117,10 +117,13 @@ const Footer = () => {
               href="https://www.facebook.com/XLR.Team"
               className="hover:underline"
             >
-              HOOKSTER
+              HOOKSTER &
             </a>
-            &amp;
-            <a href="https://flowbite.com/" className="hover:underline">
+            {/* &amp; */}
+            <a
+              href="https://ledanhthuong0909.blogspot.com/"
+              className="hover:underline"
+            >
               {' '}
               DanhThuong
             </a>

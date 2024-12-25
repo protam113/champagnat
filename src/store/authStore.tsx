@@ -80,16 +80,41 @@ export const useAuthStore = create<AuthState>()(
         }
       },
 
-      logout: () => {
-        if (typeof window !== 'undefined') {
-          localStorage.removeItem('token');
-          localStorage.removeItem('expires');
-          document.cookie = 'refresh=; path=/; max-age=0';
-          document.cookie = 'user_info=; path=/; max-age=0';
-        }
+      logout: async () => {
+        try {
+          if (typeof window !== 'undefined') {
+            // Xóa dữ liệu từ localStorage và cookie
+            localStorage.clear();
+            document.cookie = 'refresh=; path=/; max-age=0';
+            document.cookie = 'user_info=; path=/; max-age=0';
+          }
 
-        set({ isAuthenticated: false, token: null, userInfo: null }); // Xóa thông tin người dùng khi đăng xuất
-        window.location.reload();
+          // Gọi API logout
+          const response = await fetch(`${baseURL}${endpoints.logout}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('token')}`, // Thêm token vào header nếu cần
+            },
+          });
+
+          if (!response.ok) {
+            const error = await response.json();
+            console.error('Logout failed:', error);
+          }
+
+          // Cập nhật trạng thái
+          set({
+            isAuthenticated: false,
+            token: null,
+            userInfo: null,
+          });
+
+          // Điều hướng người dùng về trang login
+          window.location.href = '/login';
+        } catch (error) {
+          console.error('Error during logout:', error);
+        }
       },
       getToken: () => {
         const token =

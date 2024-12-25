@@ -192,7 +192,7 @@ export default function Navbar() {
   );
 }
 
-function SingleNavItem(d: NavItem) {
+function SingleNavItem(d: NavItem & { closeSideMenu?: () => void }) {
   const [animationParent] = useAutoAnimate();
   const [isItemOpen, setItem] = useState(false);
 
@@ -203,7 +203,12 @@ function SingleNavItem(d: NavItem) {
   return (
     <Link
       ref={animationParent}
-      onClick={toggleItem}
+      onClick={() => {
+        toggleItem();
+        if (d.link && d.closeSideMenu) {
+          d.closeSideMenu();
+        }
+      }}
       href={d.link ?? '#'}
       className="relative px-2 py-3 transition-all"
     >
@@ -258,13 +263,11 @@ function MobileNav({
         className={`fixed left-0 top-0 flex h-full min-h-screen w-full md:hidden bg-black/50 transition-all duration-300 ${
           isSideMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
         }`}
-        onClick={closeSideMenu}
       >
         <div
           className={`h-full w-[65%] bg-primary-500 text-white px-4 py-4 transition-transform duration-300 ${
             isSideMenuOpen ? 'translate-x-0' : 'translate-x-full'
           } ml-auto`}
-          onClick={(e) => e.stopPropagation()}
         >
           <section className="flex justify-end">
             <AiOutlineClose
@@ -309,13 +312,19 @@ function MobileNav({
             </section>
           ) : (
             // Nếu chưa đăng nhập
-            <section className="flex flex-col gap-4 mt-6 items-center">
-              <button className="w-max rounded-xl bg-primary-400 px-4 py-2 text-white font-bold transition-colors duration-300 ease-in-out hover:bg-yellow-500">
-                <Link href="/login">Đăng nhập</Link>
-              </button>
-              <button className="w-max rounded-xl border-2 border-primary-400 px-4 py-2 text-white font-bold transition-colors duration-300 ease-in-out hover:bg-primary-400">
-                <Link href="/register">Đăng ký</Link>
-              </button>
+            <section className="flex flex-col gap-6 mt-6 items-center">
+              <Link
+                href="/login"
+                className="h-fit text-neutral-400 transition-all hover:text-yellow-500"
+              >
+                Đăng nhập
+              </Link>
+              <Link
+                href="/register"
+                className="w-full max-w-[200px] rounded-xl border-2 border-neutral-400 px-4 py-2 text-neutral-400 transition-all hover:border-black hover:text-yellow-500"
+              >
+                Đăng ký
+              </Link>
             </section>
           )}
         </div>

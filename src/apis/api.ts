@@ -2,6 +2,7 @@ const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
 
 const endpoints = {
     // auth
+    logout: process.env.NEXT_PUBLIC_LOGOUT,
     login: process.env.NEXT_PUBLIC_LOGIN,
     register: process.env.NEXT_PUBLIC_REGISTER,
     refresh: process.env.NEXT_PUBLIC_REFRESH,
@@ -60,7 +61,7 @@ const endpoints = {
 
     // chat (ChatBot)
     chat: process.env.NEXT_PUBLIC_CHAT, // Thêm dòng này
-    chatHistory: process.env.NEXT_PUBLIC_CHAT_HISTORY, 
+    chatHistory: process.env.NEXT_PUBLIC_CHAT_HISTORY,
 };
 
 export { baseURL, endpoints };

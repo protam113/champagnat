@@ -27,7 +27,7 @@ export const News = () => {
                   height={400}
                 />
               </div>
-              <div className="lg:mt-0">
+              <div className="lg:mt-0 pt-4">
                 <div className="max-w-prose mx-auto lg:max-w-none">
                   <p className="text-22 text-stone-700">
                     <strong>Dòng Anh Em Đức Maria</strong> được thành lập năm
