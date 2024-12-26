@@ -200,3 +200,16 @@ body {
     display: none !important;
   }
 }
+@layer utilities {
+  .text-shadow-lg {
+    text-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.8),
+      0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .text-shadow-xl {
+    text-shadow:
+      0 2px 4px rgba(0, 0, 0, 0.8),
+      0 4px 8px rgba(0, 0, 0, 0.5);
+  }
+}

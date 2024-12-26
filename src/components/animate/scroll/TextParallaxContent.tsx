@@ -4,6 +4,7 @@ import React, { useState, useRef } from 'react';
 import { HistoryMonasteryData } from '@/lib/historyMonasteryData';
 import { ClipLoader } from 'react-spinners';
 import history from '@/assets/image/about.jpg';
+import about from '@/assets/image/about-2.jpg';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { TextParallaxContentProps, OverlayCopyProps } from '@/types/types';
@@ -46,7 +47,7 @@ const History = () => {
           {/* Hình ảnh bên phải */}
           <div className="relative w-full md:w-1/2 h-48 md:h-64">
             <Image
-              src={history}
+              src={about}
               alt="banner"
               layout="fill"
               objectFit="cover"
@@ -141,7 +142,7 @@ const OverlayCopy: React.FC<OverlayCopyProps> = ({ subheading, heading }) => {
     offset: ['start end', 'end start'],
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100]); // Giảm khoảng cách transform
+  const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
   const opacity = useTransform(scrollYProgress, [0.25, 0.5, 0.75], [0, 1, 0]);
 
   return (
@@ -153,10 +154,10 @@ const OverlayCopy: React.FC<OverlayCopyProps> = ({ subheading, heading }) => {
       ref={targetRef}
       className="absolute left-0 top-0 flex h-[40vh] md:h-screen w-full flex-col items-center justify-center text-white px-4 md:px-0"
     >
-      <p className="mb-1 md:mb-4 text-center text-sm md:text-xl lg:text-3xl">
+      <p className="mb-1 md:mb-4 text-center text-sm md:text-xl lg:text-3xl font-bold text-shadow-lg">
         {subheading}
       </p>
-      <h1 className="text-center text-lg md:text-4xl lg:text-7xl font-bold px-4 leading-tight">
+      <h1 className="text-center text-lg md:text-4xl lg:text-7xl font-extrabold opacity-100 px-4 leading-tight text-shadow-xl">
         {heading}
       </h1>
     </motion.div>
