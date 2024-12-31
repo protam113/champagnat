@@ -1,3 +1,4 @@
+'use client';
 // components/PushButton.tsx
 import React from 'react';
 import { useRouter } from 'next/navigation';

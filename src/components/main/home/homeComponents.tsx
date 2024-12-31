@@ -12,7 +12,7 @@ export const Content = () => {
   return (
     <div className="mt-16">
       <Container>
-        <PushButton label="Đôi Nét Về Chúng Tôi" href="/hoi_dong/about_us" />
+        <PushButton label="Đôi Nét Về Hội Dòng" href="/hoi_dong/about_us" />
         <News />
 
         <PushButton label="Bài Viết" href="/blog" />

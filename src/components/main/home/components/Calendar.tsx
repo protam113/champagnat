@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Badge, Spin, Alert } from 'antd';
+import { Badge, Spin, Alert, Select } from 'antd';
 import type { BadgeProps } from 'antd';
 import { useScheduleList } from '@/hooks/schedule/useSchedule';
 
@@ -28,8 +28,8 @@ const getDateRange = (
 };
 
 const CatholicCalendarTable: React.FC = () => {
-  const [year] = useState<string>(new Date().getFullYear().toString());
-  const [refreshKey] = useState<number>(0);
+  const [year, setYear] = useState<string>(new Date().getFullYear().toString());
+  const [refreshKey, setRefreshKey] = useState<number>(0);
   const currentDate = new Date();
   const dateRange = getDateRange(currentDate, 0, 31); // Lấy 31 ngày sau
 
@@ -70,67 +70,88 @@ const CatholicCalendarTable: React.FC = () => {
     );
   }
 
-  return (
-    <div
-      style={{
-        maxHeight: '750px',
-        overflowY: 'auto',
-        padding: '8px',
-        border: '1px solid #ddd',
-        borderRadius: '4px',
-      }}
-    >
-      {dateRange.map((date, index) => {
-        const feasts = getFeastsByDate(date);
-        const isToday = date.toDateString() === currentDate.toDateString();
+  // Thay đổi năm khi người dùng chọn năm mới
+  const handleYearChange = (value: string) => {
+    setYear(value);
+    setRefreshKey((prevKey) => prevKey + 1); // Cập nhật refreshKey để trigger lại dữ liệu
+  };
 
-        return (
-          <div key={index} style={{ marginBottom: '16px' }}>
-            <div
-              style={{
-                fontSize: '16px',
-                backgroundColor: isToday ? '#e6f7ff' : 'transparent',
-                padding: '8px',
-                borderRadius: '4px',
-                border: isToday ? '1px solid #1890ff' : 'none',
-              }}
-            >
-              <strong>
-                {date.toLocaleDateString('vi-VN', {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </strong>
+  return (
+    <div>
+      {/* Dropdown chọn năm */}
+      <div style={{ marginBottom: '16px', textAlign: 'center' }}>
+        <Select
+          value={year}
+          onChange={handleYearChange}
+          style={{ width: 150 }}
+          options={[...Array(20).keys()].map((i) => ({
+            label: (new Date().getFullYear() - i).toString(),
+            value: (new Date().getFullYear() - i).toString(),
+          }))}
+        />
+      </div>
+
+      <div
+        style={{
+          maxHeight: '750px',
+          overflowY: 'auto',
+          padding: '8px',
+          border: '1px solid #ddd',
+          borderRadius: '4px',
+        }}
+      >
+        {dateRange.map((date, index) => {
+          const feasts = getFeastsByDate(date);
+          const isToday = date.toDateString() === currentDate.toDateString();
+
+          return (
+            <div key={index} style={{ marginBottom: '16px' }}>
+              <div
+                style={{
+                  fontSize: '16px',
+                  backgroundColor: isToday ? '#e6f7ff' : 'transparent',
+                  padding: '8px',
+                  borderRadius: '4px',
+                  border: isToday ? '1px solid #1890ff' : 'none',
+                }}
+              >
+                <strong>
+                  {date.toLocaleDateString('vi-VN', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </strong>
+              </div>
+              <ul className="events">
+                {feasts.length > 0 ? (
+                  feasts.map((feast: any) => (
+                    <li
+                      key={feast.id}
+                      style={{
+                        cursor: 'pointer',
+                        fontSize: '16px',
+                      }}
+                      onClick={() => {
+                        console.log(feast); // Thay bằng modal nếu cần
+                      }}
+                    >
+                      <Badge
+                        status={feastTypeColors[feast.feast_type]}
+                        text={feast.feast_name}
+                      />
+                    </li>
+                  ))
+                ) : (
+                  <li>Không có lễ</li>
+                )}
+              </ul>
+              {index < dateRange.length - 1 && <hr />}
             </div>
-            <ul className="events">
-              {feasts.length > 0 ? (
-                feasts.map((feast: any) => (
-                  <li
-                    key={feast.id}
-                    style={{
-                      cursor: 'pointer',
-                      fontSize: '16px',
-                    }}
-                    onClick={() => {
-                      console.log(feast); // Thay bằng modal nếu cần
-                    }}
-                  >
-                    <Badge
-                      status={feastTypeColors[feast.feast_type]}
-                      text={feast.feast_name}
-                    />
-                  </li>
-                ))
-              ) : (
-                <li>Không có lễ</li>
-              )}
-            </ul>
-            {index < dateRange.length - 1 && <hr />}
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
   );
 };

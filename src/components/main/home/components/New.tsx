@@ -1,16 +1,25 @@
 'use client'; // Ensures this is a client component
 
+import { useEffect } from 'react';
 import Image from 'next/image';
 import news from '@/assets/image/hero.jpg';
 import CalendarCustom from './Calendar';
+import { useCreateVisit } from '@/hooks/visit/useVisit';
 
 export const News = () => {
+  const { mutate } = useCreateVisit();
+
+  // Gọi mutate khi component được render và khi trang được tải lại
+  useEffect(() => {
+    mutate(); // Gọi mutate mỗi khi trang được load lại
+  }, []); // Chạy chỉ một lần khi component mount
+
   return (
     <>
       {/* Phần nội dung: Hình ảnh, text và lịch */}
       <div className="flex flex-col lg:flex-row py-4 gap-2">
         {/* Phần nội dung */}
-        <div className="max-w-4xl mx-auto py-2 px-2 sm:py-2s sm:px-6 lg:px-4">
+        <div className="max-w-4xl mx-auto py-2 px-2 sm:py-2 sm:px-6">
           <div className="text-center">
             <p className="mt-1 text-24 font-light text-stone-900 sm:text-5xl sm:tracking-tight lg:text-25">
               Dòng Anh Em Đức Maria
@@ -28,7 +37,7 @@ export const News = () => {
                 />
               </div>
               <div className="lg:mt-0 pt-4">
-                <div className="max-w-prose mx-auto lg:max-w-none">
+                <div className=" text-justify mx-auto lg:max-w-none">
                   <p className="text-22 text-stone-700">
                     <strong>Dòng Anh Em Đức Maria</strong> được thành lập năm
                     1817 tại một ngôi làng ở vùng Loire, La Valla, nước Pháp.{' '}

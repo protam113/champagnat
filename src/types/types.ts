@@ -478,6 +478,8 @@ export interface ScheduleList {
   find: any // The correct property name for the array of schedule items
 }
 
+
+
 /**
  chatAI Interface
  **/
@@ -490,5 +492,9 @@ type ChatItem = {
 export type FetchChatListResponse = ChatItem[];
 
 export interface NewChat {
+  content: string;
+}
+
+export interface NewVisit {
   content: string;
 }

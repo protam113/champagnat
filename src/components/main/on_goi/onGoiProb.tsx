@@ -5,7 +5,7 @@ import logo from '@/assets/image/logo_default.png';
 const OnGoiProb: React.FC<EventProps> = ({ id, title, date, image }) => {
   return (
     <Link
-      href={`/hoi_dong/on_goi/${id}`}
+      href={`/on_goi/${id}`}
       className="rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-300 hover:scale-105" // Thêm hiệu ứng hover
     >
       <div className="relative h-48 w-full">

@@ -14,7 +14,7 @@ interface Category {
   image: string;
 }
 
-const BlogTag = ({
+const BlogsTag = ({
   onFilterChange,
   setRefreshKey,
 }: {
@@ -28,7 +28,7 @@ const BlogTag = ({
 
   const { queueData, isLoading, isError } = CategoriesList(
     currentPage,
-    'blog',
+    'blogs',
     0,
   );
 
@@ -89,11 +89,11 @@ const BlogTag = ({
     dots: false,
     infinite: true,
     speed: 300,
-    slidesToShow: isMobile ? 2 : 4,
+    slidesToShow: Math.min(queueData?.length || 0, isMobile ? 2 : 4), // Điều chỉnh số lượng slides hiển thị
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
-    lazyLoad: 'ondemand', // Ensure 'lazyLoad' is correctly typed
+    lazyLoad: 'ondemand',
     swipeToSlide: true,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -101,14 +101,14 @@ const BlogTag = ({
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: 3,
+          slidesToShow: Math.min(queueData?.length || 0, 3), // Điều chỉnh cho màn hình lớn
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: 2,
+          slidesToShow: Math.min(queueData?.length || 0, 2), // Điều chỉnh cho màn hình nhỏ
           slidesToScroll: 1,
         },
       },
@@ -121,7 +121,7 @@ const BlogTag = ({
         {queueData?.map((category: Category) => (
           <div key={category.id} className="px-2">
             <div
-              className={`relative flex flex-col items-center justify-center cursor-pointer border border-primary-500 bg-primary-500 hover:bg-primary-400 transition-all duration-300 rounded-lg overflow-hidden ${
+              className={`relative flex items-center justify-center cursor-pointer border border-primary-500 bg-primary-500 hover:bg-primary-400 transition-all duration-300 rounded-lg overflow-hidden ${
                 selectedCategory === category.id ? 'ring-2 ring-blue-500' : ''
               }`}
               onClick={() => handleCategoryChange(category.id)}
@@ -147,7 +147,7 @@ const BlogTag = ({
                   </div>
                 </div>
               ) : (
-                <div className="text-center text-14 p-4 text-white">
+                <div className="text-center text-12 p-4 text-white">
                   {category.name}
                 </div>
               )}
@@ -159,4 +159,4 @@ const BlogTag = ({
   );
 };
 
-export default BlogTag;
+export default BlogsTag;

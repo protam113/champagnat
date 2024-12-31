@@ -121,7 +121,7 @@ const NewsTag = ({
         {queueData?.map((category: Category) => (
           <div key={category.id} className="px-2">
             <div
-              className={`relative flex flex-col items-center justify-center cursor-pointer border border-primary-500 bg-primary-500 hover:bg-primary-400 transition-all duration-300 rounded-lg overflow-hidden ${
+              className={`relative flex items-center justify-center cursor-pointer border border-primary-500 bg-primary-500 hover:bg-primary-400 transition-all duration-300 rounded-lg overflow-hidden ${
                 selectedCategory === category.id ? 'ring-2 ring-blue-500' : ''
               }`}
               onClick={() => handleCategoryChange(category.id)}

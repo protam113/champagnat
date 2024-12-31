@@ -26,9 +26,9 @@ export const NavItems = () => {
           link: '/hoi_dong/about_us',
         },
         {
-          id: 6,
-          label: 'Ơn Gọi',
-          link: '/hoi_dong/on_goi',
+          id: 12,
+          label: 'Thư Viện',
+          link: '/hoi_dong/thu_vien',
         },
         {
           id: 7,
@@ -39,7 +39,7 @@ export const NavItems = () => {
     },
     {
       id: 8,
-      label: 'Sự Kiện',
+      label: 'Sự Kiện & Ơn Gọi',
       children: [
         {
           id: 11,

@@ -62,6 +62,9 @@ const endpoints = {
     // chat (ChatBot)
     chat: process.env.NEXT_PUBLIC_CHAT, // Thêm dòng này
     chatHistory: process.env.NEXT_PUBLIC_CHAT_HISTORY,
+
+    // visit
+    visit: process.env.NEXT_PUBLIC_VISIT
 };
 
 export { baseURL, endpoints };
