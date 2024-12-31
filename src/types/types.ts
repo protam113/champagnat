@@ -92,6 +92,18 @@ export interface FetchDonationListResponse {
   results: DonationList[];
 }
 
+interface GaleryList {
+  id: string;
+  image: string; // Chỉnh sửa để phù hợp với giá trị null trong JSON
+}
+
+export interface FetchGaleryListResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: GaleryList[];
+}
+
 
 /*
   Posts List Interface

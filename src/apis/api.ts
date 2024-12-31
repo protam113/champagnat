@@ -64,7 +64,8 @@ const endpoints = {
     chatHistory: process.env.NEXT_PUBLIC_CHAT_HISTORY,
 
     // visit
-    visit: process.env.NEXT_PUBLIC_VISIT
+    visit: process.env.NEXT_PUBLIC_VISIT,
+    galery: process.env.NEXT_PUBLIC_GALERY,
 };
 
 export { baseURL, endpoints };
