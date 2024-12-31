@@ -1,7 +1,6 @@
 import React from 'react';
 import Container from '@/components/Container/container';
 import NewsGallery from '@/components/main/thu_vien/NewsGallery';
-import PushButton from '@/components/design/Head';
 import BlogsGallery from '@/components/main/thu_vien/BlogsGallery';
 import QuyenGopGallery from '@/components/main/thu_vien/QuyenGopGallery';
 import SuVuGallery from '@/components/main/thu_vien/SuVuGallery';
