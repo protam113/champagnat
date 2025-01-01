@@ -12,7 +12,7 @@ export const News = () => {
   // Gọi mutate khi component được render và khi trang được tải lại
   useEffect(() => {
     mutate(); // Gọi mutate mỗi khi trang được load lại
-  }, []); // Chạy chỉ một lần khi component mount
+  }, [mutate]); // Chạy chỉ một lần khi component mount
 
   return (
     <>
