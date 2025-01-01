@@ -13,7 +13,6 @@ export const GaleryList = (currentPage: number, model: string ,refreshKey: numbe
         filters // Use the category chosen by the news
         ,refreshKey);
 
-       
     
     const queueData = data?.results || [];
 
@@ -23,7 +22,6 @@ export const GaleryList = (currentPage: number, model: string ,refreshKey: numbe
     return { 
         queueData,
         next:data?.next,
-        count: data?.count,
         latestPost,
         otherPosts,
         isLoading, 

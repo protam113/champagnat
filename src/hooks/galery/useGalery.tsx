@@ -14,7 +14,7 @@ import { FetchGaleryListResponse, Filters } from '@/types/types';
 const fetchGaleryList = async (
   filters: Filters,
   pageParam: number = 1,
-  token: string,
+  token?: string,
 ): Promise<FetchGaleryListResponse> => {
   try {
     // Filter out undefined or empty values from filters
@@ -36,11 +36,11 @@ const fetchGaleryList = async (
       `${endpoints.galery}${queryString ? `?${queryString}` : ''}`,
       'GET',
       null,
-      token,
+      token || null,
     );
     return response;
   } catch (error) {
-    console.error('Error fetching document list:', error);
+    console.error('Error fetching galery list:', error);
     throw error; // Rethrow error for further handling
   }
 };
@@ -66,10 +66,7 @@ const useGaleryList = (
   return useQuery<FetchGaleryListResponse, Error>({
     queryKey: ['galeryList', filters, page, token, refreshKey],
     queryFn: async () => {
-      if (!token) {
-        throw new Error('Token is not available');
-      }
-      return fetchGaleryList(filters, page, token);
+      return fetchGaleryList(filters, page, token || undefined);
     },
 
     staleTime: 60000,

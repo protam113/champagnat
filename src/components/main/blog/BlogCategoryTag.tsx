@@ -28,7 +28,7 @@ const BlogsTag = ({
 
   const { queueData, isLoading, isError } = CategoriesList(
     currentPage,
-    'blogs',
+    'blog',
     0,
   );
 

@@ -6,7 +6,7 @@ import QuyenGopGallery from '@/components/main/thu_vien/QuyenGopGallery';
 import SuVuGallery from '@/components/main/thu_vien/SuVuGallery';
 import OnGoiGallery from '@/components/main/thu_vien/OnGoiGallery';
 import Header from '@/components/design/Header';
-import EventsGallery from '@/components/main/thu_vien/EventsGallery';
+
 function ThuVienPage() {
   return (
     <Container>
@@ -28,18 +28,10 @@ function ThuVienPage() {
         <SuVuGallery />
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4 mx-auto">
-        {/* Cột 1: Ơn Gọi */}
-        <div>
-          <Header name="Ơn Gọi" />
-          <OnGoiGallery />
-        </div>
-
-        {/* Cột 2: Sự Kiện */}
-        <div>
-          <Header name="Sự Kiện" />
-          <EventsGallery />
-        </div>
+      {/* Cột 1: Ơn Gọi */}
+      <div className="pt-5">
+        <Header name="Ơn Gọi & Sự Kiện" />
+        <OnGoiGallery />
       </div>
     </Container>
   );
