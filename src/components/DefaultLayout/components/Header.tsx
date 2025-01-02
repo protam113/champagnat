@@ -100,11 +100,7 @@ export default function Navbar() {
   const { userInfo } = useUser() || {}; // Provide a default empty object if useUser returns null
   const [animationParent] = useAutoAnimate();
   const [isSideMenuOpen, setSideMenue] = useState(false);
-  // const [isMounted, setIsMounted] = useState(false);
   const navItems = NavItems();
-  // useEffect(() => {
-  //   setIsMounted(true); // Set to true after component mounts
-  // }, []);
 
   function openSideMenu() {
     setSideMenue(true);
@@ -114,10 +110,6 @@ export default function Navbar() {
     setSideMenue(false);
   }
 
-  // if (!isMounted) {
-  //   // Render nothing on the server to prevent hydration issues
-  //   return <Loading />;
-  // }
 
   return (
     <div className="sticky top-0 mx-auto flex w-full justify-between px-8 py-3 text-14 bg-primary-500 z-10">
@@ -296,7 +288,7 @@ function MobileNav({
               <button className="w-full max-w-[200px] rounded-xl border-2 border-neutral-400 px-4 py-2 text-white transition-all hover:border-black hover:text-black/90">
                 <Link href="/study" className="whitespace-nowrap">
                   Học Tập
-                </Link>
+                </Link>s
               </button>
 
               {/* Đăng xuất */}

@@ -18,7 +18,6 @@ export const NavItems = () => {
     {
       id: 4,
       label: 'Hội Dòng',
-      // link: '/hoi_dong',
       children: [
         {
           id: 5,
@@ -26,9 +25,14 @@ export const NavItems = () => {
           link: '/hoi_dong/about_us',
         },
         {
+          id: 15,
+          label: 'Hội Dòng AEDM VN',
+          link: '/hoi_dong/congregation',
+        },
+        {
           id: 12,
-          label: 'Thư Viện',
-          link: '/hoi_dong/thu_vien',
+          label: 'Đặc Sủng - Linh Đạo',
+          link: '/hoi_dong/charismn',
         },
         {
           id: 7,
@@ -52,6 +56,27 @@ export const NavItems = () => {
           link: '/events',
         },
       ],
+    },
+    {
+      id: 12,
+      label: 'Thư Viện',
+      children: [
+        {
+          id: 6,
+          label: 'Ảnh',
+          link: '/thu_vien_anh',
+        },
+        {
+          id: 13,
+          label: 'Video',
+          link: '/thu_vien_video',
+        },
+      ],
+    },
+    {
+      id: 14,
+      label: 'Cầu Nguyện',
+      link: '/donation',
     },
     {
       id: 9,
