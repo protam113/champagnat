@@ -16,6 +16,7 @@ import { useAuth } from '@/context/authContext';
 import { Avatar } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import ProfileDrawer from '@/components/drawer/ProfileDrawer';
+import { CategoriesList } from '@/lib/categoriesList';
 
 type NavItem = {
   label: string | undefined; // Allow undefined
@@ -23,6 +24,12 @@ type NavItem = {
   children?: NavItem[];
   iconImage?: string;
 };
+
+interface CategoryItem {
+  id: string;
+  name: string;
+  image: string;
+}
 
 export const TopHeader = () => {
   return (
@@ -95,6 +102,165 @@ export const Dropdown_image = ({ userInfo }: { userInfo: any }) => {
     </>
   );
 };
+/*
+News Dropdown Item
+*/
+export const NewsDropdown_Item = () => {
+  const [currentPage] = useState(1);
+
+  const { queueData, isLoading, isError } = CategoriesList(
+    currentPage,
+    'news',
+    0,
+  );
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading categories</div>;
+
+  return (
+    <>
+      {queueData?.map((category: CategoryItem) => (
+        <Link
+          key={category.id} // Thêm key duy nhất
+          href={`/news/?category=${category.id}`}
+          className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-yellow-300"
+        >
+          {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
+          <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+            {category.name}
+          </span>
+        </Link>
+      ))}
+    </>
+  );
+};
+
+/*
+Blog Dropdown Item
+*/
+export const BlogDropdown_Item = () => {
+  const [currentPage] = useState(1);
+
+  const { queueData, isLoading, isError } = CategoriesList(
+    currentPage,
+    'blog',
+    0,
+  );
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading categories</div>;
+
+  return (
+    <>
+      {queueData?.map((category: CategoryItem) => (
+        <Link
+          key={category.id} // Thêm key duy nhất
+          href={`/blog/?category=${category.id}`}
+          className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-yellow-300"
+        >
+          {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
+          <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+            {category.name}
+          </span>
+        </Link>
+      ))}
+    </>
+  );
+};
+
+/*
+Mission Dropdown Item
+*/
+export const MissionDropdown_Item = () => {
+  const [currentPage] = useState(1);
+
+  const { queueData, isLoading, isError } = CategoriesList(
+    currentPage,
+    'mission',
+    0,
+  );
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading categories</div>;
+
+  return (
+    <>
+      {queueData?.map((category: CategoryItem) => (
+        <Link
+          key={category.id} // Thêm key duy nhất
+          href={`/su_vu/?category=${category.id}`}
+          className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-yellow-300"
+        >
+          {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
+          <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+            {category.name}
+          </span>
+        </Link>
+      ))}
+    </>
+  );
+};
+
+/*
+Document Dropdown Item
+*/
+export const DocumentDropdown_Item = () => {
+  const [currentPage] = useState(1);
+
+  const { queueData, isLoading, isError } = CategoriesList(
+    currentPage,
+    'document',
+    0,
+  );
+
+  if (isLoading) return <div>Loading...</div>;
+  if (isError) return <div>Error loading categories</div>;
+
+  return (
+    <>
+      {queueData?.map((category: CategoryItem) => (
+        <Link
+          key={category.id} // Thêm key duy nhất
+          href={`/document/?category=${category.id}`}
+          className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-yellow-300"
+        >
+          {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
+          <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+            {category.name}
+          </span>
+        </Link>
+      ))}
+    </>
+  );
+};
+
+/*
+Multimedia Dropdown Item
+*/
+export const MultimediaDropdown_Item = () => {
+  return (
+    <>
+      <Link
+        href="/thu_vien_anh"
+        className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-yellow-300"
+      >
+        {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
+        <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+          Ảnh
+        </span>
+      </Link>
+      <Link
+        href="/thu_vien_video"
+        className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-yellow-300"
+      >
+        {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
+        <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+          Video
+        </span>
+      </Link>
+    </>
+  );
+};
 
 export default function Navbar() {
   const { userInfo } = useUser() || {}; // Provide a default empty object if useUser returns null
@@ -109,7 +275,6 @@ export default function Navbar() {
   function closeSideMenu() {
     setSideMenue(false);
   }
-
 
   return (
     <div className="sticky top-0 mx-auto flex w-full justify-between px-8 py-3 text-14 bg-primary-500 z-10">
@@ -128,14 +293,10 @@ export default function Navbar() {
         />
 
         {/* Nav items */}
-        <div className="hidden md:flex items-center justify-center flex-grow gap-10 transition-all">
+        <div className="hidden md:flex items-center justify-center flex-grow gap-8 transition-all">
           {navItems.map((d, i) => (
-            <Link
-              key={i}
-              href={d.link ?? '#'}
-              className="relative group px-2 py-3 transition-all"
-            >
-              <p className="flex cursor-pointer font-bold items-center gap-2 text-white">
+            <div key={i} className="relative group py-3 text-14 transition-all">
+              <p className="flex cursor-pointer font-semibold items-center gap-2 text-white">
                 <span className="relative">
                   {d.label}
                   <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
@@ -158,8 +319,86 @@ export default function Navbar() {
                   ))}
                 </div>
               )}
-            </Link>
+            </div>
           ))}
+          <Link
+            href="/news"
+            className="relative group py-2 text-14 transition-all"
+          >
+            <p className="flex cursor-pointer font-semibold items-center gap-2 text-white">
+              <span className="relative">
+                Tin Tức
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+              </span>
+              <IoIosArrowDown className="rotate-180 w-3 transition-all group-hover:rotate-0 group-hover:text-yellow-400" />
+              <div className="absolute z-50 top-full left-0 hidden flex-col gap-1 bg-primary-500 py-3 px-4 transition-all group-hover:flex">
+                <NewsDropdown_Item />
+              </div>
+            </p>
+          </Link>
+
+          <Link
+            href="/news"
+            className="relative group py-2 text-14 transition-all"
+          >
+            <p className="flex cursor-pointer font-semibold items-center gap-2 text-white">
+              <span className="relative">
+                Sứ Vụ
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+              </span>
+              <IoIosArrowDown className="rotate-180 w-3 transition-all group-hover:rotate-0 group-hover:text-yellow-400" />
+              <div className="absolute z-50 top-full left-0 hidden flex-col gap-1 bg-primary-500 py-3 px-4 transition-all group-hover:flex">
+                <MissionDropdown_Item />
+              </div>
+            </p>
+          </Link>
+
+          <Link
+            href="/blog"
+            className="relative group py-3 text-14 transition-all"
+          >
+            <p className="flex cursor-pointer font-semibold items-center gap-2 text-white">
+              <span className="relative">
+                Giáo Hội
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+              </span>
+              <IoIosArrowDown className="rotate-180 w-3 transition-all group-hover:rotate-0 group-hover:text-yellow-400" />
+              <div className="absolute z-50 top-full left-0 hidden flex-col gap-1 bg-primary-500 py-3 px-4 transition-all group-hover:flex">
+                <BlogDropdown_Item />
+              </div>
+            </p>
+          </Link>
+          <Link
+            href="/news"
+            className="relative group py-3 text-14 transition-all"
+          >
+            <p className="flex cursor-pointer font-semibold items-center gap-2 text-white">
+              <span className="relative">
+                Tư Liệu
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+              </span>
+              <IoIosArrowDown className="rotate-180 w-3 transition-all group-hover:rotate-0 group-hover:text-yellow-400" />
+
+              <div className="absolute z-50 top-full left-0 hidden flex-col gap-1 bg-primary-500 py-3 px-4 transition-all group-hover:flex">
+                <DocumentDropdown_Item />
+              </div>
+            </p>
+          </Link>
+          <Link
+            href="/news"
+            className="relative group py-3 text-14 transition-all"
+          >
+            <p className="flex cursor-pointer font-semibold items-center gap-2 text-white">
+              <span className="relative">
+                Multimedia
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+              </span>
+              <IoIosArrowDown className="rotate-180 w-3 transition-all group-hover:rotate-0 group-hover:text-yellow-400" />
+              <div className="absolute z-50 top-full left-0 hidden flex-col gap-1 bg-primary-500 py-3 px-4 transition-all group-hover:flex">
+                <MultimediaDropdown_Item />
+              </div>
+            </p>
+          </Link>
         </div>
 
         {/* right side data */}
@@ -269,7 +508,7 @@ function MobileNav({
           </section>
           <div className="flex flex-col text-14 text-white gap-2 transition-all">
             {navItems.map((d, i) => (
-              <SingleNavItem key={i} label={d.label} link={d.link}>
+              <SingleNavItem key={i} label={d.label}>
                 {d.children}
               </SingleNavItem>
             ))}
@@ -288,7 +527,8 @@ function MobileNav({
               <button className="w-full max-w-[200px] rounded-xl border-2 border-neutral-400 px-4 py-2 text-white transition-all hover:border-black hover:text-black/90">
                 <Link href="/study" className="whitespace-nowrap">
                   Học Tập
-                </Link>s
+                </Link>
+                s
               </button>
 
               {/* Đăng xuất */}

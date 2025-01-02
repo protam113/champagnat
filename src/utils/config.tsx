@@ -1,87 +1,100 @@
 export const NavItems = () => {
   return [
+    // {
+    //   key: 1,
+    //   label: 'Trang Chủ',
+    //   link: '/',
+    // },
+
     {
-      key: 1,
-      label: 'Trang Chủ',
-      link: '/',
-    },
-    {
-      key: 2,
-      label: 'Tin Tức',
-      link: '/news',
-    },
-    {
-      key: 3,
-      label: 'Bài Viết',
-      link: '/blog',
-    },
-    {
-      id: 4,
-      label: 'Hội Dòng',
+      id: 1,
+      label: 'Giới Thiệu',
       children: [
         {
-          id: 5,
-          label: 'Giới Thiệu Chung',
-          link: '/hoi_dong/about_us',
-        },
-        {
-          id: 15,
-          label: 'Hội Dòng AEDM VN',
+          id: 3,
+          label: 'Đặc Sủng - Linh Đạo',
           link: '/hoi_dong/congregation',
         },
         {
-          id: 12,
-          label: 'Đặc Sủng - Linh Đạo',
-          link: '/hoi_dong/charismn',
-        },
-        {
-          id: 7,
-          label: 'Sứ Vụ',
-          link: '/hoi_dong/su_vu',
+          id: 2,
+          label: 'Lược sử Hội Dòng',
+          link: '/hoi_dong/about_us',
         },
       ],
     },
     {
-      id: 8,
-      label: 'Sự Kiện & Ơn Gọi',
+      key: 4,
+      label: 'Ơn gọi',
       children: [
         {
-          id: 11,
-          label: 'Ơn Gọi',
-          link: '/on_goi',
+          id: 5,
+          label: 'Tìm Hiểu Ơn Gọi',
+          link: '/vocation/learn_about_vocation',
         },
-        {
-          id: 10,
-          label: 'Sự Kiện',
-          link: '/events',
-        },
-      ],
-    },
-    {
-      id: 12,
-      label: 'Thư Viện',
-      children: [
         {
           id: 6,
-          label: 'Ảnh',
-          link: '/thu_vien_anh',
-        },
-        {
-          id: 13,
-          label: 'Video',
-          link: '/thu_vien_video',
+          label: 'Các Giai Đoạn Đào Tạo',
+          link: '/vocation/training_stages',
         },
       ],
     },
     {
-      id: 14,
-      label: 'Cầu Nguyện',
-      link: '/donation',
+      key: 7,
+      label: 'Đấng Sáng Lập Dòng',
+      children: [
+        {
+          id: 8,
+          label: 'Cuộc đời Đấng Sáng Lập',
+          link: '/founder/the_founder_life',
+        },
+        {
+          id: 9,
+          label: 'Thư của Đấng Sáng Lập',
+          link: '/founder/letter_from_the_foundern',
+        },
+      ],
     },
-    {
-      id: 9,
-      label: 'Quyên Góp',
-      link: '/donation',
-    },
+    //     {
+    //       id: 8,
+    //       label: 'Sự Kiện & Ơn Gọi',
+    //       children: [
+    //         {
+    //           id: 11,
+    //           label: 'Ơn Gọi',
+    //           link: '/on_goi',
+    //         },
+    //         {
+    //           id: 10,
+    //           label: 'Sự Kiện',
+    //           link: '/events',
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       id: 12,
+    //       label: 'Thư Viện',
+    //       children: [
+    //         {
+    //           id: 6,
+    //           label: 'Ảnh',
+    //           link: '/thu_vien_anh',
+    //         },
+    //         {
+    //           id: 13,
+    //           label: 'Video',
+    //           link: '/thu_vien_video',
+    //         },
+    //       ],
+    //     },
+    //     {
+    //       id: 14,
+    //       label: 'Cầu Nguyện',
+    //       link: '/donation',
+    //     },
+    //     {
+    //       id: 9,
+    //       label: 'Quyên Góp',
+    //       link: '/donation',
+    //     },
   ];
 };
