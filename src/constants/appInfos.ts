@@ -2,11 +2,11 @@
 import type { Metadata } from 'next';
 
 export const appInfo = {
-    logo: '/image_logo.png',
+    logo: '/logo_default.png',
     title: 'Marists Champagnat',
     description: 'Chào mừng đến với Hội Dòng Anh Em Đức Maria',
     domain: 'https://hoidonganhemducmaria.com',
-    ogImage: '/image_logo.png',
+    ogImage: '/logo_default.png',
     themeColor: '#ffffff',
     keywords: 'dashboard, champagnat, analytics',
 } as const;
