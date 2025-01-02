@@ -12,13 +12,16 @@ const OnGoiPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [refreshKey] = useState(0);
 
+  const [events] = useState(['vocation']); // Đây là event mà bạn muốn truyền vào
+  const [status] = useState(['open']); // Đây là status bạn muốn truyền vào
+
   // Lấy danh sách tin tức từ API
   const {
     queueData: vocation,
     next,
     isLoading,
     isError,
-  } = EventList(currentPage, 'vocation', refreshKey);
+  } = EventList(currentPage, events, status, refreshKey);
 
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading news...</p>;

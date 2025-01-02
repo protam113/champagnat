@@ -75,11 +75,15 @@ const Page = () => {
           <div className="flex flex-col gap-4">
             <h1 className="text-24 font-semibold text-center">{blog.title}</h1>
 
-            <div className="text-center text-gray-500 text-sm">
+            <div className="flex items-center justify-center text-gray-500 text-sm">
+              <p className="mr-4">
+                {blog.user.first_name} {blog.user.last_name}
+              </p>
               <span className="text-blue-800 mr-4 text-16">
                 {blog.categories?.map((category) => category.name).join(', ')}
               </span>
               <span>{formatDate(blog.created_date)}</span>
+
               <button
                 onClick={handleShare}
                 className="px-4 py-2 ml-4 bg-blue-500 text-white rounded-md shadow-md hover:bg-primary-500 transition"

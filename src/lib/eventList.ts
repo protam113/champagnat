@@ -1,22 +1,17 @@
-
-"use client"; // Đảm bảo đây là client component
-
-
 // eventList.ts
 
-import {useEventList} from "@/hooks/event/useEvent";
+import { useEventList } from "@/hooks/event/useEvent";
 
-export const EventList = (currentPage: number, category: string, refreshKey: number) => {
-    const { data, isLoading, isError } = useEventList(currentPage,
-        {category: [category],} // Use the model chosen by the user
-        ,refreshKey);
+export const EventList = (currentPage: number, events: string[], status: string[], refreshKey: number) => {
+  const { data, isLoading, isError } = useEventList(currentPage, { category: events, status }, refreshKey);
 
-    const queueData = data?.results || [];
+  const queueData = data?.results || [];
 
-    return { 
-        queueData, 
-        next:data?.next,
-        count: data?.count,
-        isLoading, 
-        isError };
+  return { 
+    queueData, 
+    next: data?.next,
+    count: data?.count,
+    isLoading, 
+    isError 
+  };
 };

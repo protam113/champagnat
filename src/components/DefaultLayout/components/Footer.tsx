@@ -94,7 +94,7 @@ const Footer = () => {
             {/* Phần Chính Sách & Điều Khoản */}
             <div className="text-left text-14">
               <h2 className="mb-4 font-semibold text-white uppercase">
-                Chính Sách & Điều Khoản
+                Tin Tức & Bài Viết
               </h2>
               <ul className="space-y-2">
                 {legal.map((item, index) => (

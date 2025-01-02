@@ -1,7 +1,7 @@
 'use client';
 
 import { useParams } from 'next/navigation';
-import { Spin } from 'antd';
+import { message, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
 import Image from 'next/image';
@@ -10,6 +10,7 @@ import { useMissionDetail } from '@/hooks/misssion/useMissionDetail';
 import { MissionList } from '@/lib/missionList';
 import Container from '@/components/Container/container';
 import Tittle from '@/components/design/Tittle';
+import { BsFillShareFill } from 'react-icons/bs';
 
 const Page = () => {
   const { id: suvuIdParam } = useParams();
@@ -49,6 +50,21 @@ const Page = () => {
     return <p className="text-gray-500">Không tìm thấy sứ vụ nào.</p>;
   }
 
+  const handleShare = () => {
+    const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
+
+    navigator.clipboard
+      .writeText(shareUrl)
+      .then(() => {
+        message.success('Link copied successfully!');
+      })
+      .catch((err) => {
+        // Handle errors if clipboard access fails
+        console.error('Failed to copy the URL: ', err);
+        alert('Failed to copy the link.');
+      });
+  };
+
   return (
     <Container>
       <div className="grid grid-cols-12 gap-8">
@@ -57,12 +73,21 @@ const Page = () => {
           <div className="flex flex-col gap-4">
             <h1 className="text-24 font-semibold text-center">{suvu.title}</h1>
 
-            <div className="text-center text-gray-500 text-sm">
+            <div className="flex items-center justify-center text-gray-500 text-sm">
+              <p className="mr-4">
+                {suvu.user.first_name} {suvu.user.last_name}
+              </p>
               <span className="text-blue-800 mr-4 text-16">
                 {suvu.category.name}
-                {/* Chỉ hiển thị danh mục đầu tiên */}
               </span>
               <span>{formatDate(suvu.created_date)}</span>
+
+              <button
+                onClick={handleShare}
+                className="px-4 py-2 ml-4 bg-blue-500 text-white rounded-md shadow-md hover:bg-primary-500 transition"
+              >
+                <BsFillShareFill />
+              </button>
             </div>
 
             <div className="text-center mt-2 text-16">

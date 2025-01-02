@@ -22,7 +22,6 @@ const CreateVisit = async (token?: string) => {
     return response.data;
   } catch (error: any) {
     console.error('Error creating blog:', error.response?.data);
-    throw new Error(error.response?.data?.message || 'Failed to create blog');
   }
 };
 

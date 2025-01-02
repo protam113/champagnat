@@ -1,58 +1,16 @@
 'use client';
 import React, { useState } from 'react';
-import {
-  Form,
-  Input,
-  Button,
-  DatePicker,
-  Upload,
-  Image,
-  UploadFile,
-  UploadProps,
-} from 'antd';
+import { Form, Input, Button, DatePicker } from 'antd';
 import { FaUser, FaPhone, FaEnvelope, FaIdCard } from 'react-icons/fa';
 import { useEventRegistion } from '@/hooks/event/useEventRegister';
 import dayjs from 'dayjs';
 import Container from '../../Container/container';
-import { RcFile } from 'antd/es/upload';
-import { PiPlusDuotone } from 'react-icons/pi';
 import ContentSection from '../ContentSection';
 
 const OnGoiRegister = ({ ongoiId }: { ongoiId: string }) => {
   const [form] = Form.useForm();
   const { mutate } = useEventRegistion(ongoiId);
-  const [previewImage, setPreviewImage] = useState<string>('');
-  const [previewOpen, setPreviewOpen] = useState<boolean>(false);
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [blogData, setBlogData] = useState<any>({});
   const [content, setContent] = useState('');
-
-  const handleChange: UploadProps['onChange'] = ({ fileList }) => {
-    setFileList(fileList);
-    setBlogData({
-      ...blogData,
-      image: fileList.map((file) => file.originFileObj as RcFile),
-      learning_process: content,
-    });
-  };
-
-  const handlePreview = async (file: UploadFile) => {
-    if (!file.url && !file.preview) {
-      const reader = new FileReader();
-      reader.onload = () => setPreviewImage(reader.result as string);
-      reader.readAsDataURL(file.originFileObj as RcFile);
-    } else {
-      setPreviewImage(file.url || file.preview || '');
-    }
-    setPreviewOpen(true);
-  };
-
-  const uploadButton = (
-    <div>
-      <PiPlusDuotone />
-      <div style={{ marginTop: 8 }}>Upload</div>
-    </div>
-  );
 
   const onFinish = (values: any) => {
     const formattedValues = {
@@ -98,32 +56,6 @@ const OnGoiRegister = ({ ongoiId }: { ongoiId: string }) => {
             form={form}
           >
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 md:gap-3">
-              <Form.Item
-                label={<span className="text-white">Hình ảnh chính</span>}
-                className="col-span-1 md:col-span-2 lg:col-span-4"
-              >
-                <Upload
-                  listType="picture-card"
-                  fileList={fileList}
-                  onPreview={handlePreview}
-                  onChange={handleChange}
-                  beforeUpload={() => false}
-                >
-                  {fileList.length >= 1 ? null : uploadButton}
-                </Upload>
-                {previewImage && (
-                  <Image
-                    alt="Hình ảnh xem trước bài viết"
-                    wrapperStyle={{ display: 'none' }}
-                    preview={{
-                      visible: previewOpen,
-                      onVisibleChange: (visible) => setPreviewOpen(visible),
-                    }}
-                    src={previewImage}
-                  />
-                )}
-              </Form.Item>
-
               <Form.Item
                 label={<span className="text-white">Họ và tên đệm</span>}
                 name="first_name"

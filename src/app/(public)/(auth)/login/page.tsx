@@ -6,10 +6,10 @@ import Logo from '@/assets/image/logo.png';
 import Image from 'next/image';
 import { PiEyeSlash } from 'react-icons/pi';
 import { RxEyeOpen } from 'react-icons/rx';
-
 import { useAuth } from '@/context/authContext';
 import { useRouter } from 'next/navigation';
 import Loading from '@/components/design/Loading';
+import { message } from 'antd';
 
 const LoginPage = () => {
   const { login } = useAuth();
@@ -31,7 +31,7 @@ const LoginPage = () => {
       router.push('/'); // Điều hướng tới trang Dashboard sau khi đăng nhập thành công
     } catch (error) {
       console.error('Login error:', error);
-      alert('Login failed. Please try again.');
+      message.warning('Sai Tên Đăng Nhập Hoặc Mật Khẩu!');
     } finally {
       setLoading(false); // Tắt loading khi kết thúc
     }
