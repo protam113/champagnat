@@ -22,7 +22,6 @@ const ReplyComment = ({
   const [commentText, setCommentText] = useState<string>('');
   const [guestName, setGuestName] = useState<string>('');
   const [guestEmail, setGuestEmail] = useState<string>('');
-  console.log(model);
   const handleCommentChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentText(event.target.value);
   };

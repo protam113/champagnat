@@ -119,7 +119,7 @@ const useCreateComment = () => {
       queryClient.invalidateQueries({ queryKey: ['commentList'] });
     },
     onError: (error) => {
-      console.log(error.message || 'Failed to create comment.');
+      console.error(error.message || 'Failed to create comment.');
     },
   });
 };

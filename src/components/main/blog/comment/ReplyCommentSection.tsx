@@ -8,21 +8,27 @@ import { CommentList } from '@/lib/commentList';
 const ReplyCommentSection = ({
   postId,
   parentId,
+  model,
 }: {
   postId: string;
   parentId: string;
+  model: string;
 }) => {
   const [currentPage] = useState(1);
   const [refreshKey] = useState(0);
 
   const object_id = postId;
-  const model = 'blog';
+  const postmodel = model;
   const parent_id = parentId; // Sửa lại thành dấu "="
 
   // Gọi CommentList với các tham số cần thiết
   const { queueData, isLoading, isError } = CommentList({
     currentPage,
-    filter: { object_id: [object_id], model: [model], parent_id: parent_id },
+    filter: {
+      object_id: [object_id],
+      model: [postmodel],
+      parent_id: parent_id,
+    },
     refreshKey,
   });
 

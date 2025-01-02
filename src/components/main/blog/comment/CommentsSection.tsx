@@ -64,20 +64,18 @@ const BlogCommentsSection = ({
           comment && comment.user ? (
             <div key={comment.id}>
               <div className="flex items-center mb-3">
-                <div className="flex items-center">
-                  <Avatar
-                    className="mr-3 w-10 h-10 rounded-full"
-                    src={comment.user.profile_image}
-                    alt="avatar"
-                  />
-                  <div className="flex flex-col">
-                    <p className="text-md font-semibold text-gray-800">
-                      {comment.user.first_name} {comment.user.last_name}
-                    </p>
-                    <p className="text-sm text-gray-500">
-                      {formatDate(comment.created_date)}
-                    </p>
-                  </div>
+                <Avatar
+                  className="mr-3 w-10 h-10 rounded-full object-cover"
+                  src={comment.user.profile_image}
+                  alt="avatar"
+                />
+                <div className="flex">
+                  <p className="ml-2 text-14 font-semibold text-gray-800">
+                    {comment.user.first_name} {comment.user.last_name}
+                  </p>
+                  <p className="ml-2 text-14 text-gray-500">
+                    {formatDate(comment.created_date)}
+                  </p>
                 </div>
               </div>
 
@@ -93,11 +91,12 @@ const BlogCommentsSection = ({
                   <ReplyCommentSection
                     postId={postId}
                     parentId={String(comment.id)}
+                    model={PostModel}
                   />
                   <ReplyComment
                     postId={postId}
-                    model={PostModel}
                     parent={String(comment.id)}
+                    model={PostModel}
                   />
                 </div>
               )}

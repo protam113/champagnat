@@ -7,6 +7,7 @@ import Container from '../../Container/container';
 import Tittle from '../../design/Tittle';
 import { NewsList } from '@/lib/newList';
 import Link from 'next/link';
+import { Spline } from 'lucide-react';
 
 const RecentNewPosts = () => {
   const [currentPage] = useState(1);
@@ -23,8 +24,8 @@ const RecentNewPosts = () => {
   const otherPosts = news.slice(1, 4);
 
   // Kiểm tra dữ liệu
-  if (isLoading) return <div className="text-white">isloading</div>;
-  if (isError) return <p>Error loading news...</p>;
+  if (isLoading) return <Spline className="text-white" />;
+  if (isError) return null;
 
   return (
     <main className="pb-20">

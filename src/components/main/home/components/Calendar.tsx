@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
-import { Badge, Spin, Alert, Select } from 'antd';
+import { Badge, Spin, Alert, DatePicker, Select } from 'antd';
 import type { BadgeProps } from 'antd';
 import { useScheduleList } from '@/hooks/schedule/useSchedule';
+
+const { Option } = Select;
 
 // Màu sắc cho các loại lễ
 const feastTypeColors: Record<string, BadgeProps['status']> = {
@@ -29,27 +31,29 @@ const getDateRange = (
 
 const CatholicCalendarTable: React.FC = () => {
   const [year, setYear] = useState<string>(new Date().getFullYear().toString());
-  const [refreshKey, setRefreshKey] = useState<number>(0);
+  const [month, setMonth] = useState<string>(
+    (new Date().getMonth() + 1).toString(),
+  );
+  const [refreshKey] = useState<number>(0);
   const currentDate = new Date();
-  const dateRange = getDateRange(currentDate, 0, 31); // Lấy 31 ngày sau
+  const dateRange = getDateRange(
+    new Date(`${year}-01-01`), // Bắt đầu từ đầu năm đã chọn
+    0,
+    364, // Lấy cả năm
+  );
 
   const {
     data: scheduleData,
     isLoading,
     isError,
-  } = useScheduleList({ year: year }, refreshKey);
+  } = useScheduleList({ year: year, month: month }, refreshKey);
 
   const getFeastsByDate = (date: Date) => {
+    if (!scheduleData || !Array.isArray(scheduleData)) return [];
     const formattedDate = date.toISOString().split('T')[0];
-    const feasts: any[] = [];
-    if (scheduleData && Array.isArray(scheduleData)) {
-      for (let i = 0; i < scheduleData.length; i++) {
-        if (scheduleData[i].day === formattedDate) {
-          feasts.push(...scheduleData[i].feasts); // Lấy tất cả lễ trong ngày
-        }
-      }
-    }
-    return feasts;
+    return scheduleData
+      .filter((item) => item.day === formattedDate)
+      .flatMap((item) => item.feasts || []);
   };
 
   // Hiển thị khi dữ liệu đang tải
@@ -70,25 +74,39 @@ const CatholicCalendarTable: React.FC = () => {
     );
   }
 
-  // Thay đổi năm khi người dùng chọn năm mới
-  const handleYearChange = (value: string) => {
-    setYear(value);
-    setRefreshKey((prevKey) => prevKey + 1); // Cập nhật refreshKey để trigger lại dữ liệu
-  };
-
   return (
     <div>
-      {/* Dropdown chọn năm */}
-      <div style={{ marginBottom: '16px', textAlign: 'center' }}>
-        <Select
-          value={year}
-          onChange={handleYearChange}
-          style={{ width: 150 }}
-          options={[...Array(20).keys()].map((i) => ({
-            label: (new Date().getFullYear() - i).toString(),
-            value: (new Date().getFullYear() - i).toString(),
-          }))}
+      <div
+        style={{
+          display: 'flex',
+          gap: '16px',
+          marginBottom: '16px',
+          alignItems: 'center',
+        }}
+      >
+        {/* Picker chọn năm */}
+        <DatePicker
+          picker="year"
+          onChange={(date) => {
+            if (date) {
+              setYear(date.year().toString());
+            }
+          }}
+          placeholder="Chọn năm"
         />
+
+        <Select
+          value={month}
+          onChange={(value) => setMonth(value)}
+          style={{ width: 120 }}
+          placeholder="Chọn tháng"
+        >
+          {Array.from({ length: 12 }, (_, i) => (
+            <Option key={i + 1} value={(i + 1).toString()}>
+              Tháng {i + 1}
+            </Option>
+          ))}
+        </Select>
       </div>
 
       <div

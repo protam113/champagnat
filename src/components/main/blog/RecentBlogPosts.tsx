@@ -9,6 +9,7 @@ import Container from '../../Container/container';
 import Tittle from '../../design/Tittle';
 import { FaCross } from '@/lib/iconLib';
 import Link from 'next/link';
+import { Spline } from 'lucide-react';
 
 const RecentBlogPosts = () => {
   const [currentPage] = useState(1);
@@ -25,8 +26,8 @@ const RecentBlogPosts = () => {
   const otherPosts = blogs.slice(1, 4);
 
   // Kiểm tra dữ liệu
-  if (isLoading) return <div className="text-white">isloading</div>;
-  if (isError) return <p>Error loading news...</p>;
+  if (isLoading) return <Spline className="text-white" />;
+  if (isError) return null;
 
   if (blogs.length === 0) {
     return (
