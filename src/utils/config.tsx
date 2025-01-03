@@ -36,8 +36,24 @@ export const NavItems = () => {
           label: 'Các Giai Đoạn Đào Tạo',
           link: '/vocation/training_stages',
         },
+        {
+          id: 11,
+          label: 'Nhà Đề Tử',
+          link: '/vocation/training_stages',
+        },
+        {
+          id: 12,
+          label: 'Nhà Thỉnh Sinh',
+          link: '/vocation/training_stages',
+        },
+        {
+          id: 10,
+          label: 'Nhà Tập',
+          link: '/vocation/training_stages',
+        },
       ],
     },
+
     {
       key: 7,
       label: 'Đấng Sáng Lập Dòng',
@@ -54,6 +70,22 @@ export const NavItems = () => {
         },
       ],
     },
+    // {
+    //   id: 13,
+    //   label: 'Bác Ái Xã Hội',
+    //   children: [
+    //     {
+    //       id: 14,
+    //       label: 'Dự Án',
+    //       link: '/hoi_dong/congregation',
+    //     },
+    //     {
+    //       id: 15,
+    //       label: 'Quyên Góp',
+    //       link: '/hoi_dong/about_us',
+    //     },
+    //   ],
+    // },
     //     {
     //       id: 8,
     //       label: 'Sự Kiện & Ơn Gọi',

@@ -2,8 +2,7 @@
 
 import Contact from '@/components/design/formResgister';
 import Heading from '@/components/design/Heading';
-import NewContent from '@/components/main/news/NewContent';
-import RecentNewPosts from '@/components/main/news/RecentNewPosts';
+import NewsCat from '@/components/main/news/category/newCat';
 
 const Page = () => {
   return (
@@ -16,11 +15,7 @@ const Page = () => {
         </p>
       </div>
 
-      <div className="mt-6">
-        <RecentNewPosts />
-      </div>
-
-      <NewContent />
+      <NewsCat />
 
       <Contact />
     </main>

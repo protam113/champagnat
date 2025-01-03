@@ -122,7 +122,7 @@ export const NewsDropdown_Item = () => {
       {queueData?.map((category: CategoryItem) => (
         <Link
           key={category.id} // Thêm key duy nhất
-          href={`/news/?category=${category.id}`}
+          href={`/news/category/${category.id}`}
           className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-yellow-300"
         >
           {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
@@ -327,7 +327,7 @@ export default function Navbar() {
           >
             <p className="flex cursor-pointer font-semibold items-center gap-2 text-white">
               <span className="relative">
-                Tin Tức
+                Tin Tức Hội Dòng
                 <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
               </span>
               <IoIosArrowDown className="rotate-180 w-3 transition-all group-hover:rotate-0 group-hover:text-yellow-400" />
@@ -374,6 +374,21 @@ export default function Navbar() {
           >
             <p className="flex cursor-pointer font-semibold items-center gap-2 text-white">
               <span className="relative">
+                Bác Ái Xã Hội
+                <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
+              </span>
+              <IoIosArrowDown className="rotate-180 w-3 transition-all group-hover:rotate-0 group-hover:text-yellow-400" />
+              <div className="absolute z-50 top-full left-0 hidden flex-col gap-1 bg-primary-500 py-3 px-4 transition-all group-hover:flex">
+                <MultimediaDropdown_Item />
+              </div>
+            </p>
+          </Link>
+          <Link
+            href="/news"
+            className="relative group py-3 text-14 transition-all"
+          >
+            <p className="flex cursor-pointer font-semibold items-center gap-2 text-white">
+              <span className="relative">
                 Tư Liệu
                 <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-yellow-400 transition-all duration-300 group-hover:w-full" />
               </span>
@@ -384,6 +399,7 @@ export default function Navbar() {
               </div>
             </p>
           </Link>
+
           <Link
             href="/news"
             className="relative group py-3 text-14 transition-all"
