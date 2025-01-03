@@ -262,6 +262,34 @@ export const MultimediaDropdown_Item = () => {
   );
 };
 
+/*
+Multimedia Dropdown Item
+*/
+export const BacAiDropdown_Item = () => {
+  return (
+    <>
+      <Link
+        href="/thu_vien_anh"
+        className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-yellow-300"
+      >
+        {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
+        <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+          Dự Án
+        </span>
+      </Link>
+      <Link
+        href="/thu_vien_video"
+        className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-yellow-300"
+      >
+        {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
+        <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+          Quyên Góp
+        </span>
+      </Link>
+    </>
+  );
+};
+
 export default function Navbar() {
   const { userInfo } = useUser() || {}; // Provide a default empty object if useUser returns null
   const [animationParent] = useAutoAnimate();
@@ -379,7 +407,7 @@ export default function Navbar() {
               </span>
               <IoIosArrowDown className="rotate-180 w-3 transition-all group-hover:rotate-0 group-hover:text-yellow-400" />
               <div className="absolute z-50 top-full left-0 hidden flex-col gap-1 bg-primary-500 py-3 px-4 transition-all group-hover:flex">
-                <MultimediaDropdown_Item />
+                <BacAiDropdown_Item />
               </div>
             </p>
           </Link>
