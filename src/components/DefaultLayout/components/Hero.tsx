@@ -80,7 +80,7 @@ const Hero = () => {
   }
 
   return (
-    <div className="relative w-full h-4/5">
+    <div className=" relative w-full h-4/5">
       <Slide
         easing="ease"
         autoplay={true}
@@ -89,15 +89,18 @@ const Hero = () => {
         arrows={false}
       >
         {newsData.map((news, index) => (
-          <Link href={`/news/${news.id}`} className="each-slide" key={index}>
-            <div className="relative w-full h-[300px] lg:h-[450px]">
+          <Link
+            href={`/news/${news.id}`}
+            className="each-slide brightness-50"
+            key={index}
+          >
+            <div className="relative w-full h-[250px] lg:h-[400px]">
               <Image
                 src={news.image || logo}
                 alt={`Banner Image ${index + 1}`}
                 className="object-cover"
                 layout="fill"
                 priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
           </Link>
@@ -107,7 +110,7 @@ const Hero = () => {
       {/* Phần tin tức */}
       <div className="relative cursor-pointer">
         <div
-          className="rounded-lg w-full -bottom-10 md:w-3/4 absolute left-1/2 transform -translate-x-1/2 bg-primary-800 px-3"
+          className="rounded-lg -bottom-10 w-3/4 absolute left-1/2 transform -translate-x-1/2 bg-primary-800 px-3"
           style={{
             boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.25)', // Điều chỉnh độ mờ và hướng của shadow
           }}

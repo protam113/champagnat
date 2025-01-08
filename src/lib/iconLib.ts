@@ -17,8 +17,20 @@ import { IoDocumentText } from "react-icons/io5";
 import { FaSync } from 'react-icons/fa';
 import { SlCalender } from "react-icons/sl";
 import { FaPhoneAlt, FaMapMarkerAlt } from "react-icons/fa"
+import { PiFacebookLogoBold, PiHandsPrayingDuotone } from 'react-icons/pi';
+import { BiLogoFacebook } from 'react-icons/bi';
+import { RiInstagramLine } from 'react-icons/ri';
+import { MdOutlineMail } from 'react-icons/md';
+import { FaPhoneVolume } from 'react-icons/fa';
+import { IoIosArrowDown } from 'react-icons/io';
+import { FiMenu } from 'react-icons/fi';
+import { AiOutlineClose, AiOutlineYoutube } from 'react-icons/ai';
 // Export trực tiếp các icon mà không cần khai báo interface
 export {
+  IoIosArrowDown, FiMenu, AiOutlineClose, AiOutlineYoutube,
+  MdOutlineMail, FaPhoneVolume,
+  BiLogoFacebook, RiInstagramLine,
+  PiFacebookLogoBold, PiHandsPrayingDuotone,
   FaCommentDots,
   FaThumbsUp,
   FaHome,
@@ -38,5 +50,5 @@ export {
   FaArrowLeft, FaArrowRight,
   FaSync,
   SlCalender,
-  FaPhoneAlt, FaMapMarkerAlt 
+  FaPhoneAlt, FaMapMarkerAlt
 };

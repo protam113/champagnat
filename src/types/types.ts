@@ -15,12 +15,32 @@ export interface OverlayCopyProps {
   subheading: string;
   heading: string;
 }
+// Message Interface
+
+
+interface MessageList {
+  id: string;
+  title: string;
+  description: string;
+  content: string;
+  link: string;
+  image: string | null;
+  user: User;
+  created_date: string;
+  category: Category;
+}
+
+export interface FetchMessageListResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: MessageList[];
+}
+
 
 /**
 Register Interface
 **/
-
-
 export interface Register {
   username: string;
   password: string;

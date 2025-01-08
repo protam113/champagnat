@@ -11,14 +11,13 @@ import { TextParallaxContentProps, OverlayCopyProps } from '@/types/types';
 import Container from '@/components/Container/container';
 import Heading from '@/components/design/Heading';
 
-const History = () => {
+const History = ({ model }: { model: string }) => {
   const [refreshKey] = useState(0);
-
   const {
     queueData: data,
     isLoading,
     isError,
-  } = HistoryMonasteryData(refreshKey);
+  } = HistoryMonasteryData(refreshKey, model);
 
   if (isLoading)
     return (
@@ -26,7 +25,7 @@ const History = () => {
         <ClipLoader size="20" loading={isLoading} />
       </div>
     );
-  if (isError || !data) return <div>Error loading queue data.</div>;
+  if (isError || !data) return <div>Error loading queue data.{isError}</div>;
 
   return (
     <div>
@@ -68,14 +67,14 @@ const History = () => {
   );
 };
 
-export const HistoryContent = () => {
+export const HistoryContent = ({ model }: { model: string }) => {
   return (
     <div className="w-full">
       <TextParallaxContent
-        subheading="Về Chúng Tôi"
+        subheading=""
         heading="Đôi Nét Về Hội Dòng Anh Em Đức Maria"
       >
-        <History />
+        <History model={model} />
       </TextParallaxContent>
     </div>
   );

@@ -14,8 +14,8 @@ import { motion } from 'framer-motion';
 
 const BlogContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [refreshKey, setRefreshKey] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [refreshKey] = useState(0);
+  const [selectedCategory] = useState<string | null>(null);
 
   const categoryQuery = selectedCategory ? selectedCategory : '';
 
@@ -36,11 +36,6 @@ const BlogContent = () => {
     );
   if (isError) return <p>Error loading news...</p>;
 
-  // Cập nhật thể loại được chọn
-  const handleFilterChange = (categories: string[]) => {
-    setSelectedCategory(categories[0] || null);
-  };
-
   const totalPages = next ? currentPage + 1 : currentPage;
 
   return (
@@ -48,10 +43,7 @@ const BlogContent = () => {
       <Container>
         <Tittle name="TẤT CẢ BÀI VIẾT" />
         <div className="mt-6 mb-4">
-          <BlogTag
-            onFilterChange={handleFilterChange}
-            setRefreshKey={setRefreshKey}
-          />
+          <BlogTag />
         </div>
         <motion.div
           key={currentPage}

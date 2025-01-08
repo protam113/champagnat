@@ -23,14 +23,14 @@ const NewProb: React.FC<NewCardProps> = ({
   return (
     <Link
       href={`/news/${id}`}
-      className="rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-300 hover:scale-105 hover:text-amber-500" // Thêm hiệu ứng hover
+      className="rounded-lg shadow-xl overflow-hidden bg-white transform transition-transform duration-300 hover:scale-105 hover:text-amber-500" // Thêm hiệu ứng hover
     >
       <div className="relative h-48 w-full">
         <Image
           src={image}
           alt={title}
           fill // Tương ứng với layout="fill"
-          className="object-cover rounded-lg" // Tailwind CSS cho hình ảnh
+          className="object-cover rounded-t-lg" // Tailwind CSS cho hình ảnh
         />
       </div>
       <div className="p-4">

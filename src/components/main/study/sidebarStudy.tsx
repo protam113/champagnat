@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Layout, Menu, Drawer, Button } from 'antd';
 import Link from 'next/link';
 import {
-  BookOutlined,
+  // BookOutlined,
   RobotOutlined,
   TeamOutlined,
   KeyOutlined,
@@ -42,53 +42,53 @@ const SidebarStudy: React.FC = () => {
   };
 
   const items = [
+    // {
+    //   key: '1',
+    //   icon: <BookOutlined style={{ color: 'white' }} />,
+    //   label: (
+    //     <Link
+    //       href="/study"
+    //       style={{ color: 'white' }}
+    //       onClick={() => setSelectedKey('1')} // Update selected key on click
+    //     >
+    //       Tài Liệu
+    //     </Link>
+    //   ),
+    // },
     {
       key: '1',
-      icon: <BookOutlined style={{ color: 'white' }} />,
+      icon: <RobotOutlined style={{ color: 'white' }} />,
       label: (
         <Link
           href="/study"
           style={{ color: 'white' }}
           onClick={() => setSelectedKey('1')} // Update selected key on click
         >
-          Tài Liệu
-        </Link>
-      ),
-    },
-    {
-      key: '2',
-      icon: <RobotOutlined style={{ color: 'white' }} />,
-      label: (
-        <Link
-          href="/study/ChatAI"
-          style={{ color: 'white' }}
-          onClick={() => setSelectedKey('2')} // Update selected key on click
-        >
           MaristChat
         </Link>
       ),
     },
     {
-      key: '3',
+      key: '2',
       icon: <TeamOutlined style={{ color: 'white' }} />,
       label: (
         <Link
           href="/study/community"
           style={{ color: 'white' }}
-          onClick={() => setSelectedKey('3')} // Update selected key on click
+          onClick={() => setSelectedKey('2')} // Update selected key on click
         >
           Cộng Đoàn
         </Link>
       ),
     },
     {
-      key: '6',
+      key: '3',
       icon: <SlCalender style={{ color: 'white' }} />,
       label: (
         <Link
           href="/study/schedule"
           style={{ color: 'white' }}
-          onClick={() => setSelectedKey('6')} // Update selected key on click
+          onClick={() => setSelectedKey('3')} // Update selected key on click
         >
           Lịch Công Giáo
         </Link>

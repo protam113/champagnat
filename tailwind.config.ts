@@ -45,6 +45,8 @@ const config: Config = {
         "primary-300": "var(--primary-300)",
         "primary-200": "var(--primary-200)",
         "primary-100": "var(--primary-100)",
+        "primary-50": "var(--primary-50)",
+
 
         "neutral-900": "var(--neutral-900)",
         "neutral-800": "var(--neutral-800)",

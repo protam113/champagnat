@@ -13,8 +13,8 @@ import { motion } from 'framer-motion';
 
 const NewContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [refreshKey, setRefreshKey] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [refreshKey] = useState(0);
+  const [selectedCategory] = useState<string | null>(null);
 
   const categoryQuery = selectedCategory ? selectedCategory : '';
 
@@ -37,12 +37,6 @@ const NewContent = () => {
     );
   if (isError) return <p>Error loading news...</p>;
 
-  // Cập nhật thể loại được chọn
-  const handleFilterChange = (categories: string[]) => {
-    // Update the selected category, should only have 1 or none
-    setSelectedCategory(categories[0] || null);
-  };
-
   const totalPages = next ? currentPage + 1 : currentPage;
 
   return (
@@ -50,10 +44,7 @@ const NewContent = () => {
       <Container>
         <Tittle name="TẤT CẢ TIN TỨC" />
         <div className="mt-6 mb-4">
-          <NewsTag
-            onFilterChange={handleFilterChange}
-            setRefreshKey={setRefreshKey}
-          />
+          <NewsTag />
         </div>
 
         {/* Animating news list with framer-motion */}

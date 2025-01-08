@@ -4,7 +4,11 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'hcm03.vstorage.vngcloud.vn',
+                hostname: 'hcm03.vstorage.vngcloud.vn',  // Đã cấu hình trước
+            },
+            {
+                protocol: 'https',
+                hostname: 'images.unsplash.com',  // Thêm images.unsplash.com
             },
         ],
     },

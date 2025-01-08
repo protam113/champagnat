@@ -7,6 +7,7 @@ import Slider, { Settings } from 'react-slick'; // Import Settings
 import logo from '@/assets/image/logo_default.png';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import Link from 'next/link';
 
 interface Category {
   id: string;
@@ -14,15 +15,9 @@ interface Category {
   image: string;
 }
 
-const NewsTag = ({
-  onFilterChange,
-  setRefreshKey,
-}: {
-  onFilterChange: (categories: string[]) => void;
-  setRefreshKey: React.Dispatch<React.SetStateAction<number>>;
-}) => {
+const NewsTag = () => {
   const [currentPage] = useState(1);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedCategory] = useState<string | null>(null);
 
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
@@ -43,17 +38,6 @@ const NewsTag = ({
         <ClipLoader size="20" loading={isLoading} />
       </div>
     );
-
-  const handleCategoryChange = (categoryId: string) => {
-    const newSelectedCategory =
-      selectedCategory === categoryId ? null : categoryId;
-    setSelectedCategory(newSelectedCategory);
-
-    onFilterChange(newSelectedCategory ? [newSelectedCategory] : []);
-    if (!newSelectedCategory) {
-      setRefreshKey((prev) => prev + 1);
-    }
-  };
 
   const NextArrow = (props: any) => {
     const { className, style, onClick } = props;
@@ -119,12 +103,15 @@ const NewsTag = ({
     <div className="w-full relative">
       <Slider {...settings}>
         {queueData?.map((category: Category) => (
-          <div key={category.id} className="px-2">
+          <Link
+            href={`/news/category/${category.id}`}
+            key={category.id}
+            className="px-2"
+          >
             <div
               className={`relative flex items-center justify-center cursor-pointer border border-primary-500 bg-primary-500 hover:bg-primary-400 transition-all duration-300 rounded-lg overflow-hidden ${
                 selectedCategory === category.id ? 'ring-2 ring-blue-500' : ''
               }`}
-              onClick={() => handleCategoryChange(category.id)}
             >
               {!isMobile && (category.image || logo) ? (
                 <div className="w-full h-32 relative overflow-hidden">
@@ -152,7 +139,7 @@ const NewsTag = ({
                 </div>
               )}
             </div>
-          </div>
+          </Link>
         ))}
       </Slider>
     </div>

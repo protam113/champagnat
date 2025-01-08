@@ -16,6 +16,7 @@ const endpoints = {
 
     // nha dong
     nhaDong: process.env.NEXT_PUBLIC_NHA_DONG,
+    nhaDongDetail: process.env.NEXT_PUBLIC_NHA_DONG_DETAIL,
 
     // category (thể loại)
     categories: process.env.NEXT_PUBLIC_CATEGORIES,
@@ -66,6 +67,10 @@ const endpoints = {
     // visit
     visit: process.env.NEXT_PUBLIC_VISIT,
     galery: process.env.NEXT_PUBLIC_GALERY,
+
+    //message
+    messages: process.env.NEXT_PUBLIC_MESSAGES,
+    message: process.env.NEXT_PUBLIC_MESSAGE,
 };
 
 export { baseURL, endpoints };

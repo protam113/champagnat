@@ -14,7 +14,7 @@ import { FetchPostListResponse, Filters } from '@/types/types';
 const fetchDocList = async (
   filters: Filters,
   pageParam: number = 1,
-  token: string,
+  token?: string,
 ): Promise<FetchPostListResponse> => {
   try {
     // Filter out undefined or empty values from filters
@@ -36,7 +36,7 @@ const fetchDocList = async (
       `${endpoints.documents}${queryString ? `?${queryString}` : ''}`,
       'GET',
       null,
-      token,
+      token || null,
     );
     return response;
   } catch (error) {
@@ -66,10 +66,7 @@ const useDocList = (
   return useQuery<FetchPostListResponse, Error>({
     queryKey: ['docList', filters, page, token, refreshKey],
     queryFn: async () => {
-      if (!token) {
-        throw new Error('Token is not available');
-      }
-      return fetchDocList(filters, page, token);
+      return fetchDocList(filters, page, token || undefined);
     },
 
     staleTime: 60000,

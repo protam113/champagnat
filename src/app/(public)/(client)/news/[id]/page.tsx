@@ -23,8 +23,6 @@ const Page = () => {
   const { queueData: news } = NewsList(1, '', 0);
 
   const relatedNews = news.filter((relatedPost) => {
-    // Kiểm tra xem có danh mục trùng với bài viết hiện tại không
-    // Đồng thời kiểm tra bài viết không phải là bài hiện tại (so sánh ID)
     return (
       relatedPost.id !== blog?.id &&
       relatedPost.categories.some((relatedCategory) =>
@@ -52,6 +50,7 @@ const Page = () => {
   if (!blog) {
     return <p className="text-gray-500">Không tìm thấy bài viết nào.</p>;
   }
+
   const handleShare = () => {
     const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
 
@@ -61,7 +60,6 @@ const Page = () => {
         message.success('Link copied successfully!');
       })
       .catch((err) => {
-        // Handle errors if clipboard access fails
         console.error('Failed to copy the URL: ', err);
         alert('Failed to copy the link.');
       });
@@ -108,6 +106,17 @@ const Page = () => {
                 />
               </div>
             )}
+
+            {/* Khung PDF */}
+            <div className="mt-8 w-full max-w-3xl mx-auto">
+              <iframe
+                src="/path/to/your/pdf-file.pdf"
+                width="100%"
+                height="600"
+                frameBorder="0"
+                title="PDF Viewer"
+              ></iframe>
+            </div>
           </div>
 
           {/* Content */}
@@ -128,9 +137,9 @@ const Page = () => {
         </div>
 
         {/* Các bài viết gợi ý (bên phải) */}
-        <div className=" col-span-12 lg:col-span-4  p-6 ">
+        <div className="col-span-12 lg:col-span-4 p-6">
           <div>
-            <div className=" mb-4">
+            <div className="mb-4">
               <Tittle name="Bài Viết Liên Quan" />
             </div>
             <ul>
@@ -147,7 +156,7 @@ const Page = () => {
           </div>
 
           <div className="pt-10">
-            <div className=" mb-4">
+            <div className="mb-4">
               <Tittle name="Tất Cả Bài Viết" />
             </div>
             <ul>

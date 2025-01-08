@@ -15,6 +15,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   isLoading,
   setRef,
 }) => {
+  console.log('isloading', isLoading);
   return (
     <div
       className={`
