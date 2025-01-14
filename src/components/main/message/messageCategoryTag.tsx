@@ -1,4 +1,3 @@
-'use client';
 import React, { useState } from 'react';
 import { CategoriesList } from '@/lib/categoriesList';
 import { ClipLoader } from 'react-spinners';
@@ -13,11 +12,12 @@ import Link from 'next/link';
 interface Category {
   id: string;
   name: string;
-  image: string;
+  image?: string;
 }
 
 const MessageTag = () => {
   const [currentPage] = useState(1);
+  const [selectedCategory] = useState<string | null>(null);
 
   const isMobile = useMediaQuery({ maxWidth: 768 });
 
@@ -26,7 +26,7 @@ const MessageTag = () => {
     'messageformfounder',
     0,
   );
-  console.log(queueData);
+
   if (isError) {
     console.error('Error fetching categories');
     return <div>Error fetching categories</div>;
@@ -51,7 +51,7 @@ const MessageTag = () => {
         }}
         onClick={onClick}
       >
-        <span>→</span>
+        {/* <FaChevronRight className="text-primary-500 text-2xl" /> */}
       </div>
     );
   };
@@ -64,16 +64,16 @@ const MessageTag = () => {
         style={{ ...style, display: 'block', left: '10px' }}
         onClick={onClick}
       >
-        <span>←</span>
+        {/* <FaChevronLeft className="text-primary-500 text-2xl" /> */}
       </div>
     );
   };
 
   const settings: Settings = {
     dots: false,
-    infinite: false,
+    infinite: true,
     speed: 300,
-    slidesToShow: Math.min(queueData?.length || 0, isMobile ? 2 : 4),
+    slidesToShow: Math.min(queueData?.length || 0, isMobile ? 2 : 4), // Điều chỉnh số lượng slides hiển thị
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
@@ -85,14 +85,14 @@ const MessageTag = () => {
       {
         breakpoint: 1024,
         settings: {
-          slidesToShow: Math.min(queueData?.length || 0, 3),
+          slidesToShow: Math.min(queueData?.length || 0, 3), // Điều chỉnh cho màn hình lớn
           slidesToScroll: 1,
         },
       },
       {
         breakpoint: 600,
         settings: {
-          slidesToShow: Math.min(queueData?.length || 0, 2),
+          slidesToShow: Math.min(queueData?.length || 0, 2), // Điều chỉnh cho màn hình nhỏ
           slidesToScroll: 1,
         },
       },
@@ -100,16 +100,18 @@ const MessageTag = () => {
   };
 
   return (
-    <div className="max-w-[600px] w-full">
+    <div className="w-full relative">
       <Slider {...settings}>
         {queueData?.map((category: Category) => (
           <Link
             href={`/founder/letter_from_the_founder/category/${category.id}`}
             key={category.id}
-            className=" pr-6"
+            className="px-2"
           >
             <div
-              className={`relative w-full cursor-pointer border border-primary-500 bg-primary-500 transition-all duration-300 rounded-lg overflow-hidden`}
+              className={`relative flex items-center justify-center cursor-pointer border border-primary-500 bg-primary-500 hover:bg-primary-400 transition-all duration-300 rounded-lg overflow-hidden ${
+                selectedCategory === category.id ? 'ring-2 ring-blue-500' : ''
+              }`}
             >
               {!isMobile && (category.image || logo) ? (
                 <div className="w-full h-32 relative overflow-hidden">
@@ -123,7 +125,7 @@ const MessageTag = () => {
                   <div
                     className="absolute bottom-0 left-0 w-full text-white text-center p-2 text-sm"
                     style={{
-                      backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                      backgroundColor: 'rgba(0, 0, 0, 0.3)',
                       backdropFilter: 'blur(2px)',
                       WebkitBackdropFilter: 'blur(2px)',
                     }}

@@ -3,7 +3,7 @@ import { HistoryContent } from '@/components/animate/scroll/TextParallaxContent'
 const Page = () => {
   return (
     <div>
-      <HistoryContent model="c316b086-8b82-456f-96fe-0012aca0c1a1" />
+      <HistoryContent category="5b2a002c-3221-41a3-ba56-02d111cdfe8e" />
     </div>
   );
 };

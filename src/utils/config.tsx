@@ -7,7 +7,7 @@ export const NavItems = () => {
         {
           id: 3,
           label: 'Đặc Sủng - Linh Đạo',
-          link: '/hoi_dong/congregation',
+          link: '/hoi_dong/dac_sung-linh_dao',
         },
         {
           id: 2,
@@ -23,7 +23,7 @@ export const NavItems = () => {
         {
           id: 5,
           label: 'Tìm Hiểu Ơn Gọi',
-          link: '/on_goi/tiem_hieu_on_goi',
+          link: '/on_goi/tim_hieu_on_goi',
         },
         {
           id: 6,

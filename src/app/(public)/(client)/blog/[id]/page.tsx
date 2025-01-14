@@ -97,18 +97,17 @@ const Page = () => {
 
             {/* Image */}
             {blog.image && (
-              <div className="mt-8 w-full max-w-3xl mx-auto">
+              <div className="mt-8 w-full">
                 <Image
                   src={blog.image}
                   alt={blog.title}
-                  className="rounded-2xl object-cover"
+                  className="rounded-2xl object-cover w-full h-auto"
                   width={800}
                   height={450}
                 />
               </div>
             )}
           </div>
-
           {/* Content */}
           <div className="flex flex-col gap-8 mt-12">
             <div
@@ -117,6 +116,37 @@ const Page = () => {
                 __html: blog.content.replace(/\"/g, ''), // Xóa tất cả dấu "
               }}
             />
+
+            {/* pdf or image */}
+            <div className="text-blue-800 mr-4 text-16">
+              {blog.media?.map((media) => {
+                if (media.file_type === 'PDF') {
+                  return (
+                    <iframe
+                      key={media.id} // Thêm key cho mỗi phần tử
+                      src={media.file}
+                      width="100%" // Bạn có thể điều chỉnh chiều rộng của iframe
+                      height="600px" // Bạn có thể điều chỉnh chiều cao của iframe"
+                      title="PDF Viewer"
+                    />
+                  );
+                } else if (media.file_type === 'IMAGE') {
+                  return (
+                    <div key={media.id} className="w-full">
+                      <Image
+                        src={media.file}
+                        alt={blog.title}
+                        className=" object-cover"
+                        width={800}
+                        height={450}
+                      />
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+
             {/* Source */}
             <div className="mt-6 mb-6">
               <p className="text-gray-500 font-semibold">Nguồn:</p>
@@ -134,7 +164,7 @@ const Page = () => {
             <ul>
               {relatedBlogs.slice(0, 5).map((relatedPost, index) => (
                 <li key={index} className="mb-4">
-                  <Link href={`/new/${relatedPost.id}`}>
+                  <Link href={`/blog/${relatedPost.id}`}>
                     <p className="text-16 border-b-2 pb-2 line-clamp-3 text-gray-700 transform transition-transform duration-300 hover:text-gray-500">
                       {relatedPost.title}
                     </p>
@@ -150,7 +180,7 @@ const Page = () => {
             <ul>
               {blogs.slice(0, 10).map((allPost, index) => (
                 <li key={index} className="mb-4">
-                  <Link href={`/new/${allPost.id}`}>
+                  <Link href={`/blog/${allPost.id}`}>
                     <p className="text-16 border-b-2 pb-2 line-clamp-3 text-gray-700 transform transition-transform duration-300 hover:text-gray-500">
                       {allPost.title}
                     </p>

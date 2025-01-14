@@ -1,5 +1,4 @@
 'use client';
-
 import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useChat, useChatList } from '@/hooks/chatAI/useChat';
@@ -98,7 +97,6 @@ const Page = () => {
             <div className="flex-1 overflow-y-auto px-4 py-4">
               {isLoading ? (
                 <div className="flex items-center justify-center h-full">
-                  {/* Hiệu ứng loading từ Ant Design */}
                   <Spin size="large" />
                 </div>
               ) : isError ? (
@@ -112,7 +110,7 @@ const Page = () => {
                       key={index}
                       message={chat.message}
                       sender={chat.sender}
-                      isLoading={isLoading && chat.sender === 'system'}
+                      isLoading={isLoading && chat.sender === 'system'} // Truyền isLoading vào ChatMessage
                       setRef={messagesEndRef} // Truyền ref vào ChatMessage
                     />
                   ))}
@@ -136,11 +134,10 @@ const Page = () => {
         visible={isModalOpen}
         onCancel={handleCancel}
         footer={null}
-        width={800} // Thêm chiều rộng cho modal để không gian rộng hơn
-        style={{ padding: '24px' }} // Thay bodyStyle bằng style
+        width={800}
+        style={{ padding: '24px' }}
       >
         <div className="flex flex-col md:flex-row items-center">
-          {/* Nội dung bên trái */}
           <div className="md:w-2/3 text-base">
             <p>
               Xin chào, mình là <strong>Thưởng</strong>!
@@ -160,14 +157,13 @@ const Page = () => {
             </p>
           </div>
 
-          {/* Hình ảnh QR bên phải */}
           <div className="md:w-1/3 flex justify-center mt-4 md:mt-0">
             <div className="flex flex-col items-center">
               <Image
-                src={QR} // Thay đường dẫn bằng hình QR của bạn
+                src={QR}
                 alt="QR Code"
-                width={250} // Tăng kích thước ảnh QR
-                height={250} // Tăng kích thước ảnh QR
+                width={250}
+                height={250}
                 className="object-contain border rounded-md shadow"
               />
             </div>

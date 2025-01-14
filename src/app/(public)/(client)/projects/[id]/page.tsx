@@ -7,7 +7,7 @@ import formatDate from '@/utils/formatDate';
 import Image from 'next/image';
 import { useEventDetail } from '@/hooks/event/useEventDetail';
 import Container from '@/components/Container/container';
-import EventRegister from '@/components/main/event/eventRegister';
+import EventRegister from '@/components/main/projects/eventRegister';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();
@@ -74,6 +74,36 @@ const Page = () => {
               __html: blog.description.replace(/\"/g, ''), // Xóa tất cả dấu "
             }}
           />
+        </div>
+
+        {/* pdf or image */}
+        <div className="text-blue-800 mr-4 text-16">
+          {blog.media?.map((media) => {
+            if (media.file_type === 'PDF') {
+              return (
+                <iframe
+                  key={media.id} // Thêm key cho mỗi phần tử
+                  src={media.file}
+                  width="100%" // Bạn có thể điều chỉnh chiều rộng của iframe
+                  height="600px" // Bạn có thể điều chỉnh chiều cao của iframe"
+                  title="PDF Viewer"
+                />
+              );
+            } else if (media.file_type === 'IMAGE') {
+              return (
+                <div key={media.id} className="w-full">
+                  <Image
+                    src={media.file}
+                    alt={blog.title}
+                    className=" object-cover"
+                    width={800}
+                    height={450}
+                  />
+                </div>
+              );
+            }
+            return null;
+          })}
         </div>
       </div>
 

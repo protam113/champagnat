@@ -7,14 +7,13 @@ import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '@/components/Container/container';
 import Heading from '@/components/design/Heading';
 import Tittle from '@/components/design/Tittle';
-import EventProb from '@/components/main/event/eventPost';
+import EventProb from '@/components/main/projects/eventPost';
 import Contact from '@/components/design/formResgister';
 
 const Page = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [refreshKey] = useState(0);
-  const [events] = useState(['event']); // Đây là event mà bạn muốn truyền vào
-  const [status] = useState(['open']); // Đây là status bạn muốn truyền vào
+  const [status] = useState('open'); // Đây là status bạn muốn truyền vào
 
   // Lấy danh sách tin tức từ API
   const {
@@ -22,7 +21,7 @@ const Page = () => {
     next,
     isLoading,
     isError,
-  } = EventList(currentPage, events, status, refreshKey);
+  } = EventList(currentPage, status, refreshKey);
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error loading news...</p>;
 

@@ -65,7 +65,7 @@ export const TopHeader = () => {
         <FaPhoneVolume className="ml-5" />
         0384543634 - 0345817993
       </div>
-      <div className="flex items-center gap-2 cursor-pointer hidden lg:flex">
+      <div className=" items-center gap-2 cursor-pointer hidden lg:flex">
         <SocialIcon
           href="https://www.facebook.com/groups/345937739645973"
           IconComponent={PiFacebookLogoBold}
@@ -198,7 +198,7 @@ export const BacAiDropdown_Item = () => {
         </span>
       </Link>
       <Link
-        href="/donate"
+        href="/donation"
         className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-albert-warning"
       >
         {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
@@ -225,7 +225,7 @@ export const MultimediaDropdown_Item = () => {
         </span>
       </Link>
       <Link
-        href="/thu_vien_video"
+        href="/thu_vien/thu_vien_video"
         className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-primary-50"
       >
         {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
@@ -371,13 +371,10 @@ export default function Navbar() {
               </div>
             </p>
           </Link>
-          <Link
-            href={'/thu_vien'}
-            className="relative group py-3 text-14 transition-all"
-          >
-            <p className="flex  font-semibold items-center gap-2 text-white">
+          <div className="relative group py-3 text-14 transition-all">
+            <p className="flex  cursor-pointe  font-semibold items-center gap-2 text-white">
               <span className="relative">
-                Multimedia
+                Media
                 <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-primary-50 transition-all duration-300 group-hover:w-full" />
               </span>
               <IoIosArrowDown className="rotate-180 w-3 transition-all group-hover:rotate-0 group-hover:text-primary-50" />
@@ -385,7 +382,7 @@ export default function Navbar() {
                 <MultimediaDropdown_Item />
               </div>
             </p>
-          </Link>
+          </div>
         </div>
 
         {/* right side data */}
@@ -410,19 +407,21 @@ export default function Navbar() {
   );
 }
 
+// mobile
 function SingleNavItem(d: NavItem & { closeSideMenu?: () => void }) {
   const [animationParent] = useAutoAnimate();
   const [isItemOpen, setItem] = useState(false);
 
-  function toggleItem() {
+  function toggleItem(e: React.MouseEvent) {
+    e.stopPropagation(); // Ngừng sự kiện lan truyền để không tắt sidebar
     setItem(!isItemOpen);
   }
 
   return (
     <Link
       ref={animationParent}
-      onClick={() => {
-        toggleItem();
+      onClick={(e) => {
+        toggleItem(e);
         if (d.link && d.closeSideMenu) {
           d.closeSideMenu();
         }
@@ -455,47 +454,75 @@ function SingleNavItem(d: NavItem & { closeSideMenu?: () => void }) {
   );
 }
 
-// function NewsSingleNavItem() {
-//   const [currentPage] = useState(1);
+function MobileNavItem({ model }: { model: any }) {
+  const [currentPage] = useState(1);
 
-//   const { queueData, isLoading, isError } = CategoriesList(
-//     currentPage,
-//     'news',
-//     0,
-//   );
+  const { queueData, isLoading, isError } = CategoriesList(
+    currentPage,
+    model,
+    0,
+  );
 
-//   if (isLoading) return <div>Loading...</div>;
-//   if (isError) return <div>Error loading categories</div>;
-//   return (
-//     <Link
+  // Kiểm tra trạng thái đang tải dữ liệu
+  if (isLoading) return <div>Loading...</div>;
 
-//       href={d.link ?? '#'}
-//       className="relative px-2 py-3 transition-all"
-//     >
-//       <p className="flex cursor-pointer items-center gap-2 text-white hover:text-yellow-500">
-//         <span>News</span> {/* Use a default string */}
-//         {d.children && (
-//           <IoIosArrowDown
-//             className={`text-xs transition-all ${isItemOpen && 'rotate-180'}`}
-//           />
-//         )}
-//       </p>
-//       {isItemOpen && d.children && (
-//         <p className="w-auto flex-col gap-1 rounded-md text-primary-500 bg-white py-3 transition-all flex">
-//           {d.children.map((ch, i) => (
-//             <Link
-//               key={i}
-//               href={ch.link ?? '#'}
-//               className="flex cursor-pointer items-center py-1 pl-6 pr-8 text-black hover:text-black"
-//             >
-//               <span className="whitespace-nowrap pl-3">{ch.label}</span>
-//             </Link>
-//           ))}
-//         </p>
-//       )}
-//     </Link>
-//   );
-// }
+  // Kiểm tra trạng thái lỗi khi tải dữ liệu
+  if (isError) return <div>Error loading categories</div>;
+
+  return (
+    <p className="w-auto flex-col gap-1 rounded-md text-primary-500 bg-white py-3 transition-all flex">
+      {queueData?.map((category: CategoryItem) => (
+        <Link
+          key={category.id} // Thêm key duy nhất
+          href={`/${model}/category/${category.id}`}
+          className="flex cursor-pointer items-center py-1  pr-6 text-black hover:text-black"
+        >
+          <span className="whitespace-nowrap pl-3">{category.name}</span>
+        </Link>
+      ))}
+    </p>
+  );
+}
+
+function BacAiNavItem() {
+  return (
+    <div className="flex flex-col gap-2 py-3 px-4 bg-white rounded-md shadow-md transition-all">
+      <Link
+        href="/projects"
+        className="flex cursor-pointer items-center py-2 pr-6 text-black hover:text-primary-500 transition-all"
+      >
+        <span className="whitespace-nowrap pl-3">Dự Án</span>
+      </Link>
+      <Link
+        href="/donation"
+        className="flex cursor-pointer items-center py-2 pr-6 text-black hover:text-albert-warning transition-all"
+      >
+        <span className="whitespace-nowrap pl-3">Quyên Góp</span>
+      </Link>
+    </div>
+  );
+}
+
+function MultimediaNavItem() {
+  return (
+    <div className="flex flex-col gap-2 py-3 px-4 bg-white rounded-md shadow-md transition-all">
+      <Link
+        href="/thu_vien/thu_vien_anh"
+        className="flex cursor-pointer items-center py-1 pr-8 text-black hover:text-primary-50"
+      >
+        {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
+        <span className="whitespace-nowrap ">Ảnh</span>
+      </Link>
+      <Link
+        href="/thu_vien/thu_vien_video"
+        className="flex cursor-pointer items-center py-1 pr-8 text-black hover:text-primary-50"
+      >
+        {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
+        <span className="whitespace-nowrap ">Video</span>
+      </Link>
+    </div>
+  );
+}
 
 function MobileNav({
   closeSideMenu,
@@ -504,31 +531,27 @@ function MobileNav({
   closeSideMenu: () => void;
   isSideMenuOpen: boolean;
 }) {
+  const [animationParent] = useAutoAnimate();
   const navItems = NavItems();
   const { userInfo } = useUser() || {};
   const { logout } = useAuth();
   const [open, setOpen] = useState(false);
 
-  const showDrawer = () => {
-    setOpen(true);
-  };
+  // Quản lý trạng thái mở/đóng của các dropdown
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
-  const onClose = () => {
-    setOpen(false);
+  const toggleDropdown = (id: string) => {
+    setOpenDropdown((prev) => (prev === id ? null : id)); // Nếu đang mở thì đóng, nếu không thì mở mục đó
   };
 
   return (
     <>
       <div
-        className={`fixed left-0 top-0 flex h-full min-h-screen w-full md:hidden bg-black/50 transition-all duration-300 ${
-          isSideMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
-        }`}
-        onClick={closeSideMenu} // Thêm sự kiện click ra ngoài
+        className={`fixed left-0 top-0 flex h-full min-h-screen w-full md:hidden bg-black/50 transition-all duration-300 ${isSideMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+        onClick={closeSideMenu}
       >
         <div
-          className={`h-full w-[65%] bg-primary-500 text-white px-4 py-4 transition-transform duration-300 ${
-            isSideMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          } ml-auto`}
+          className={`h-full w-[65%] bg-primary-500 text-white px-4 py-4 transition-transform duration-300 ${isSideMenuOpen ? 'translate-x-0' : 'translate-x-full'} ml-auto`}
         >
           <section className="flex justify-end">
             <AiOutlineClose
@@ -537,30 +560,176 @@ function MobileNav({
             />
           </section>
           <div className="flex flex-col text-14 text-white gap-2 transition-all">
+            {/* Loop through navItems */}
             {navItems.map((d, i) => (
               <SingleNavItem key={i} label={d.label}>
                 {d.children}
               </SingleNavItem>
             ))}
+
+            {/* Mục "Tin Tức" với dropdown */}
+            <Link
+              ref={animationParent}
+              href="/news"
+              className="relative px-2 py-3 transition-all"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleDropdown('Tin Tức'); // Toggle trạng thái "Tin Tức"
+              }}
+            >
+              <p className="flex cursor-pointer items-center gap-2 text-white">
+                <span>Tin Tức</span>
+                <IoIosArrowDown
+                  className={`transition-all ${openDropdown === 'Tin Tức' ? 'rotate-180' : ''}`} // Điều chỉnh mũi tên
+                />
+              </p>
+
+              {/* Hiển thị dropdown khi openDropdown === 'Tin Tức' */}
+              {openDropdown === 'Tin Tức' && (
+                <div className="w-auto flex-col flex overflow-hidden transition-all">
+                  <MobileNavItem model="news" />
+                </div>
+              )}
+            </Link>
+
+            {/* Mục "Giáo Hội" với dropdown */}
+            <Link
+              ref={animationParent}
+              href="/mission"
+              className="relative px-2 py-3 transition-all"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleDropdown('Sứ Vụ'); // Toggle trạng thái "Giáo Hội"
+              }}
+            >
+              <p className="flex cursor-pointer items-center gap-2 text-white hover:text-yellow-500">
+                <span>Sứ Vụ</span>
+                <IoIosArrowDown
+                  className={`transition-all ${openDropdown === 'Sứ Vụ' ? 'rotate-180' : ''}`} // Điều chỉnh mũi tên
+                />
+              </p>
+
+              {/* Hiển thị dropdown khi openDropdown === 'Giáo Hội' */}
+              {openDropdown === 'Sứ Vụ' && (
+                <div className="w-auto flex-col flex overflow-hidden transition-all">
+                  <MobileNavItem model="mission" />
+                </div>
+              )}
+            </Link>
+
+            {/* Mục "Giáo Hội" với dropdown */}
+            <Link
+              ref={animationParent}
+              href="/blog"
+              className="relative px-2 py-3 transition-all"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleDropdown('Giáo Hội'); // Toggle trạng thái "Giáo Hội"
+              }}
+            >
+              <p className="flex cursor-pointer items-center gap-2 text-white hover:text-yellow-500">
+                <span>Giáo Hội</span>
+                <IoIosArrowDown
+                  className={`transition-all ${openDropdown === 'Giáo Hội' ? 'rotate-180' : ''}`} // Điều chỉnh mũi tên
+                />
+              </p>
+
+              {/* Hiển thị dropdown khi openDropdown === 'Giáo Hội' */}
+              {openDropdown === 'Giáo Hội' && (
+                <div className="w-auto flex-col flex overflow-hidden transition-all">
+                  <MobileNavItem model="blog" />
+                </div>
+              )}
+            </Link>
+            {/* Mục "Bác Aí " với dropdown */}
+            <div
+              ref={animationParent}
+              className="relative px-2 py-3 transition-all"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleDropdown('Bác Aí'); // Toggle trạng thái "Giáo Hội"
+              }}
+            >
+              <p className="flex cursor-pointer items-center gap-2 text-white hover:text-yellow-500">
+                <span>Bác Aí Xã Hội</span>
+                <IoIosArrowDown
+                  className={`transition-all ${openDropdown === 'Bác Aí' ? 'rotate-180' : ''}`} // Điều chỉnh mũi tên
+                />
+              </p>
+
+              {/* Hiển thị dropdown khi openDropdown === 'Giáo Hội' */}
+              {openDropdown === 'Bác Aí' && (
+                <div className="w-auto flex-col flex overflow-hidden transition-all">
+                  <BacAiNavItem />
+                </div>
+              )}
+            </div>
+
+            {/* Mục "Tư Liệu" với dropdown */}
+            <Link
+              ref={animationParent}
+              href="/document"
+              className="relative px-2 py-3 transition-all"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleDropdown('Tư Liệu'); // Toggle trạng thái "Giáo Hội"
+              }}
+            >
+              <p className="flex cursor-pointer items-center gap-2 text-white hover:text-yellow-500">
+                <span>Tư Liệu</span>
+                <IoIosArrowDown
+                  className={`transition-all ${openDropdown === 'Tư Liệu' ? 'rotate-180' : ''}`} // Điều chỉnh mũi tên
+                />
+              </p>
+
+              {/* Hiển thị dropdown khi openDropdown === 'Tư Liệu' */}
+              {openDropdown === 'Tư Liệu' && (
+                <div className="w-auto flex-col flex overflow-hidden transition-all">
+                  <MobileNavItem model="document" />
+                </div>
+              )}
+            </Link>
+
+            {/* Mục "Bác Aí " với dropdown */}
+            <div
+              ref={animationParent}
+              className="relative px-2 py-3 transition-all"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleDropdown('Media'); // Toggle trạng thái "Giáo Hội"
+              }}
+            >
+              <p className="flex cursor-pointer items-center gap-2 text-white hover:text-yellow-500">
+                <span>Media</span>
+                <IoIosArrowDown
+                  className={`transition-all ${openDropdown === 'Media' ? 'rotate-180' : ''}`} // Điều chỉnh mũi tên
+                />
+              </p>
+
+              {/* Hiển thị dropdown khi openDropdown === 'Giáo Hội' */}
+              {openDropdown === 'Media' && (
+                <div className="w-auto flex-col flex overflow-hidden transition-all">
+                  <MultimediaNavItem />
+                </div>
+              )}
+            </div>
           </div>
+
           {userInfo ? (
             <section className="flex flex-col gap-6 mt-6 items-center">
-              {/* Xem thông tin cá nhân */}
               <button
                 className="w-full max-w-[200px] rounded-xl border-2 border-neutral-400 px-4 py-2 text-white transition-all hover:border-black hover:text-black/90"
-                onClick={showDrawer}
+                onClick={() => setOpen(true)}
               >
                 Thông tin cá nhân
               </button>
 
-              {/* Học tập */}
               <button className="w-full max-w-[200px] rounded-xl border-2 border-neutral-400 px-4 py-2 text-white transition-all hover:border-black hover:text-black/90">
                 <Link href="/study" className="whitespace-nowrap">
                   Học Tập
                 </Link>
               </button>
 
-              {/* Đăng xuất */}
               <button
                 className="w-full max-w-[200px] rounded-xl bg-blue-500 px-4 py-2 text-white transition-all hover:bg-blue-600"
                 onClick={() => {
@@ -572,7 +741,6 @@ function MobileNav({
               </button>
             </section>
           ) : (
-            // Nếu chưa đăng nhập
             <section className="flex flex-col gap-6 mt-6 items-center">
               <Link
                 href="/login"
@@ -590,7 +758,11 @@ function MobileNav({
           )}
         </div>
       </div>
-      <ProfileDrawer open={open} onClose={onClose} userInfo={userInfo} />
+      <ProfileDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        userInfo={userInfo}
+      />
     </>
   );
 }

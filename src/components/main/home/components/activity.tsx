@@ -10,15 +10,14 @@ import { LoadingOutlined } from '@ant-design/icons';
 export const Activity = () => {
   const [currentPage] = useState(1);
   const [refreshKey] = useState(0);
-  const [events] = useState(['event']); // Đây là event mà bạn muốn truyền vào
-  const [status] = useState(['open']); // Đây là status bạn muốn truyền vào
+  const [status] = useState('open'); // Đây là status bạn muốn truyền vào
 
   // Lấy danh sách tin tức từ API
   const {
     queueData: blogs,
     isLoading,
     isError,
-  } = EventList(currentPage, events, status, refreshKey);
+  } = EventList(currentPage, status, refreshKey);
 
   if (isLoading) return <Spin indicator={<LoadingOutlined spin />} />;
   if (isError) return null;

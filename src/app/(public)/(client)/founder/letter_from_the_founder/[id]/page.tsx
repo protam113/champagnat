@@ -100,6 +100,36 @@ const Page = () => {
               }}
             />
 
+            {/* pdf or image */}
+            <div className="text-blue-800 mr-4 text-16">
+              {suvu.media?.map((media) => {
+                if (media.file_type === 'PDF') {
+                  return (
+                    <iframe
+                      key={media.id} // Thêm key cho mỗi phần tử
+                      src={media.file}
+                      width="100%" // Bạn có thể điều chỉnh chiều rộng của iframe
+                      height="600px" // Bạn có thể điều chỉnh chiều cao của iframe"
+                      title="PDF Viewer"
+                    />
+                  );
+                } else if (media.file_type === 'IMAGE') {
+                  return (
+                    <div key={media.id} className="w-full">
+                      <Image
+                        src={media.file}
+                        alt={suvu.title}
+                        className=" object-cover"
+                        width={800}
+                        height={450}
+                      />
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+
             {/* Source */}
             <div className="mt-6">
               <p className="text-gray-500 font-semibold">Nguồn:</p>

@@ -4,6 +4,7 @@ export interface TextParallaxContentProps {
   subheading: string;
   heading: string;
   children: React.ReactNode;
+  image: string;
 }
 
 export interface StickyImageProps {
@@ -37,6 +38,19 @@ export interface FetchMessageListResponse {
   results: MessageList[];
 }
 
+
+// MediaVideo
+interface MediaVideoList {
+  id: string;
+  content: string;
+  image: string;
+  link: string;
+  create_date: string;
+}
+
+export interface FetchMediaVideoResponse {
+  data: MediaVideoList[];
+}
 
 /**
 Register Interface
@@ -72,6 +86,8 @@ export interface FeastDrawerProps {
 export interface HistoryMonasteryResponse {
   id: string,
   about: string,
+  title: string,
+  image: string,
 }
 
 
@@ -90,6 +106,7 @@ export interface DonationDetail {
   status: string;
   created_date: string
   updated_date: string
+  media: Media[];
 }
 
 interface DonationList {
@@ -145,6 +162,13 @@ interface User {
   profile_image: string;
 }
 
+interface Media {
+  id: string;
+  file: string;
+  file_type: string;
+  metadata: string;
+}
+
 interface PostList {
   id: string;
   title: string;
@@ -155,6 +179,7 @@ interface PostList {
   categories: Category[];
   user: User; // Sử dụng interface User đã khai báo ở trên
   created_date: string
+  media: Media[];
 }
 
 export interface FetchPostListResponse {
@@ -335,6 +360,7 @@ export interface BLogDetail {
   categories: Category[];
   user: User; // Sử dụng interface User đã khai báo ở trên
   created_date: string
+  media: Media[];
 }
 
 export interface DocDetail {
@@ -347,6 +373,7 @@ export interface DocDetail {
   category: Category;
   user: User; // Sử dụng interface User đã khai báo ở trên
   created_date: string
+  media: Media[];
 }
 
 /**
@@ -362,6 +389,7 @@ export interface EventList {
   category: string;
   user: string;
   created_date: string
+  media: Media[];
 }
 
 // Khai Báo Các Thuộc Tính Không Có trong trường hiển thị
@@ -485,6 +513,16 @@ export interface NewComment {
   object_id: string;
   guest_name: string | null;
   guest_email: string | null;
+}
+
+
+export interface ApplyVocationData {
+  email: string;
+  phone_number: string;
+  name: string;
+  dob: string;
+  reason: string;
+  church: string;
 }
 
 

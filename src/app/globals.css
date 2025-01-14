@@ -56,8 +56,10 @@
     --background: #ededed;
   }
 }
-
+html {
+}
 body {
+  scroll-behavior: smooth;
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
@@ -235,3 +237,11 @@ body {
   height: 100%;
   position: relative;
 } */
+
+/* Kiểu cho màn hình di động cho các giao đoạn */
+@media (max-width: 768px) {
+  .ukiyo {
+    object-fit: cover; /* Giữ tỷ lệ hình ảnh, không méo */
+    width: 390px !important; /* Đảm bảo hình ảnh tự động điều chỉnh chiều rộng */
+  }
+}

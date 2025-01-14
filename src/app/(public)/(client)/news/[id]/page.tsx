@@ -106,17 +106,6 @@ const Page = () => {
                 />
               </div>
             )}
-
-            {/* Khung PDF */}
-            <div className="mt-8 w-full max-w-3xl mx-auto">
-              <iframe
-                src="/path/to/your/pdf-file.pdf"
-                width="100%"
-                height="600"
-                frameBorder="0"
-                title="PDF Viewer"
-              ></iframe>
-            </div>
           </div>
 
           {/* Content */}
@@ -127,6 +116,36 @@ const Page = () => {
                 __html: blog.content.replace(/\"/g, ''), // Xóa tất cả dấu "
               }}
             />
+
+            {/* pdf or image */}
+            <div className="text-blue-800 mr-4 text-16">
+              {blog.media?.map((media) => {
+                if (media.file_type === 'PDF') {
+                  return (
+                    <iframe
+                      key={media.id} // Thêm key cho mỗi phần tử
+                      src={media.file}
+                      width="100%" // Bạn có thể điều chỉnh chiều rộng của iframe
+                      height="600px" // Bạn có thể điều chỉnh chiều cao của iframe"
+                      title="PDF Viewer"
+                    />
+                  );
+                } else if (media.file_type === 'IMAGE') {
+                  return (
+                    <div key={media.id} className="w-full">
+                      <Image
+                        src={media.file}
+                        alt={blog.title}
+                        className=" object-cover"
+                        width={800}
+                        height={450}
+                      />
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
 
             {/* Source */}
             <div className="mt-6">

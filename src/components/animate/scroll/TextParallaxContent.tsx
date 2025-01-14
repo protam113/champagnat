@@ -3,21 +3,30 @@
 import React, { useState, useRef } from 'react';
 import { HistoryMonasteryData } from '@/lib/historyMonasteryData';
 import { ClipLoader } from 'react-spinners';
-import history from '@/assets/image/about.jpg';
-import about from '@/assets/image/about-2.jpg';
 import Image from 'next/image';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { TextParallaxContentProps, OverlayCopyProps } from '@/types/types';
-import Container from '@/components/Container/container';
-import Heading from '@/components/design/Heading';
 
-const History = ({ model }: { model: string }) => {
+const History = ({ data }: { data: any }) => {
+  return (
+    <div>
+      <div
+        className="content text-base md:text-lg space-y-4"
+        dangerouslySetInnerHTML={{
+          __html: data.about.replace(/\"/g, ''),
+        }}
+      />
+    </div>
+  );
+};
+
+export const HistoryContent = ({ category }: { category: string }) => {
   const [refreshKey] = useState(0);
   const {
     queueData: data,
     isLoading,
     isError,
-  } = HistoryMonasteryData(refreshKey, model);
+  } = HistoryMonasteryData(refreshKey, category);
 
   if (isLoading)
     return (
@@ -28,69 +37,26 @@ const History = ({ model }: { model: string }) => {
   if (isError || !data) return <div>Error loading queue data.{isError}</div>;
 
   return (
-    <div>
-      <Container>
-        <Heading name="Giới Thiệu Về Hội Dòng" />
-        <div className="flex flex-col md:flex-row items-center justify-between my-6 md:my-10 gap-6 md:gap-0">
-          {/* Nội dung bên trái */}
-          <div className="text-left w-full md:w-1/2 pr-0 md:pr-8">
-            <div className="text-lg md:text-2xl lg:text-28 italic text-black font-bold text-center md:text-left">
-              <b className="text-lg md:text-2xl lg:text-28">&#34; </b>
-              Đến với Chúa Giê-su nhờ Mẹ Maria.
-              <br />
-              Đến với Mẹ Maria vì Chúa Giê-su.
-              <b className="text-lg md:text-2xl lg:text-24">&#34;</b>
-            </div>
-          </div>
-
-          {/* Hình ảnh bên phải */}
-          <div className="relative w-full md:w-1/2 h-48 md:h-64">
-            <Image
-              src={about}
-              alt="banner"
-              layout="fill"
-              objectFit="cover"
-              className="rounded-lg"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </div>
-        </div>
-
-        <div
-          className="content text-base md:text-lg space-y-4"
-          dangerouslySetInnerHTML={{
-            __html: data.about.replace(/\"/g, ''),
-          }}
-        />
-      </Container>
-    </div>
-  );
-};
-
-export const HistoryContent = ({ model }: { model: string }) => {
-  return (
     <div className="w-full">
       <TextParallaxContent
         subheading=""
-        heading="Đôi Nét Về Hội Dòng Anh Em Đức Maria"
+        heading={data.title}
+        image={data.image}
       >
-        <History model={model} />
+        <History data={data} />
       </TextParallaxContent>
     </div>
   );
 };
 
-const TextParallaxContent: React.FC<TextParallaxContentProps> = ({
-  subheading,
-  heading,
-  children,
-}) => {
+const TextParallaxContent: React.FC<
+  TextParallaxContentProps & { image: string }
+> = ({ subheading, heading, children, image }) => {
   return (
     <div className="px-4 md:px-12">
       <div className="relative h-[40vh] md:h-[150vh]">
-        {' '}
         {/* Giảm chiều cao trên mobile */}
-        <StickyImage />
+        <StickyImage image={image} />
         <OverlayCopy heading={heading} subheading={subheading} />
       </div>
       <div className="mt-4 md:mt-8">{children}</div>
@@ -98,7 +64,7 @@ const TextParallaxContent: React.FC<TextParallaxContentProps> = ({
   );
 };
 
-const StickyImage: React.FC = () => {
+const StickyImage: React.FC<{ image: string }> = ({ image }) => {
   const targetRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -117,7 +83,7 @@ const StickyImage: React.FC = () => {
       className="sticky top-0 z-0 overflow-hidden rounded-xl md:rounded-3xl w-full h-[25vh] md:h-full" // Giảm chiều cao hình trên mobile
     >
       <Image
-        src={history}
+        src={image}
         alt="Sticky image"
         fill
         className="object-cover"
