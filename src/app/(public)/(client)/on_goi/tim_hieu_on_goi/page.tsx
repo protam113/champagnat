@@ -34,7 +34,7 @@ const Page = () => {
 
   return (
     <div className=" py-10">
-      <HistoryContent category="5fd97bd4-0f02-42f0-9674-71c4ef59c6a5" />
+      <HistoryContent category="3b164b58-18c6-454b-bfec-3e345f8fe33f" />
       <div className="max-w-4xl mx-auto bg-primary-500 text-white p-8 rounded-lg shadow-lg">
         <div className="text-center pb-6">
           <h2 className="text-2xl text-white font-bold text-gray-800">
