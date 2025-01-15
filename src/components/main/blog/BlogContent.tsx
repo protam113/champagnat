@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { BlogList } from '@/lib/blogList';
 
 import formatDate from '@/utils/formatDate';
@@ -26,7 +26,7 @@ const BlogContent = () => {
     isLoading,
     isError,
   } = BlogList(currentPage, categoryQuery, refreshKey);
-
+  const dataSource = useMemo(() => blogs, [blogs]);
   // Kiểm tra dữ liệu
   if (isLoading)
     return (
@@ -53,7 +53,7 @@ const BlogContent = () => {
           transition={{ duration: 0.3 }}
           className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {blogs.map((blog, index) => (
+          {dataSource.map((blog, index) => (
             <BlogProb
               key={index}
               id={blog.id}

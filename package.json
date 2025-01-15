@@ -43,9 +43,7 @@
     "react-spinners": "^0.15.0",
     "sharp": "^0.33.5",
     "slick-carousel": "^1.8.1",
-    "swiper": "^11.2.1",
     "tailwind-merge": "^2.5.5",
-    "ukiyojs": "^4.2.0",
     "zustand": "^5.0.2"
   },
   "devDependencies": {

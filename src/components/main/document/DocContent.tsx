@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
@@ -30,7 +30,7 @@ const DocContent = () => {
     isLoading,
     isError,
   } = DocList(currentPage, categoryQuery, refreshKey);
-
+  const dataSource = useMemo(() => document, [document]);
   // Kiểm tra dữ liệu
   if (isLoading || isCatLoading)
     return (
@@ -59,7 +59,7 @@ const DocContent = () => {
           transition={{ duration: 0.5 }}
           className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {document.map((blog, index) => (
+          {dataSource.map((blog, index) => (
             <DocProb
               key={index}
               id={blog.id}

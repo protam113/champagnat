@@ -60,9 +60,7 @@ const Page = () => {
               <p className="mr-4">
                 {suvu.user.first_name} {suvu.user.last_name}
               </p>
-              <span className="text-blue-800 mr-4 text-16">
-                {suvu.category.name}
-              </span>
+
               <span>{formatDate(suvu.created_date)}</span>
 
               <button

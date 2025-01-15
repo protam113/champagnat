@@ -84,17 +84,20 @@ const Page = () => {
           </Button>
         </div>
 
-        <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 flex flex-col overflow-hidden max-w-full">
           {/* Overlay for mobile sidebar */}
           {isSidebarOpen && (
             <div
-              className="fixed inset-0  bg-opacity-50 z-30 md:hidden"
+              className="fixed inset-0 bg-opacity-50 z-30 md:hidden"
               onClick={() => setIsSidebarOpen(false)}
             />
           )}
 
-          <main className="flex-1 flex flex-col overflow-hidden">
-            <div className="flex-1 overflow-y-auto px-4 py-4">
+          <main className="flex flex-col overflow-hidden h-full w-full">
+            <div
+              className="flex-1 overflow-y-auto px-4 py-4 space-y-4"
+              style={{ maxHeight: 'calc(100vh - 150px)' }}
+            >
               {isLoading ? (
                 <div className="flex items-center justify-center h-full">
                   <Spin size="large" />
@@ -104,14 +107,14 @@ const Page = () => {
                   Có lỗi xảy ra khi tải dữ liệu.
                 </div>
               ) : chatHistory.length > 0 ? (
-                <div className="max-w-3xl mx-auto space-y-4">
+                <div className="space-y-4">
                   {chatHistory.map((chat, index) => (
                     <ChatMessage
                       key={index}
                       message={chat.message}
                       sender={chat.sender}
-                      isLoading={isLoading && chat.sender === 'system'} // Truyền isLoading vào ChatMessage
-                      setRef={messagesEndRef} // Truyền ref vào ChatMessage
+                      isLoading={isLoading && chat.sender === 'system'}
+                      setRef={messagesEndRef}
                     />
                   ))}
                 </div>
@@ -119,6 +122,8 @@ const Page = () => {
                 <ChatFont />
               )}
             </div>
+
+            {/* Fixed Chat Input at the bottom */}
 
             <ChatInput
               userInput={userInput}
@@ -128,6 +133,7 @@ const Page = () => {
           </main>
         </div>
       </div>
+
       {/* Modal */}
       <Modal
         title="Thông Tin Ủng Hộ"
@@ -151,7 +157,7 @@ const Page = () => {
               <BankOutlined style={{ marginRight: '8px', color: '#1890ff' }} />{' '}
               Thông tin ủng hộ: <br />- Ngân hàng: <strong>MB Bank</strong>{' '}
               (Ngân hàng Thương mại cổ phần Quân đội)
-              <br />- Số tài khoản: <strong>2460909199324609091993</strong>
+              <br />- Số tài khoản: <strong>24609091993</strong>
               <br />- Nội dung chuyển khoản:{' '}
               <strong>&quot;Ủng hộ Thưởng - MaristChat&quot;</strong>
             </p>

@@ -4,6 +4,13 @@ import Image from 'next/image';
 import Head from 'next/head';
 import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from '@/lib/iconLib';
 import Container from '@/components/Container/container';
+import {
+  PiFacebookLogoBold,
+  PiHandsPrayingDuotone,
+  AiOutlineYoutube,
+  BiLogoFacebook,
+  RiInstagramLine,
+} from '@/lib/iconLib';
 const followUs = [
   { name: 'Đặc Sủng - Linh Đạo', link: '/hoi_dong/dac_sung-linh_dao' },
   { name: 'Lược Sử Hội Dòng', link: '/hoi_dong/about_us' },
@@ -32,7 +39,25 @@ const media = [
   { name: 'Ảnh', link: '/thu_vien/thu_vien_anh' },
   { name: 'Video', link: '/thu_vien/thu_vien_anh/thu_vien_video' },
 ];
+interface SocialIconProps {
+  href: string;
+  IconComponent: React.ComponentType<{ size: number; color: string }>;
+  title: string;
+}
 
+const SocialIcon: React.FC<SocialIconProps> = ({
+  href,
+  IconComponent,
+  title,
+}) => (
+  <div className="tooltip" title={title}>
+    <div className="bg-secondary-500 p-1 rounded-full hover:bg-primary-500">
+      <a target="_blank" rel="noopener noreferrer" href={href}>
+        <IconComponent size={24} color="white" />
+      </a>
+    </div>
+  </div>
+);
 const Footer = () => {
   return (
     <>
@@ -191,12 +216,47 @@ const Footer = () => {
           </div>
         </Container>
         {/* Phần Bản Quyền */}
-        <div className="flex items-center justify-center bg-white py-4 px-2 shadow-md">
-          <span className="text-sm text-gray-500 text-center">
-            &copy; {new Date().getFullYear()}
-            <p className="hover:underline inline">Hội Dòng Anh Em Đức Maria</p>.
-            All Rights Reserved.
-          </span>
+        <div className="bg-white py-4 px-2 shadow-md">
+          <Container>
+            <div className="flex flex-col items-center justify-between space-y-4 lg:flex-row lg:space-y-0">
+              <span className="text-sm text-gray-500 text-center">
+                &copy; {new Date().getFullYear()}
+                <p className="hover:underline inline">
+                  {' '}
+                  Hội Dòng Anh Em Đức Maria
+                </p>
+                . All Rights Reserved.
+              </span>
+
+              <div className="flex  items-center gap-2 cursor-pointer lg:flex-row lg:gap-4">
+                <SocialIcon
+                  href="https://www.facebook.com/groups/345937739645973"
+                  IconComponent={PiFacebookLogoBold}
+                  title="Facebook - Marist Vietnam"
+                />
+                <SocialIcon
+                  href="https://www.facebook.com/fms.champagnat"
+                  IconComponent={BiLogoFacebook}
+                  title="Facebook - Marist World"
+                />
+                <SocialIcon
+                  href="https://www.youtube.com/champagnatorg"
+                  IconComponent={AiOutlineYoutube}
+                  title="YouTube"
+                />
+                <SocialIcon
+                  href="https://www.instagram.com/fms.champagnat/"
+                  IconComponent={RiInstagramLine}
+                  title="Instagram"
+                />
+                <SocialIcon
+                  href="https://champagnat.org/en/library/prayers/"
+                  IconComponent={PiHandsPrayingDuotone}
+                  title="Prayers"
+                />
+              </div>
+            </div>
+          </Container>
         </div>
       </footer>
     </>

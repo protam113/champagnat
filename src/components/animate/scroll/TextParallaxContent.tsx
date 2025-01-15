@@ -53,8 +53,8 @@ const TextParallaxContent: React.FC<
   TextParallaxContentProps & { image: string }
 > = ({ subheading, heading, children, image }) => {
   return (
-    <div className="px-4 md:px-12">
-      <div className="relative h-[40vh] md:h-[150vh]">
+    <div>
+      <div className="relative ">
         {/* Giảm chiều cao trên mobile */}
         <StickyImage image={image} />
         <OverlayCopy heading={heading} subheading={subheading} />
@@ -80,18 +80,18 @@ const StickyImage: React.FC<{ image: string }> = ({ image }) => {
       style={{
         scale,
       }}
-      className="sticky top-0 z-0 overflow-hidden rounded-xl md:rounded-3xl w-full h-[25vh] md:h-full" // Giảm chiều cao hình trên mobile
+      className="sticky top-0 z-0 overflow-hidden rounded-xl md:rounded-3xl w-full h-[25vh] lg:h-screen" // Giảm chiều cao cho cả mobile và desktop
     >
       <Image
         src={image}
         alt="Sticky image"
         fill
         className="object-cover"
-        sizes="100vw"
+        sizes="50vw"
         priority
       />
       <motion.div
-        className="absolute inset-0 bg-neutral-950/30"
+        className="absolute  bg-neutral-950/30"
         style={{
           opacity,
         }}
@@ -122,7 +122,7 @@ const OverlayCopy: React.FC<OverlayCopyProps> = ({ subheading, heading }) => {
       <p className="mb-1 md:mb-4 text-center text-sm md:text-xl lg:text-3xl font-bold text-shadow-lg">
         {subheading}
       </p>
-      <h1 className="text-center text-lg md:text-4xl lg:text-7xl font-extrabold opacity-100 px-4 leading-tight text-shadow-xl">
+      <h1 className="font-heading text-lg md:text-4xl lg:text-7xl opacity-100 leading-tight text-shadow-xl">
         {heading}
       </h1>
     </motion.div>

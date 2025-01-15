@@ -1,22 +1,19 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
 import { ClipLoader } from 'react-spinners';
 import Tittle from '@/components/design/Tittle';
 import { motion } from 'framer-motion';
-import MessageTag from './messageCategoryTag';
+// import MessageTag from './messageCategoryTag';
 import MessageProb from './messageProb';
 import { MessageList } from '@/lib/messageList';
 
 const MessageContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [refreshKey] = useState(0);
-  const [selectedCategory] = useState<string | null>(null);
-
-  const categoryQuery = selectedCategory ? selectedCategory : '';
 
   // Lấy danh sách tin tức từ API
   const {
@@ -24,8 +21,8 @@ const MessageContent = () => {
     next,
     isLoading,
     isError,
-  } = MessageList(currentPage, categoryQuery, refreshKey);
-
+  } = MessageList(currentPage, refreshKey);
+  const dataSource = useMemo(() => message, [message]);
   // Kiểm tra dữ liệu
   if (isLoading)
     return (
@@ -43,10 +40,6 @@ const MessageContent = () => {
     <main>
       <Container>
         <Tittle name="TẤT CẢ THƯ " />
-        <div className="mt-6 mb-4">
-          <MessageTag />
-        </div>
-
         {/* Add motion for smooth transition of the content grid */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -55,7 +48,7 @@ const MessageContent = () => {
           transition={{ duration: 0.5 }}
           className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {message.map((message, index) => (
+          {dataSource.map((message, index) => (
             <MessageProb
               key={index}
               id={message.id}
@@ -63,7 +56,6 @@ const MessageContent = () => {
               description={message.description}
               date={formatDate(message.created_date)}
               author={message.user.username}
-              categories={[message.category.name]}
               image={message?.image}
             />
           ))}

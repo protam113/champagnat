@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Lobster&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Poppins:wght@100;400;500;600&display=swap');
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -56,13 +56,15 @@
     --background: #ededed;
   }
 }
-html {
-}
 body {
   scroll-behavior: smooth;
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.font-heading {
+  font-family: 'Noto Serif', serif;
 }
 /* src/components/CustomCursor.css */
 .custom-cursor {
@@ -238,10 +240,14 @@ body {
   position: relative;
 } */
 
-/* Kiểu cho màn hình di động cho các giao đoạn */
-@media (max-width: 768px) {
-  .ukiyo {
-    object-fit: cover; /* Giữ tỷ lệ hình ảnh, không méo */
-    width: 390px !important; /* Đảm bảo hình ảnh tự động điều chỉnh chiều rộng */
-  }
+/* Mô tả: Dùng max-height và overflow để tránh làm thay đổi chiều cao */
+p.description {
+  max-height: 30px; /* Giới hạn chiều cao mô tả */
+  overflow: hidden; /* Ẩn nội dung vượt quá chiều cao */
+}
+
+/* Khi hover, mở rộng chiều cao mô tả */
+.group:hover .description {
+  max-height: 150px; /* Điều chỉnh lại chiều cao khi hover */
+  opacity: 1; /* Hiển thị mô tả */
 }

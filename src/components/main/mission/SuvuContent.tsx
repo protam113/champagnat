@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
@@ -23,6 +23,7 @@ const SuvuContent = () => {
     isLoading: isCatLoading,
     isError: isCatError,
   } = CategoriesList(currentPage, 'messageformfounder', 0);
+
   // Lấy danh sách tin tức từ API
   const {
     queueData: su_vu,
@@ -30,7 +31,7 @@ const SuvuContent = () => {
     isLoading,
     isError,
   } = MissionList(currentPage, categoryQuery, refreshKey);
-
+  const dataSource = useMemo(() => su_vu, [su_vu]);
   // Kiểm tra dữ liệu
   if (isLoading || isCatLoading)
     return (
@@ -60,7 +61,7 @@ const SuvuContent = () => {
           transition={{ duration: 0.5 }}
           className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {su_vu.map((suvu, index) => (
+          {dataSource.map((suvu, index) => (
             <SuvuProb
               key={index}
               id={suvu.id}

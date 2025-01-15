@@ -14,12 +14,12 @@ const formatDate = (dateString: string): string => {
 
     // Nếu thời gian chênh lệch nhỏ hơn 60 phút, trả về số phút trước
     if (diffInMinutes < 60) {
-        return `${diffInMinutes}m ago`;
+        return `${diffInMinutes} phút trước`;
     }
     // Nếu thời gian chênh lệch nhỏ hơn 24 giờ (1440 phút), trả về số giờ trước
     else if (diffInMinutes < 1440) {
         const hours = Math.floor(diffInMinutes / 60);
-        return `${hours}h ago`;
+        return `${hours} giờ trước`;
     }
     // Nếu thời gian chênh lệch lớn hơn 1 ngày, trả về ngày tháng định dạng dd/MM/yyyy
     else {

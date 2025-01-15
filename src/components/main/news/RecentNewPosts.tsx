@@ -90,8 +90,9 @@ const RecentNewPosts = () => {
           {/* Các bài viết khác bên phải */}
           <div className="cursor-pointer flex flex-col space-y-4">
             {otherPosts.slice(0, 3).map((post, index) => (
-              <div
+              <Link
                 key={index}
+                href={`/news/${latestPost.id}`}
                 className="flex rounded-lg shadow-lg overflow-hidden bg-white h-auto hover:shadow-2xl hover:scale-105 hover:text-yellow-500 transform transition-all duration-300"
               >
                 <div className="relative w-1/3 h-40 md:h-48 lg:h-40">
@@ -121,7 +122,7 @@ const RecentNewPosts = () => {
                   </p>
                   <h2 className="text-14 font-semibold">{post.title}</h2>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

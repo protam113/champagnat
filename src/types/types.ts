@@ -28,7 +28,6 @@ interface MessageList {
   image: string | null;
   user: User;
   created_date: string;
-  category: Category;
 }
 
 export interface FetchMessageListResponse {
@@ -120,6 +119,7 @@ interface DonationList {
   status: string;
   created_date: string
   updated_date: string
+  media: Media[];
 }
 
 export interface FetchDonationListResponse {
@@ -149,7 +149,7 @@ export interface FetchGaleryListResponse {
 interface Category {
   id: string;
   name: string;
-  file: string;
+  image: string;
 }
 
 interface User {

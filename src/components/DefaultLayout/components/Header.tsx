@@ -74,7 +74,7 @@ export const TopHeader = () => {
         <SocialIcon
           href="https://www.facebook.com/fms.champagnat"
           IconComponent={BiLogoFacebook}
-          title="Facebook - Marist France"
+          title="Facebook - Marist World"
         />
         <SocialIcon
           href="https://www.youtube.com/champagnatorg"
@@ -407,8 +407,8 @@ export default function Navbar() {
   );
 }
 
-// mobile
-function SingleNavItem(d: NavItem & { closeSideMenu?: () => void }) {
+// mobile}
+function SingleNavItem(d: NavItem & { closeSideMenu: any }) {
   const [animationParent] = useAutoAnimate();
   const [isItemOpen, setItem] = useState(false);
 
@@ -422,6 +422,7 @@ function SingleNavItem(d: NavItem & { closeSideMenu?: () => void }) {
       ref={animationParent}
       onClick={(e) => {
         toggleItem(e);
+        // Khi click vào item, đóng sidebar nếu có closeSideMenu
         if (d.link && d.closeSideMenu) {
           d.closeSideMenu();
         }
@@ -443,7 +444,11 @@ function SingleNavItem(d: NavItem & { closeSideMenu?: () => void }) {
             <Link
               key={i}
               href={ch.link ?? '#'}
-              className="flex cursor-pointer items-center py-1 pl-6 pr-8 text-black hover:text-black"
+              className="flex cursor-pointer items-center py-1 pr-8 text-black hover:text-black"
+              onClick={() => {
+                // Đóng sidebar khi click vào item con
+                if (d.closeSideMenu) d.closeSideMenu();
+              }}
             >
               <span className="whitespace-nowrap pl-3">{ch.label}</span>
             </Link>
@@ -454,7 +459,13 @@ function SingleNavItem(d: NavItem & { closeSideMenu?: () => void }) {
   );
 }
 
-function MobileNavItem({ model }: { model: any }) {
+function MobileNavItem({
+  model,
+  closeSideMenu,
+}: {
+  model: any;
+  closeSideMenu: any;
+}) {
   const [currentPage] = useState(1);
 
   const { queueData, isLoading, isError } = CategoriesList(
@@ -476,6 +487,7 @@ function MobileNavItem({ model }: { model: any }) {
           key={category.id} // Thêm key duy nhất
           href={`/${model}/category/${category.id}`}
           className="flex cursor-pointer items-center py-1  pr-6 text-black hover:text-black"
+          onClick={closeSideMenu}
         >
           <span className="whitespace-nowrap pl-3">{category.name}</span>
         </Link>
@@ -562,7 +574,11 @@ function MobileNav({
           <div className="flex flex-col text-14 text-white gap-2 transition-all">
             {/* Loop through navItems */}
             {navItems.map((d, i) => (
-              <SingleNavItem key={i} label={d.label}>
+              <SingleNavItem
+                key={i}
+                label={d.label}
+                closeSideMenu={closeSideMenu}
+              >
                 {d.children}
               </SingleNavItem>
             ))}
@@ -574,6 +590,7 @@ function MobileNav({
               className="relative px-2 py-3 transition-all"
               onClick={(e) => {
                 e.stopPropagation();
+
                 toggleDropdown('Tin Tức'); // Toggle trạng thái "Tin Tức"
               }}
             >
@@ -587,7 +604,7 @@ function MobileNav({
               {/* Hiển thị dropdown khi openDropdown === 'Tin Tức' */}
               {openDropdown === 'Tin Tức' && (
                 <div className="w-auto flex-col flex overflow-hidden transition-all">
-                  <MobileNavItem model="news" />
+                  <MobileNavItem model="news" closeSideMenu={closeSideMenu} />
                 </div>
               )}
             </Link>
@@ -612,7 +629,10 @@ function MobileNav({
               {/* Hiển thị dropdown khi openDropdown === 'Giáo Hội' */}
               {openDropdown === 'Sứ Vụ' && (
                 <div className="w-auto flex-col flex overflow-hidden transition-all">
-                  <MobileNavItem model="mission" />
+                  <MobileNavItem
+                    model="mission"
+                    closeSideMenu={closeSideMenu}
+                  />
                 </div>
               )}
             </Link>
@@ -637,7 +657,7 @@ function MobileNav({
               {/* Hiển thị dropdown khi openDropdown === 'Giáo Hội' */}
               {openDropdown === 'Giáo Hội' && (
                 <div className="w-auto flex-col flex overflow-hidden transition-all">
-                  <MobileNavItem model="blog" />
+                  <MobileNavItem model="blog" closeSideMenu={closeSideMenu} />
                 </div>
               )}
             </Link>
@@ -685,7 +705,10 @@ function MobileNav({
               {/* Hiển thị dropdown khi openDropdown === 'Tư Liệu' */}
               {openDropdown === 'Tư Liệu' && (
                 <div className="w-auto flex-col flex overflow-hidden transition-all">
-                  <MobileNavItem model="document" />
+                  <MobileNavItem
+                    model="document"
+                    closeSideMenu={closeSideMenu}
+                  />
                 </div>
               )}
             </Link>

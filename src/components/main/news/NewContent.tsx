@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
@@ -25,7 +25,7 @@ const NewContent = () => {
     isLoading,
     isError,
   } = NewsList(currentPage, categoryQuery, refreshKey);
-
+  const dataSource = useMemo(() => news, [news]);
   // Kiểm tra dữ liệu
   if (isLoading)
     return (
@@ -55,7 +55,7 @@ const NewContent = () => {
           transition={{ duration: 0.5 }}
           className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {news.map((blog, index) => (
+          {dataSource.map((blog, index) => (
             <NewProb
               key={index}
               id={blog.id}
