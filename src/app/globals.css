@@ -251,3 +251,12 @@ p.description {
   max-height: 150px; /* Điều chỉnh lại chiều cao khi hover */
   opacity: 1; /* Hiển thị mô tả */
 }
+
+/* Add this CSS to your global styles or CSS-in-JS solution */
+
+@media (max-width: 768px) {
+  .calendar-container {
+    width: 90%; /* Adjust calendar width on mobile */
+    margin: 0 auto; /* Center it */
+  }
+}

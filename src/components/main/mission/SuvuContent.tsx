@@ -22,7 +22,7 @@ const SuvuContent = () => {
     queueData,
     isLoading: isCatLoading,
     isError: isCatError,
-  } = CategoriesList(currentPage, 'messageformfounder', 0);
+  } = CategoriesList(currentPage, 'mission', 0);
 
   // Lấy danh sách tin tức từ API
   const {

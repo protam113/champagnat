@@ -1,33 +1,68 @@
 'use client';
 
-import { memo } from 'react';
+import { useEffect, useState, memo } from 'react';
 import Image from 'next/image';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'; // Thêm style cho slideshow
-import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'; // Các mũi tên điều hướng
+import { FaArrowLeft, FaArrowRight, FaLongArrowAltRight } from 'react-icons/fa';
 import { NewsList } from '@/lib/newList';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import formatDate from '@/utils/formatDate';
 import logo from '@/assets/image/logo_default.png';
 import Link from 'next/link';
-import Container from '@/components/Container/container';
-import formatDate from '@/utils/formatDate';
+// Dữ liệu cho phần tin tức
+
 const Hero = () => {
-  const slideItems = 5; // Mỗi slide có 5 phần tử
+  const [currentPage] = useState(1);
+  const [refreshKey] = useState(0);
+  const [slideItems, setSlideItems] = useState(4); // Số lượng bài mặc định trên mỗi slide
 
   // Lấy dữ liệu tin tức từ API
-  const { queueData: newsData, isLoading, isError } = NewsList(1, '', 0);
+  const {
+    queueData: newsData,
+    isLoading,
+    isError,
+  } = NewsList(currentPage, '', refreshKey);
+
+  const [isClient, setIsClient] = useState(false);
 
   // Chia dữ liệu tin tức thành các slide với số lượng bài tương ứng
   const slides = [];
   if (newsData) {
-    // Kiểm tra và chỉ tạo slide khi có đủ số lượng bài viết (5, 10, 15, ...)
     for (let i = 0; i < newsData.length; i += slideItems) {
-      const slide = newsData.slice(i, i + slideItems);
-      if (slide.length === slideItems) {
-        slides.push(slide); // Chỉ thêm slide khi có đủ 5 phần tử
-      }
+      slides.push(newsData.slice(i, i + slideItems));
     }
+  }
+
+  useEffect(() => {
+    setIsClient(true); // Đảm bảo rằng code chỉ chạy trên client
+
+    // Thay đổi số lượng bài trên mỗi slide khi kích thước cửa sổ thay đổi
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setSlideItems(1); // Mobile: 1 bài mỗi slide
+      } else if (window.innerWidth <= 1024) {
+        setSlideItems(2); // Tablet: 2 bài mỗi slide
+      } else {
+        setSlideItems(4); // Desktop: 4 bài mỗi slide
+      }
+    };
+
+    // Lắng nghe sự thay đổi kích thước cửa sổ
+    window.addEventListener('resize', handleResize);
+
+    // Gọi hàm một lần để thiết lập giá trị ban đầu
+    handleResize();
+
+    // Dọn dẹp khi component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+  if (!isClient) {
+    return null;
   }
 
   // Hiển thị khi đang tải
@@ -44,200 +79,111 @@ const Hero = () => {
     return null;
   }
 
-  // Kiểm tra nếu không có đủ slide
-  if (slides.length === 0) {
-    return (
-      <div className="absolute inset-0 flex items-center justify-center">
-        <p className="text-xl">Chưa có đủ bài viết để hiển thị slideshow</p>
-      </div>
-    );
-  }
-
   return (
-    <Container>
-      <div className="relative">
-        <Slide
-          easing="ease"
-          duration={4000}
-          transitionDuration={500}
-          arrows={true} // Đảm bảo mũi tên luôn hiển thị
-          prevArrow={
-            <div className="absolute left-4 top-1/2 transform translate-y-1/2 text-white bg-primary-500 bg-opacity-50 p-2 rounded-full hover:bg-albert-warning transition-all duration-300">
-              <FaArrowLeft size={18} />
+    <div className=" relative w-full h-4/5">
+      <Slide
+        easing="ease"
+        autoplay={true}
+        duration={4000}
+        transitionDuration={500}
+        arrows={false}
+      >
+        {newsData.map((news, index) => (
+          <Link
+            href={`/news/${news.id}`}
+            className="each-slide brightness-50"
+            key={index}
+          >
+            <div className="relative w-full h-[250px] lg:h-[400px]">
+              <Image
+                src={news.image || logo}
+                alt={`Banner Image ${index + 1}`}
+                className="object-cover"
+                layout="fill"
+                priority
+              />
             </div>
-          }
-          nextArrow={
-            <div className="absolute right-4 top-1/2 transform translate-y-1/2 text-white bg-primary-500 bg-opacity-50 p-2 rounded-full hover:bg-albert-warning transition-all duration-300">
-              <FaArrowRight size={18} />
-            </div>
-          }
+          </Link>
+        ))}
+      </Slide>
+
+      {/* Phần tin tức */}
+      <div className="relative cursor-pointer">
+        <div
+          className="rounded-lg -bottom-10 w-3/4 absolute left-1/2 transform -translate-x-1/2 bg-primary-800 px-3"
+          style={{
+            boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.25)', // Điều chỉnh độ mờ và hướng của shadow
+          }}
         >
-          {slides.map((slide, index) => (
-            <div
-              key={index}
-              className="grid grid-cols-12 lg:grid-cols-12 gap-0.5"
-            >
-              {/* Dòng 1: 2 phần tử lớn */}
-              <div className="col-span-12 lg:col-span-6">
-                {slide[0] && (
-                  <Link
-                    href={`/news/${slide[0].id}`}
-                    className="relative group"
-                  >
-                    <div className="relative w-full lg:h-[300px] h-[250px] group">
-                      <Image
-                        src={slide[0].image || logo}
-                        alt={`Banner Image ${index + 1}`}
-                        className="object-cover w-full h-full"
-                        layout="fill"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black to-transparent opacity-60 group-hover:opacity-70 transition-opacity duration-300">
-                        <div className="absolute bottom-0 left-0 right-0 px-4 opacity-100">
-                          <p className="text-white lg:text-14 text-12 transition-all duration-300 group-hover:translate-y-[-25px]">
-                            {formatDate(slide[0].created_date)}
-                          </p>
-                          <h2 className="lg:text-20 text-14 font-bold text-white transition-all duration-300 group-hover:translate-y-[-20px]">
-                            {slide[0].title}
-                          </h2>
-                          <p className="description text-white text-12 lg:text-16 py-1 opacity-50 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 transform translate-y-[50px] line-clamp-4">
-                            {slide[0].description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                )}
+          <Slide
+            easing="ease"
+            autoplay={true}
+            duration={3000}
+            transitionDuration={500}
+            arrows={true}
+            prevArrow={
+              <div
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  fontSize: '14px',
+                  color: 'white',
+                }}
+              >
+                {<FaArrowLeft />}
               </div>
-
-              <div className="col-span-6 lg:col-span-6">
-                {slide[1] && (
-                  <Link
-                    href={`/news/${slide[1].id}`}
-                    className="relative group"
-                  >
-                    <div className="relative w-full lg:h-[300px] h-[200px] group">
-                      <Image
-                        src={slide[1].image || logo}
-                        alt={`Banner Image ${index + 1}`}
-                        className="object-cover w-full h-full"
-                        layout="fill"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black to-transparent opacity-60 group-hover:opacity-70 transition-opacity duration-300">
-                        <div className="absolute bottom-0 left-0 right-0 px-4 opacity-100">
-                          <p className="text-white lg:text-14 text-12 transition-all duration-300 group-hover:translate-y-[-25px]">
-                            {formatDate(slide[1].created_date)}
-                          </p>
-                          <h2 className="lg:text-20 text-14 font-bold text-white transition-all duration-300 group-hover:translate-y-[-20px]">
-                            {slide[1].title}
-                          </h2>
-                          <p className="description text-white text-12 lg:text-16 py-1 opacity-50 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 transform translate-y-[50px] line-clamp-4">
-                            {slide[1].description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                )}
+            }
+            nextArrow={
+              <div
+                style={{
+                  width: '20px',
+                  height: '20px',
+                  fontSize: '14px',
+                  color: 'white',
+                }}
+              >
+                {<FaArrowRight />}
               </div>
-
-              {/* Dòng 2: 3 phần tử nhỏ */}
-              <div className="col-span-6 lg:col-span-4">
-                {slide[2] && (
-                  <Link
-                    href={`/news/${slide[2].id}`}
-                    className="relative group"
+            }
+          >
+            {slides.map((slide, index) => (
+              <div className="flex flex-wrap justify-between px-4" key={index}>
+                {slide.map((news, newsIndex) => (
+                  <div
+                    className="bg-primary-800 p-2 lg:p-4 w-full sm:w-1/2 md:w-1/4"
+                    key={newsIndex}
                   >
-                    <div className="relative w-full lg:h-[240px] h-[200px]">
-                      <Image
-                        src={slide[2].image || logo}
-                        alt={`Banner Image ${index + 1}`}
-                        className="object-cover w-full h-full"
-                        layout="fill"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black to-transparent opacity-60 group-hover:opacity-70 transition-opacity duration-300">
-                        <div className="absolute bottom-0 left-0 right-0 px-4 opacity-100">
-                          <p className="text-white lg:text-14 text-12 transition-all duration-300 group-hover:translate-y-[-25px]">
-                            {formatDate(slide[2].created_date)}
-                          </p>
-                          <h2 className="lg:text-20 text-14 font-bold text-white transition-all duration-300 group-hover:translate-y-[-20px]">
-                            {slide[2].title}
-                          </h2>
-                          <p className="description text-white text-12 lg:text-16 py-1 opacity-50 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 transform translate-y-[50px] line-clamp-4">
-                            {slide[2].description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                )}
+                    <p className="text-gray-300 text-xs font-bold">
+                      <p>{formatDate(news.created_date)}</p>
+                    </p>
+                    <p className="w-max rounded-xl bg-primary-400 text-white text-xs mt-1 mb-3 py-1 px-3">
+                      {news.categories
+                        ?.map((category) => category.name)
+                        .join(', ')}
+                    </p>
+                    <p
+                      className="text-white text-sm font-bold truncate overflow-hidden"
+                      style={{ maxHeight: '35px', lineHeight: '1.20em' }}
+                    >
+                      {news.title}
+                    </p>
+                    <hr className="border-t-1 border-white mt-2 mb-3" />
+                    <Link
+                      href={`/news/${news.id}`}
+                      className="relative flex items-center gap-1 text-primary-100 group"
+                    >
+                      <i>Tiếp tục đọc</i>{' '}
+                      <span className="absolute left-0 -bottom-1 w-0 h-0.5 bg-white transition-all duration-300 group-hover:w-1/2"></span>
+                      <FaLongArrowAltRight className="arrow-icon transform transition-transform duration-300 group-hover:translate-x-2" />
+                    </Link>
+                  </div>
+                ))}
               </div>
-
-              <div className="col-span-6 lg:col-span-4">
-                {slide[3] && (
-                  <Link
-                    href={`/news/${slide[3].id}`}
-                    className="relative group"
-                  >
-                    <div className="relative w-full lg:h-[240px] h-[200px]">
-                      <Image
-                        src={slide[3].image || logo}
-                        alt={`Banner Image ${index + 1}`}
-                        className="object-cover w-full h-full"
-                        layout="fill"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black to-transparent opacity-60 group-hover:opacity-70 transition-opacity duration-300">
-                        <div className="absolute bottom-0 left-0 right-0 px-4 opacity-100">
-                          <p className="text-white lg:text-14 text-12 transition-all duration-300 group-hover:translate-y-[-25px]">
-                            {formatDate(slide[3].created_date)}
-                          </p>
-                          <h2 className="lg:text-20 text-14 font-bold text-white transition-all duration-300 group-hover:translate-y-[-20px]">
-                            {slide[3].title}
-                          </h2>
-                          <p className="description text-white text-12 lg:text-16 py-1 opacity-50 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 transform translate-y-[50px] line-clamp-4">
-                            {slide[3].description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                )}
-              </div>
-
-              <div className="col-span-6 lg:col-span-4">
-                {slide[4] && (
-                  <Link
-                    href={`/news/${slide[4].id}`}
-                    className="relative group"
-                  >
-                    <div className="relative w-full lg:h-[240px] h-[200px]">
-                      <Image
-                        src={slide[4].image || logo}
-                        alt={`Banner Image ${index + 1}`}
-                        className="object-cover w-full h-full"
-                        layout="fill"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black to-transparent opacity-60 group-hover:opacity-70 transition-opacity duration-300">
-                        <div className="absolute bottom-0 left-0 right-0 px-4 opacity-100">
-                          <p className="text-white lg:text-14 text-12 transition-all duration-300 group-hover:translate-y-[-25px]">
-                            {formatDate(slide[4].created_date)}
-                          </p>
-                          <h2 className="lg:text-20 text-14 font-bold text-white transition-all duration-300 group-hover:translate-y-[-20px]">
-                            {slide[4].title}
-                          </h2>
-                          <p className="description text-white text-12 lg:text-16 py-1 opacity-50 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 transform translate-y-[50px] line-clamp-4">
-                            {slide[4].description}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </Link>
-                )}
-              </div>
-            </div>
-          ))}
-        </Slide>
+            ))}
+          </Slide>
+        </div>
       </div>
-    </Container>
+    </div>
   );
 };
 

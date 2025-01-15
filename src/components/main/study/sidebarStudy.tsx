@@ -42,19 +42,6 @@ const SidebarStudy: React.FC = () => {
   };
 
   const items = [
-    // {
-    //   key: '1',
-    //   icon: <BookOutlined style={{ color: 'white' }} />,
-    //   label: (
-    //     <Link
-    //       href="/study"
-    //       style={{ color: 'white' }}
-    //       onClick={() => setSelectedKey('1')} // Update selected key on click
-    //     >
-    //       Tài Liệu
-    //     </Link>
-    //   ),
-    // },
     {
       key: '1',
       icon: <RobotOutlined style={{ color: 'white' }} />,
@@ -62,7 +49,10 @@ const SidebarStudy: React.FC = () => {
         <Link
           href="/study"
           style={{ color: 'white' }}
-          onClick={() => setSelectedKey('1')} // Update selected key on click
+          onClick={() => {
+            setSelectedKey('1');
+            if (isMobile) onClose(); // Close sidebar if on mobile
+          }}
         >
           MaristChat
         </Link>
@@ -75,7 +65,10 @@ const SidebarStudy: React.FC = () => {
         <Link
           href="/study/community"
           style={{ color: 'white' }}
-          onClick={() => setSelectedKey('2')} // Update selected key on click
+          onClick={() => {
+            setSelectedKey('2');
+            if (isMobile) onClose(); // Close sidebar if on mobile
+          }}
         >
           Cộng Đoàn
         </Link>
@@ -88,7 +81,10 @@ const SidebarStudy: React.FC = () => {
         <Link
           href="/study/schedule"
           style={{ color: 'white' }}
-          onClick={() => setSelectedKey('3')} // Update selected key on click
+          onClick={() => {
+            setSelectedKey('3');
+            if (isMobile) onClose(); // Close sidebar if on mobile
+          }}
         >
           Lịch Công Giáo
         </Link>
@@ -101,7 +97,10 @@ const SidebarStudy: React.FC = () => {
         <Link
           href="/study/reset_password"
           style={{ color: 'white' }}
-          onClick={() => setSelectedKey('4')} // Update selected key on click
+          onClick={() => {
+            setSelectedKey('4');
+            if (isMobile) onClose(); // Close sidebar if on mobile
+          }}
         >
           Đổi Mật Khẩu
         </Link>
@@ -114,7 +113,10 @@ const SidebarStudy: React.FC = () => {
         <Link
           href="/study/update_profile"
           style={{ color: 'white' }}
-          onClick={() => setSelectedKey('5')} // Update selected key on click
+          onClick={() => {
+            setSelectedKey('5');
+            if (isMobile) onClose(); // Close sidebar if on mobile
+          }}
         >
           Cập Nhật Thông Tin
         </Link>

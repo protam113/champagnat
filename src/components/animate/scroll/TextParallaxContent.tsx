@@ -117,12 +117,12 @@ const OverlayCopy: React.FC<OverlayCopyProps> = ({ subheading, heading }) => {
         opacity,
       }}
       ref={targetRef}
-      className="absolute left-0 top-0 flex h-[40vh] md:h-screen w-full flex-col items-center justify-center text-white px-4 md:px-0"
+      className="absolute left-0 top-0 flex h-full w-full flex-col items-center justify-center text-white px-4 md:px-0"
     >
-      <p className="mb-1 md:mb-4 text-center text-sm md:text-xl lg:text-3xl font-bold text-shadow-lg">
+      <p className="mb-1 md:mb-4 text-center text-sm  lg:text-3xl font-bold text-shadow-lg">
         {subheading}
       </p>
-      <h1 className="font-heading text-lg md:text-4xl lg:text-7xl opacity-100 leading-tight text-shadow-xl">
+      <h1 className="bg-gray-300/50 backdrop-blur-lg p-5 lg:max-w-4xl max-w-xs font-heading  text-center text-lg  lg:text-6xl opacity-100 leading-tight text-shadow-xl">
         {heading}
       </h1>
     </motion.div>

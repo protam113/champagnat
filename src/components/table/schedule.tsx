@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Calendar, Badge, Button } from 'antd';
 import type { BadgeProps, CalendarProps } from 'antd';
 import dayjs, { Dayjs } from 'dayjs';
@@ -8,7 +8,6 @@ import { useScheduleList } from '@/hooks/schedule/useSchedule';
 import { FaSync } from '@/lib/iconLib';
 import FeastDrawer from '../drawer/ScheduleDetail';
 
-// Màu sắc cho các loại lễ
 const feastTypeColors: Record<string, BadgeProps['status']> = {
   'Lễ trọng': 'error',
   'Lễ kính': 'warning',
@@ -18,7 +17,6 @@ const feastTypeColors: Record<string, BadgeProps['status']> = {
   ' ': 'processing',
 };
 
-// Sắp xếp loại lễ theo ưu tiên
 const feastPriority = [
   'Lễ trọng',
   'Lễ kính',
@@ -28,7 +26,6 @@ const feastPriority = [
   ' ',
 ];
 
-// Hàm sắp xếp lễ
 const sortFeasts = (feasts: any[]) => {
   return feasts.sort(
     (a, b) =>
@@ -41,9 +38,10 @@ const CatholicCalendarTable: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const [ScheduleId, setScheduleId] = useState<string>('');
-  const [mode, setMode] = useState<'month' | 'year'>('month'); // Để điều chỉnh chế độ xem (tháng/năm)
+  const [mode, setMode] = useState<'month' | 'year'>('month');
+  const [currentDate, setCurrentDate] = useState<Dayjs>(dayjs());
+  const [isMobile, setIsMobile] = useState(false); // State to track mobile view
 
-  const [currentDate, setCurrentDate] = useState<Dayjs>(dayjs()); // Ngày hiện tại
   const { year, month } = {
     year: currentDate.year().toString(),
     month: (currentDate.month() + 1).toString(),
@@ -55,9 +53,23 @@ const CatholicCalendarTable: React.FC = () => {
     isError,
   } = useScheduleList({ year, month }, 0);
 
+  // Check for mobile screen size
+  useEffect(() => {
+    const checkIfMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkIfMobile();
+    window.addEventListener('resize', checkIfMobile);
+
+    return () => {
+      window.removeEventListener('resize', checkIfMobile);
+    };
+  }, []);
+
   const handlePanelChange = (date: Dayjs, newMode: 'month' | 'year') => {
     setCurrentDate(date);
-    setMode(newMode); // Lưu lại chế độ xem
+    setMode(newMode);
   };
 
   const dateCellRender = (value: Dayjs) => {
@@ -113,6 +125,10 @@ const CatholicCalendarTable: React.FC = () => {
           mode={mode}
           value={currentDate}
           onPanelChange={handlePanelChange}
+          style={{
+            maxWidth: isMobile ? '100%' : 'auto', // Adjust width based on screen size
+            margin: isMobile ? '0 auto' : 'unset', // Centering for mobile
+          }}
         />
       )}
 
