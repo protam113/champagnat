@@ -142,10 +142,10 @@ const Page = () => {
             {/* Reason Section */}
             <div>
               <label
-                className="block text-sm font-medium text-gray-700"
+                className="block text-16 font-medium text-white mb-2"
                 htmlFor="messages"
               >
-                Nội Dung
+                Lý do muốn tìm hiểu
               </label>
               <div className="bg-white text-black p-4 border border-gray-300 rounded-lg">
                 <RichText onChange={setReason} initialContent={reason} />

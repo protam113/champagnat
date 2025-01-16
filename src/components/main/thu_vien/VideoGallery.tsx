@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ClipLoader } from 'react-spinners';
 import { useVideoList } from '@/hooks/video/useVideo';
 import Image from 'next/image';
+import { ArrowRight } from 'lucide-react';
 
 const VideoGallery = () => {
   const [currentPage] = useState(1);
@@ -33,34 +34,34 @@ const VideoGallery = () => {
 
   return (
     <div>
-      <div className="pt-10 grid grid-cols-1 gap-6">
-        {queueData.map((queueData, index) => (
+      <div className="pt-10 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+        {queueData.map((video, index) => (
           <div
             key={index}
-            className="flex lg:flex-row flex-col bg-[#EBEBEB] rounded-lg shadow-lg hover:shadow-2xl transition-all ease-in-out duration-300 overflow-hidden"
+            className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden flex flex-col"
           >
+            {/* Phần hình ảnh */}
             <div className="relative">
               <Image
                 alt={`Image ${index + 1}`}
-                src={queueData.image}
+                src={video.image}
                 width={410}
-                height={210}
-                className="object-cover w-full h-48" // Điều chỉnh chiều cao ảnh
+                height={230}
+                className="object-cover w-full h-56"
               />
-              {/* Nút Play ở giữa ảnh */}
               <div className="absolute inset-0 flex justify-center items-center">
                 <a
-                  href={queueData.link}
+                  href={video.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group p-5 rounded-full bg-primary-500 opacity-50 hover:opacity-75 transition-all duration-300"
+                  className="p-3 rounded-full bg-primary-500 hover:bg-yellow-500 text-white transition-all duration-300"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
-                    className="w-6 h-6 text-white"
+                    className="w-6 h-6"
                   >
                     <path
                       strokeLinecap="round"
@@ -73,42 +74,43 @@ const VideoGallery = () => {
               </div>
             </div>
 
-            <div className="p-4">
-              <p className="text-20 text-primary-500 font-semibold">
-                {queueData.content}
-              </p>
-              <span>{queueData.create_date}</span>
-
-              {/* Nút "READ MORE" */}
-              <a
-                href={queueData.link}
+            {/* Phần nội dung */}
+            <div className="p-4 flex-grow">
+              <h3 className="text-lg font-bold text-gray-800 mb-2">
+                {video.content}
+              </h3>
+              <p className="text-sm text-gray-500 mb-4">{video.create_date}</p>
+              {/* <a
+                href={video.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group w-max flex items-center mt-4 p-2 rounded-md text-primary-500 font-semibold relative overflow-hidden border-2 border-primary-500"
+                className="relative flex items-center text-primary-500 text-16 sm:text-16 md:text-18 lo:text-20 font-semibold group transition duration-300 overflow-hidden"
               >
-                {/* Chữ sẽ chuyển sang màu trắng khi hover */}
-                <span className="text-14 group-hover:text-white transition-all duration-300 z-10 relative">
-                  Xem Thêm
+                <span className="absolute left-0 top-0 h-full w-1 bg-primary-500"></span>
+
+                <span className="relative z-10 pl-4">Xem Thêm</span>
+
+                <span className="relative z-10 ml-1 transition-transform group-hover:translate-x-1">
+                  →
                 </span>
-                {/* Thêm mũi tên với hiệu ứng animation */}
-                <svg
-                  className="relative z-10 inline-block ml-2 w-5 h-5 group-hover:text-white transition-all duration-300 transform group-hover:translate-x-2"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  fill="none"
-                  strokeWidth="2"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5 12h14M12 5l7 7-7 7"
-                  />
-                </svg>
-                {/* Hiệu ứng background với chiều rộng đúng */}
-                <div className="absolute inset-0 bg-primary-500 group-hover:w-full w-0 transition-all duration-300 z-0"></div>
-              </a>
+
+                <span className="absolute inset-0 bg-yellow-500 scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
+              </a> */}
+              <button
+                className={`group relative rounded-full border border-white bg-white p-2 text-16 font-semibold `}
+              >
+                <div className="absolute bg-primary-500 left-0 top-0 flex h-full w-11 items-center justify-end rounded-full transition-all duration-200 ease-in-out group-hover:w-full">
+                  <span className="mr-3 text-white transition-all duration-200 ease-in-out">
+                    <ArrowRight size={20} />
+                  </span>
+                </div>
+                <span className="relative left-4 z-10 whitespace-nowrap px-8 font-semibold text-black transition-all duration-200 ease-in-out group-hover:-left-3 group-hover:text-yellow-500">
+                  xem thêm{' '}
+                </span>
+              </button>
             </div>
+
+            {/* Các nút chức năng */}
           </div>
         ))}
       </div>

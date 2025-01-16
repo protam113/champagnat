@@ -57,7 +57,7 @@ const DocsCat = () => {
               description={blog.description}
               date={formatDate(blog.created_date)}
               author={blog.user.username}
-              categories={blog.categories.map((category) => category.name)}
+              category={blog.category.name}
               image={blog.image}
             />
           ))}
