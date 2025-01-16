@@ -37,6 +37,7 @@ const Page = () => {
     <Container>
       <div className=" py-10">
         <HistoryContent category="3b164b58-18c6-454b-bfec-3e345f8fe33f" />
+
         <div className="max-w-4xl mt-4 mx-auto bg-primary-500 text-white p-8 rounded-lg shadow-lg">
           <div className="text-center pb-6">
             <h2 className="text-2xl text-white font-bold text-gray-800">
@@ -161,7 +162,7 @@ const Page = () => {
               </button>
             </div>
           </form>
-        </di>
+        </div>
       </div>
     </Container>
   );
