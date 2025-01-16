@@ -8,6 +8,7 @@ import Tittle from '../../design/Tittle';
 import { NewsList } from '@/lib/newList';
 import Link from 'next/link';
 import { Spline } from 'lucide-react';
+import { FaCross } from 'react-icons/fa';
 
 const RecentNewPosts = () => {
   const [currentPage] = useState(1);
@@ -27,6 +28,18 @@ const RecentNewPosts = () => {
   if (isLoading) return <Spline className="text-white" />;
   if (isError) return null;
 
+  if (news.length === 0) {
+    return (
+      <Container>
+        <div className="flex flex-col items-center justify-center h-full text-center pt-10">
+          <FaCross className="text-6xl text-gray-400 mb-4" />
+          <p className="text-lg text-gray-600">
+            Hiện tại chưa có bài viết nào. Vui lòng quay lại sau!
+          </p>
+        </div>
+      </Container>
+    );
+  }
   return (
     <main className="pb-20">
       <Container>
@@ -77,8 +90,9 @@ const RecentNewPosts = () => {
           {/* Các bài viết khác bên phải */}
           <div className="cursor-pointer flex flex-col space-y-4">
             {otherPosts.slice(0, 3).map((post, index) => (
-              <div
+              <Link
                 key={index}
+                href={`/news/${latestPost.id}`}
                 className="flex rounded-lg shadow-lg overflow-hidden bg-white h-auto hover:shadow-2xl hover:scale-105 hover:text-yellow-500 transform transition-all duration-300"
               >
                 <div className="relative w-1/3 h-40 md:h-48 lg:h-40">
@@ -108,7 +122,7 @@ const RecentNewPosts = () => {
                   </p>
                   <h2 className="text-14 font-semibold">{post.title}</h2>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

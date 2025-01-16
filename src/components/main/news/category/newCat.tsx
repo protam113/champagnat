@@ -5,11 +5,10 @@ import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import { NewsList } from '@/lib/newList';
 import { ClipLoader } from 'react-spinners';
-import Tittle from '@/components/design/Tittle';
 import { motion } from 'framer-motion';
-import Container from '../../blog/container';
 import NewProb from '../newProb';
 import { useParams } from 'next/navigation';
+import Container from '@/components/Container/container';
 
 const NewsCat = () => {
   const { id: catId } = useParams();
@@ -42,8 +41,6 @@ const NewsCat = () => {
   return (
     <main>
       <Container>
-        <Tittle name="TẤT CẢ TIN TỨC" />
-
         {/* Animating news list with framer-motion */}
         <motion.div
           initial={{ opacity: 0 }}

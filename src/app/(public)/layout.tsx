@@ -25,14 +25,20 @@ export default function DashboardLayout({
     }
   }, [loading]);
 
+  useEffect(() => {
+    document.documentElement.style.scrollBehavior = 'smooth'; // Áp dụng scroll mượt cho toàn bộ trang
+  }, []);
+
   if (loading || !tokenChecked) {
     return <Loading />;
   }
 
   return (
-    <DefaultLayout>
-      {children}
-      <ScrollToTopButton />
-    </DefaultLayout>
+    <div>
+      <DefaultLayout>
+        {children}
+        <ScrollToTopButton />
+      </DefaultLayout>
+    </div>
   );
 }

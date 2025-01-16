@@ -1,20 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
 import { NewsList } from '@/lib/newList';
-import { ClipLoader } from 'react-spinners';
 import NewProb from './newProb';
 import NewsTag from './NewCatetoryTag';
 import Tittle from '@/components/design/Tittle';
 import { motion } from 'framer-motion';
+import { NotiPostNull, NotiPostError } from '@/components/design/index';
+import SkeletonCard from '@/components/Skeleton/SkeletonCard';
 
 const NewContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [refreshKey, setRefreshKey] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [refreshKey] = useState(0);
+  const [selectedCategory] = useState<string | null>(null);
 
   const categoryQuery = selectedCategory ? selectedCategory : '';
 
@@ -24,24 +25,12 @@ const NewContent = () => {
     next,
     isLoading,
     isError,
+    count,
   } = NewsList(currentPage, categoryQuery, refreshKey);
+  const dataSource = useMemo(() => news, [news]);
+  if (isError) return <NotiPostError />;
 
-  // Kiểm tra dữ liệu
-  if (isLoading)
-    return (
-      <div>
-        <div className="text-center">
-          <ClipLoader size="20" loading={isLoading} />
-        </div>
-      </div>
-    );
-  if (isError) return <p>Error loading news...</p>;
-
-  // Cập nhật thể loại được chọn
-  const handleFilterChange = (categories: string[]) => {
-    // Update the selected category, should only have 1 or none
-    setSelectedCategory(categories[0] || null);
-  };
+  if (!isLoading && count === 0) return <NotiPostNull />;
 
   const totalPages = next ? currentPage + 1 : currentPage;
 
@@ -50,10 +39,7 @@ const NewContent = () => {
       <Container>
         <Tittle name="TẤT CẢ TIN TỨC" />
         <div className="mt-6 mb-4">
-          <NewsTag
-            onFilterChange={handleFilterChange}
-            setRefreshKey={setRefreshKey}
-          />
+          <NewsTag />
         </div>
 
         {/* Animating news list with framer-motion */}
@@ -64,18 +50,22 @@ const NewContent = () => {
           transition={{ duration: 0.5 }}
           className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {news.map((blog, index) => (
-            <NewProb
-              key={index}
-              id={blog.id}
-              title={blog.title}
-              description={blog.description}
-              date={formatDate(blog.created_date)}
-              author={blog.user.username}
-              categories={blog.categories.map((category) => category.name)}
-              image={blog.image}
-            />
-          ))}
+          {isLoading
+            ? Array(count)
+                .fill(0)
+                .map((_, index) => <SkeletonCard key={index} />) // Hiển thị skeletons
+            : dataSource.map((blog, index) => (
+                <NewProb
+                  key={index}
+                  id={blog.id}
+                  title={blog.title}
+                  description={blog.description}
+                  date={formatDate(blog.created_date)}
+                  author={blog.user.username}
+                  categories={blog.categories.map((category) => category.name)}
+                  image={blog.image}
+                />
+              ))}
         </motion.div>
 
         <div className="flex justify-center mt-8 items-center space-x-2">

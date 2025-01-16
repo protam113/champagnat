@@ -63,7 +63,8 @@ const useCategoryList = (
     queryFn: async () => {
       return fetchCategoryList(filters, page, token || undefined);
     },
-    staleTime: 60000,
+    staleTime: 3600000, // 1 giờ
+    refetchOnWindowFocus: false, // Tắt refetch khi người dùng quay lại tab
   });
 };
 

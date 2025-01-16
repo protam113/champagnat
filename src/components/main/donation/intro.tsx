@@ -1,6 +1,5 @@
 import Image from 'next/image';
 import React from 'react';
-import money from '@/assets/image/banner.png';
 import Heading from '../../design/Heading';
 
 const Intro = () => {
@@ -35,7 +34,7 @@ const Intro = () => {
         <div className="flex justify-center mt-8">
           <div className="relative group rounded-lg">
             <Image
-              src={money} // Đảm bảo chọn hình ảnh phù hợp
+              src="/img/banner.png" // Đảm bảo chọn hình ảnh phù hợp
               alt="Quyên góp"
               className="rounded-lg transition-all duration-500 transform group-hover:scale-105"
               width={800}

@@ -23,8 +23,6 @@ const Page = () => {
   const { queueData: news } = NewsList(1, '', 0);
 
   const relatedNews = news.filter((relatedPost) => {
-    // Kiểm tra xem có danh mục trùng với bài viết hiện tại không
-    // Đồng thời kiểm tra bài viết không phải là bài hiện tại (so sánh ID)
     return (
       relatedPost.id !== blog?.id &&
       relatedPost.categories.some((relatedCategory) =>
@@ -52,6 +50,7 @@ const Page = () => {
   if (!blog) {
     return <p className="text-gray-500">Không tìm thấy bài viết nào.</p>;
   }
+
   const handleShare = () => {
     const shareUrl = typeof window !== 'undefined' ? window.location.href : '';
 
@@ -61,7 +60,6 @@ const Page = () => {
         message.success('Link copied successfully!');
       })
       .catch((err) => {
-        // Handle errors if clipboard access fails
         console.error('Failed to copy the URL: ', err);
         alert('Failed to copy the link.');
       });
@@ -119,6 +117,36 @@ const Page = () => {
               }}
             />
 
+            {/* pdf or image */}
+            <div className="text-blue-800 mr-4 text-16">
+              {blog.media?.map((media) => {
+                if (media.file_type === 'PDF') {
+                  return (
+                    <iframe
+                      key={media.id} // Thêm key cho mỗi phần tử
+                      src={media.file}
+                      width="100%" // Bạn có thể điều chỉnh chiều rộng của iframe
+                      height="600px" // Bạn có thể điều chỉnh chiều cao của iframe"
+                      title="PDF Viewer"
+                    />
+                  );
+                } else if (media.file_type === 'IMAGE') {
+                  return (
+                    <div key={media.id} className="w-full">
+                      <Image
+                        src={media.file}
+                        alt={blog.title}
+                        className=" object-cover"
+                        width={800}
+                        height={450}
+                      />
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
+
             {/* Source */}
             <div className="mt-6">
               <p className="text-gray-500 font-semibold">Nguồn:</p>
@@ -128,9 +156,9 @@ const Page = () => {
         </div>
 
         {/* Các bài viết gợi ý (bên phải) */}
-        <div className=" col-span-12 lg:col-span-4  p-6 ">
+        <div className="col-span-12 lg:col-span-4 p-6">
           <div>
-            <div className=" mb-4">
+            <div className="mb-4">
               <Tittle name="Bài Viết Liên Quan" />
             </div>
             <ul>
@@ -147,7 +175,7 @@ const Page = () => {
           </div>
 
           <div className="pt-10">
-            <div className=" mb-4">
+            <div className="mb-4">
               <Tittle name="Tất Cả Bài Viết" />
             </div>
             <ul>

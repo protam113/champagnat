@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import LazyLoad from 'react-lazyload';
 
 interface EventCardProps {
   id: string;
@@ -21,16 +22,24 @@ const DonateProb: React.FC<EventCardProps> = ({
       href={`/donation/${id}`}
       className="rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-300 hover:scale-105 hover:text-yellow-500" // Thêm hiệu ứng hover
     >
-      <div className="relative h-48 w-full">
-        <Image
-          src={image || '/placeholder-image.jpg'}
-          alt={title}
-          fill
-          priority
-          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover rounded-t-lg"
-        />
-      </div>
+      <LazyLoad
+        height={192}
+        offset={100}
+        placeholder={
+          <div className="h-48 w-full bg-gray-200 animate-pulse"></div>
+        }
+      >
+        <div className="relative h-48 w-full">
+          <Image
+            src={image || ''}
+            alt={title}
+            fill
+            priority={false} // Bỏ 'priority' để LazyLoad hoạt động đúng
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            className="object-cover rounded-t-lg"
+          />
+        </div>
+      </LazyLoad>
 
       <div className="p-4">
         <p className="text-gray-500 text-sm">{date}</p>

@@ -1,14 +1,15 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
-import { ClipLoader } from 'react-spinners';
 import DonateProb from './donateProb';
 import { DonateList } from '@/lib/donateList';
 import Tittle from '@/components/design/Tittle';
+import { NotiPostNull, NotiPostError } from '@/components/design/index';
+import SkeletonCard from '@/components/Skeleton/SkeletonCard';
 
 const DonateContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,18 +21,14 @@ const DonateContent = () => {
     next,
     isLoading,
     isError,
+    count,
   } = DonateList(currentPage, '', refreshKey);
-  console.log(donate);
+  const dataSource = useMemo(() => donate, [donate]);
+
   // Kiểm tra dữ liệu
-  if (isLoading)
-    return (
-      <div>
-        <div className="text-center">
-          <ClipLoader size="20" loading={isLoading} />
-        </div>
-      </div>
-    );
-  if (isError) return <p>Error loading news...</p>;
+  if (isError) return <NotiPostError />;
+
+  if (!isLoading && count === 0) return <NotiPostNull />;
 
   const totalPages = next ? currentPage + 1 : currentPage;
 
@@ -39,16 +36,20 @@ const DonateContent = () => {
     <Container>
       <Tittle name="HÀNH TRÌNH QUYÊN GÓP CỦA CHÚNG TÔI" />
       <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {donate.map((blog, index) => (
-          <DonateProb
-            key={index}
-            id={blog.id}
-            title={blog.title}
-            description={blog.description}
-            date={formatDate(blog.created_date)}
-            image={blog.image}
-          />
-        ))}
+        {isLoading
+          ? Array(count)
+              .fill(0)
+              .map((_, index) => <SkeletonCard key={index} />) // Hiển thị skeletons
+          : dataSource.map((blog, index) => (
+              <DonateProb
+                key={index}
+                id={blog.id}
+                title={blog.title}
+                description={blog.description}
+                date={formatDate(blog.created_date)}
+                image={blog.image}
+              />
+            ))}
       </div>
       <div className="flex justify-center mt-8 items-center space-x-2">
         <button

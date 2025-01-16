@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Badge, Spin, Alert, DatePicker, Select } from 'antd';
 import type { BadgeProps } from 'antd';
@@ -5,7 +7,6 @@ import { useScheduleList } from '@/hooks/schedule/useSchedule';
 
 const { Option } = Select;
 
-// Màu sắc cho các loại lễ
 const feastTypeColors: Record<string, BadgeProps['status']> = {
   'Lễ trọng': 'error',
   'Lễ kính': 'warning',
@@ -14,7 +15,6 @@ const feastTypeColors: Record<string, BadgeProps['status']> = {
   'Lễ nhớ tùy ý*': 'processing',
 };
 
-// Hàm lấy dải ngày
 const getDateRange = (
   currentDate: Date,
   daysBefore: number,
@@ -36,11 +36,7 @@ const CatholicCalendarTable: React.FC = () => {
   );
   const [refreshKey] = useState<number>(0);
   const currentDate = new Date();
-  const dateRange = getDateRange(
-    new Date(`${year}-01-01`), // Bắt đầu từ đầu năm đã chọn
-    0,
-    364, // Lấy cả năm
-  );
+  const dateRange = getDateRange(new Date(`${year}-01-01`), 0, 364); // Get whole year
 
   const {
     data: scheduleData,
@@ -56,7 +52,7 @@ const CatholicCalendarTable: React.FC = () => {
       .flatMap((item) => item.feasts || []);
   };
 
-  // Hiển thị khi dữ liệu đang tải
+  // Show loading
   if (isLoading) {
     return (
       <div style={{ textAlign: 'center', marginTop: '20px' }}>
@@ -65,7 +61,7 @@ const CatholicCalendarTable: React.FC = () => {
     );
   }
 
-  // Hiển thị khi có lỗi
+  // Show error
   if (isError) {
     return (
       <div style={{ textAlign: 'center', marginTop: '20px' }}>
@@ -76,6 +72,7 @@ const CatholicCalendarTable: React.FC = () => {
 
   return (
     <div>
+      {/* Year and month selector */}
       <div
         style={{
           display: 'flex',
@@ -84,7 +81,6 @@ const CatholicCalendarTable: React.FC = () => {
           alignItems: 'center',
         }}
       >
-        {/* Picker chọn năm */}
         <DatePicker
           picker="year"
           onChange={(date) => {
@@ -109,6 +105,7 @@ const CatholicCalendarTable: React.FC = () => {
         </Select>
       </div>
 
+      {/* Calendar Display */}
       <div
         style={{
           maxHeight: '750px',
@@ -117,6 +114,7 @@ const CatholicCalendarTable: React.FC = () => {
           border: '1px solid #ddd',
           borderRadius: '4px',
         }}
+        className="calendar-container"
       >
         {dateRange.map((date, index) => {
           const feasts = getFeastsByDate(date);
@@ -152,7 +150,7 @@ const CatholicCalendarTable: React.FC = () => {
                         fontSize: '16px',
                       }}
                       onClick={() => {
-                        console.log(feast); // Thay bằng modal nếu cần
+                        console.log(feast); // Replace with modal if needed
                       }}
                     >
                       <Badge

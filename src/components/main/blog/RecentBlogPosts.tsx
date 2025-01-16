@@ -1,10 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { BlogList } from '@/lib/blogList';
 import formatDate from '@/utils/formatDate';
-
 import Container from '../../Container/container';
 import Tittle from '../../design/Tittle';
 import { FaCross } from '@/lib/iconLib';
@@ -21,9 +20,10 @@ const RecentBlogPosts = () => {
     isLoading,
     isError,
   } = BlogList(currentPage, '', refreshKey);
+  const dataSource = useMemo(() => blogs, [blogs]);
 
-  const latestPost = blogs[0];
-  const otherPosts = blogs.slice(1, 4);
+  const latestPost = dataSource[0];
+  const otherPosts = dataSource.slice(1, 4);
 
   // Kiểm tra dữ liệu
   if (isLoading) return <Spline className="text-white" />;
@@ -93,8 +93,9 @@ const RecentBlogPosts = () => {
           {/* Các bài viết khác bên phải */}
           <div className="cursor-pointer flex flex-col space-y-4">
             {otherPosts.slice(0, 3).map((post, index) => (
-              <div
+              <Link
                 key={index}
+                href={`/blog/${latestPost.id}`}
                 className="flex rounded-lg shadow-lg overflow-hidden bg-white h-auto hover:shadow-2xl hover:scale-105 hover:text-yellow-500 transform transition-all duration-300"
               >
                 <div className="relative w-1/3 h-40 md:h-48 lg:h-40">
@@ -124,7 +125,7 @@ const RecentBlogPosts = () => {
                   </p>
                   <h2 className="text-14 font-semibold">{post.title}</h2>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>

@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import { Image } from 'antd';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
-import { GaleryList } from '@/lib/galeryList';
 import { ClipLoader } from 'react-spinners';
+import { GaleryList } from '@/lib/galeryList';
 
 const NewsGallery = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -55,7 +55,9 @@ const NewsGallery = () => {
         <button
           onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
           disabled={currentPage === 1}
-          className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
+            currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
         >
           <FaArrowLeft />
         </button>
@@ -63,7 +65,11 @@ const NewsGallery = () => {
           <button
             key={i}
             onClick={() => setCurrentPage(i + 1)}
-            className={`w-6 h-6 text-10 rounded-full hover:bg-gray-300 ${currentPage === i + 1 ? 'bg-primary-500 text-white' : 'bg-gray-200'}`}
+            className={`w-6 h-6 text-10 rounded-full hover:bg-gray-300 ${
+              currentPage === i + 1
+                ? 'bg-primary-500 text-white'
+                : 'bg-gray-200'
+            }`}
           >
             {i + 1}
           </button>
@@ -71,7 +77,9 @@ const NewsGallery = () => {
         <button
           onClick={() => setCurrentPage((prev) => prev + 1)}
           disabled={!next}
-          className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${!next ? 'opacity-50 cursor-not-allowed' : ''}`}
+          className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
+            !next ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
         >
           <FaArrowRight />
         </button>

@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import lineClamp from '@tailwindcss/line-clamp';
 
 const config: Config = {
   content: [
@@ -7,10 +8,6 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-
-    rounded: {
-      sm: "15px"
-    },
     extend: {
       keyframes: {
         "rotate-full": {
@@ -36,6 +33,7 @@ const config: Config = {
         background: "var(--background)",
         foreground: "var(--foreground)",
 
+        // Primary Color Palette
         "primary-900": "var(--primary-900)",
         "primary-800": "var(--primary-800)",
         "primary-700": "var(--primary-700)",
@@ -45,7 +43,9 @@ const config: Config = {
         "primary-300": "var(--primary-300)",
         "primary-200": "var(--primary-200)",
         "primary-100": "var(--primary-100)",
+        "primary-50": "var(--primary-50)",
 
+        // Neutral Color Palette
         "neutral-900": "var(--neutral-900)",
         "neutral-800": "var(--neutral-800)",
         "neutral-700": "var(--neutral-700)",
@@ -56,14 +56,15 @@ const config: Config = {
         "neutral-200": "var(--neutral-200)",
         "neutral-100": "var(--neutral-100)",
 
+        // Additional Custom Colors
         black: "var(--black)",
         white: "var(--white)",
-
         "albert-success": "var(--albert-success)",
         "albert-error": "var(--albert-error)",
         "albert-warning": "var(--albert-warning)",
         "albert-noti": "var(--albert-noti)",
 
+        // Secondary Color Palette
         "secondary-900": "var(--secondary-900)",
         "secondary-800": "var(--secondary-800)",
         "secondary-700": "var(--secondary-700)",
@@ -75,6 +76,7 @@ const config: Config = {
         "secondary-100": "var(--secondary-100)",
         "secondary-50": "var(--secondary-50)",
 
+        // Custom Borders and Blues
         "primary-border-50": "var(--primary-border-50)",
         "custom-blue": "var(--custom-blue)",
       },
@@ -88,17 +90,23 @@ const config: Config = {
       fontSize: {
         10: "10px",
         12: "12px",
-        14: "14px", //promary
+        14: "14px", // Primary text size
         16: "16px",
         18: "18px",
-        20: "20px", //content
-        24: "24px",  //title
+        20: "20px", // Content text
+        24: "24px",  // Title text
         26: "26px",
         28: "28px",
         30: "30px",
       },
+      borderRadius: {
+        sm: "15px", // Custom rounded corners
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    lineClamp,
+  ],
 };
+
 export default config;

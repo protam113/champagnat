@@ -16,6 +16,7 @@ const endpoints = {
 
     // nha dong
     nhaDong: process.env.NEXT_PUBLIC_NHA_DONG,
+    nhaDongDetail: process.env.NEXT_PUBLIC_NHA_DONG_DETAIL,
 
     // category (thể loại)
     categories: process.env.NEXT_PUBLIC_CATEGORIES,
@@ -60,12 +61,22 @@ const endpoints = {
     schedules: process.env.NEXT_PUBLIC_SCHEDULES,
 
     // chat (ChatBot)
-    chat: process.env.NEXT_PUBLIC_CHAT, // Thêm dòng này
+    chat: process.env.NEXT_PUBLIC_CHATAI, // Thêm dòng này
     chatHistory: process.env.NEXT_PUBLIC_CHAT_HISTORY,
 
     // visit
     visit: process.env.NEXT_PUBLIC_VISIT,
     galery: process.env.NEXT_PUBLIC_GALERY,
+
+    //message
+    messages: process.env.NEXT_PUBLIC_MESSAGES,
+    message: process.env.NEXT_PUBLIC_MESSAGE,
+
+    //video
+    video: process.env.NEXT_PUBLIC_VIDEO,
+
+    //Vocation
+    vocation: process.env.NEXT_PUBLIC_VOCATION
 };
 
 export { baseURL, endpoints };

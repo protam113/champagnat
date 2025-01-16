@@ -1,11 +1,5 @@
 export const NavItems = () => {
   return [
-    // {
-    //   key: 1,
-    //   label: 'Trang Chủ',
-    //   link: '/',
-    // },
-
     {
       id: 1,
       label: 'Giới Thiệu',
@@ -13,7 +7,7 @@ export const NavItems = () => {
         {
           id: 3,
           label: 'Đặc Sủng - Linh Đạo',
-          link: '/hoi_dong/congregation',
+          link: '/hoi_dong/dac_sung-linh_dao',
         },
         {
           id: 2,
@@ -29,31 +23,15 @@ export const NavItems = () => {
         {
           id: 5,
           label: 'Tìm Hiểu Ơn Gọi',
-          link: '/vocation/learn_about_vocation',
+          link: '/on_goi/tim_hieu_on_goi',
         },
         {
           id: 6,
           label: 'Các Giai Đoạn Đào Tạo',
-          link: '/vocation/training_stages',
-        },
-        {
-          id: 11,
-          label: 'Nhà Đề Tử',
-          link: '/vocation/training_stages',
-        },
-        {
-          id: 12,
-          label: 'Nhà Thỉnh Sinh',
-          link: '/vocation/training_stages',
-        },
-        {
-          id: 10,
-          label: 'Nhà Tập',
-          link: '/vocation/training_stages',
+          link: '/on_goi/cac_giai_doan_dao_tao',
         },
       ],
     },
-
     {
       key: 7,
       label: 'Đấng Sáng Lập Dòng',
@@ -66,67 +44,9 @@ export const NavItems = () => {
         {
           id: 9,
           label: 'Thư của Đấng Sáng Lập',
-          link: '/founder/letter_from_the_foundern',
+          link: '/founder/letter_from_the_founder',
         },
       ],
     },
-    // {
-    //   id: 13,
-    //   label: 'Bác Ái Xã Hội',
-    //   children: [
-    //     {
-    //       id: 14,
-    //       label: 'Dự Án',
-    //       link: '/hoi_dong/congregation',
-    //     },
-    //     {
-    //       id: 15,
-    //       label: 'Quyên Góp',
-    //       link: '/hoi_dong/about_us',
-    //     },
-    //   ],
-    // },
-    //     {
-    //       id: 8,
-    //       label: 'Sự Kiện & Ơn Gọi',
-    //       children: [
-    //         {
-    //           id: 11,
-    //           label: 'Ơn Gọi',
-    //           link: '/on_goi',
-    //         },
-    //         {
-    //           id: 10,
-    //           label: 'Sự Kiện',
-    //           link: '/events',
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       id: 12,
-    //       label: 'Thư Viện',
-    //       children: [
-    //         {
-    //           id: 6,
-    //           label: 'Ảnh',
-    //           link: '/thu_vien_anh',
-    //         },
-    //         {
-    //           id: 13,
-    //           label: 'Video',
-    //           link: '/thu_vien_video',
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       id: 14,
-    //       label: 'Cầu Nguyện',
-    //       link: '/donation',
-    //     },
-    //     {
-    //       id: 9,
-    //       label: 'Quyên Góp',
-    //       link: '/donation',
-    //     },
   ];
 };

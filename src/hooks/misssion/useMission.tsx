@@ -13,17 +13,22 @@ const fetchMissionlist = async (
   token?: string,
 ): Promise<FetchMissionListResponse> => {
   try {
-    // Filter out undefined or empty values from filters
+    // Loại bỏ các giá trị undefined, null hoặc rỗng trong filters
     const validFilters = Object.fromEntries(
       Object.entries(filters).filter(
-        ([, value]) => value !== undefined && value !== '',
+        ([, value]) => value !== undefined && value !== '' && value !== null,
       ),
     );
 
-    // Construct the query string
+    // Loại bỏ category nếu nó không có giá trị hợp lệ
+    if (!validFilters.category) {
+      delete validFilters.category; // Xóa category nếu không có giá trị hợp lệ
+    }
+
+    // Tạo query string từ các filters hợp lệ
     const queryString = new URLSearchParams({
       page: pageParam.toString(),
-      ...validFilters, // Merge the valid filters into the query string
+      ...validFilters, // Thêm các bộ lọc hợp lệ
     }).toString();
 
     // Make the API request using handleAPI

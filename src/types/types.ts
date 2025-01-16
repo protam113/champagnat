@@ -4,6 +4,7 @@ export interface TextParallaxContentProps {
   subheading: string;
   heading: string;
   children: React.ReactNode;
+  image: string;
 }
 
 export interface StickyImageProps {
@@ -15,12 +16,44 @@ export interface OverlayCopyProps {
   subheading: string;
   heading: string;
 }
+// Message Interface
+
+
+interface MessageList {
+  id: string;
+  title: string;
+  description: string;
+  content: string;
+  link: string;
+  image: string | null;
+  user: User;
+  created_date: string;
+}
+
+export interface FetchMessageListResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: MessageList[];
+}
+
+
+// MediaVideo
+interface MediaVideoList {
+  id: string;
+  content: string;
+  image: string;
+  link: string;
+  create_date: string;
+}
+
+export interface FetchMediaVideoResponse {
+  data: MediaVideoList[];
+}
 
 /**
 Register Interface
 **/
-
-
 export interface Register {
   username: string;
   password: string;
@@ -52,6 +85,8 @@ export interface FeastDrawerProps {
 export interface HistoryMonasteryResponse {
   id: string,
   about: string,
+  title: string,
+  image: string,
 }
 
 
@@ -70,6 +105,7 @@ export interface DonationDetail {
   status: string;
   created_date: string
   updated_date: string
+  media: Media[];
 }
 
 interface DonationList {
@@ -83,6 +119,7 @@ interface DonationList {
   status: string;
   created_date: string
   updated_date: string
+  media: Media[];
 }
 
 export interface FetchDonationListResponse {
@@ -112,7 +149,7 @@ export interface FetchGaleryListResponse {
 interface Category {
   id: string;
   name: string;
-  file: string;
+  image: string;
 }
 
 interface User {
@@ -125,6 +162,37 @@ interface User {
   profile_image: string;
 }
 
+interface Media {
+  id: string;
+  file: string;
+  file_type: string;
+  metadata: string;
+}
+
+
+
+export interface DocsList {
+  id: string;
+  title: string;
+  description: string;
+  content: string;
+  link: string;
+  image: string | null; 
+  category: Category;
+  user: User;
+  media: Media[] | null;
+  created_date: string
+
+}
+
+
+export interface FetchDocsListResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: DocsList[];
+}
+
 interface PostList {
   id: string;
   title: string;
@@ -135,6 +203,7 @@ interface PostList {
   categories: Category[];
   user: User; // Sử dụng interface User đã khai báo ở trên
   created_date: string
+  media: Media[];
 }
 
 export interface FetchPostListResponse {
@@ -315,6 +384,7 @@ export interface BLogDetail {
   categories: Category[];
   user: User; // Sử dụng interface User đã khai báo ở trên
   created_date: string
+  media: Media[];
 }
 
 export interface DocDetail {
@@ -327,6 +397,7 @@ export interface DocDetail {
   category: Category;
   user: User; // Sử dụng interface User đã khai báo ở trên
   created_date: string
+  media: Media[];
 }
 
 /**
@@ -342,6 +413,7 @@ export interface EventList {
   category: string;
   user: string;
   created_date: string
+  media: Media[];
 }
 
 // Khai Báo Các Thuộc Tính Không Có trong trường hiển thị
@@ -465,6 +537,16 @@ export interface NewComment {
   object_id: string;
   guest_name: string | null;
   guest_email: string | null;
+}
+
+
+export interface ApplyVocationData {
+  email: string;
+  phone_number: string;
+  name: string;
+  dob: string;
+  reason: string;
+  church: string;
 }
 
 

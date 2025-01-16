@@ -103,7 +103,7 @@ const LoginPage = () => {
         <div className="mt-4 text-center">
           <p className="text-sm text-gray-600">
             Chưa có tài khoản?{' '}
-            <Link href="/register" className="text-indigo-500 hover:underline">
+            <Link href="/register" className=" text-indigo-500 hover:underline">
               Đăng ký ngay
             </Link>
           </p>

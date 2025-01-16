@@ -1,21 +1,21 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { BlogList } from '@/lib/blogList';
-
 import formatDate from '@/utils/formatDate';
 import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
-import { ClipLoader } from 'react-spinners';
 import Tittle from '@/components/design/Tittle';
 import BlogTag from './BlogCategoryTag';
 import BlogProb from './blogProb';
 import { motion } from 'framer-motion';
+import { NotiPostNull, NotiPostError } from '@/components/design/index';
+import SkeletonCard from '@/components/Skeleton/SkeletonCard';
 
 const BlogContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [refreshKey, setRefreshKey] = useState(0);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [refreshKey] = useState(0);
+  const [selectedCategory] = useState<string | null>(null);
 
   const categoryQuery = selectedCategory ? selectedCategory : '';
 
@@ -25,21 +25,13 @@ const BlogContent = () => {
     next,
     isLoading,
     isError,
+    count,
   } = BlogList(currentPage, categoryQuery, refreshKey);
-
+  const dataSource = useMemo(() => blogs, [blogs]);
   // Kiểm tra dữ liệu
-  if (isLoading)
-    return (
-      <div className="text-center">
-        <ClipLoader size="20" loading={isLoading} />
-      </div>
-    );
-  if (isError) return <p>Error loading news...</p>;
+  if (isError) return <NotiPostError />;
 
-  // Cập nhật thể loại được chọn
-  const handleFilterChange = (categories: string[]) => {
-    setSelectedCategory(categories[0] || null);
-  };
+  if (!isLoading && count === 0) return <NotiPostNull />;
 
   const totalPages = next ? currentPage + 1 : currentPage;
 
@@ -48,10 +40,7 @@ const BlogContent = () => {
       <Container>
         <Tittle name="TẤT CẢ BÀI VIẾT" />
         <div className="mt-6 mb-4">
-          <BlogTag
-            onFilterChange={handleFilterChange}
-            setRefreshKey={setRefreshKey}
-          />
+          <BlogTag />
         </div>
         <motion.div
           key={currentPage}
@@ -61,18 +50,22 @@ const BlogContent = () => {
           transition={{ duration: 0.3 }}
           className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {blogs.map((blog, index) => (
-            <BlogProb
-              key={index}
-              id={blog.id}
-              title={blog.title}
-              description={blog.description}
-              date={formatDate(blog.created_date)}
-              author={blog.user.username}
-              categories={blog.categories.map((category) => category.name)}
-              image={blog.image}
-            />
-          ))}
+          {isLoading
+            ? Array(count)
+                .fill(0)
+                .map((_, index) => <SkeletonCard key={index} />) // Hiển thị skeletons
+            : dataSource.map((blog, index) => (
+                <BlogProb
+                  key={index}
+                  id={blog.id}
+                  title={blog.title}
+                  description={blog.description}
+                  date={formatDate(blog.created_date)}
+                  author={blog.user.username}
+                  categories={blog.categories.map((category) => category.name)}
+                  image={blog.image}
+                />
+              ))}
         </motion.div>
         <div className="flex justify-center mt-8 items-center space-x-2">
           <button

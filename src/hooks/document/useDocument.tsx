@@ -5,7 +5,7 @@ import { handleAPI } from '@/apis/axiosClient';
 import { endpoints } from '@/apis/api';
 import { useAuth } from '@/context/authContext';
 import { useEffect, useState } from 'react';
-import { FetchPostListResponse, Filters } from '@/types/types';
+import { FetchDocsListResponse, Filters } from '@/types/types';
 
 /*
         Hooks lấy danh sách tài liệu
@@ -14,8 +14,8 @@ import { FetchPostListResponse, Filters } from '@/types/types';
 const fetchDocList = async (
   filters: Filters,
   pageParam: number = 1,
-  token: string,
-): Promise<FetchPostListResponse> => {
+  token?: string,
+): Promise<FetchDocsListResponse> => {
   try {
     // Filter out undefined or empty values from filters
     const validFilters = Object.fromEntries(
@@ -36,7 +36,7 @@ const fetchDocList = async (
       `${endpoints.documents}${queryString ? `?${queryString}` : ''}`,
       'GET',
       null,
-      token,
+      token || null,
     );
     return response;
   } catch (error) {
@@ -63,13 +63,10 @@ const useDocList = (
     fetchToken();
   }, [getToken]);
 
-  return useQuery<FetchPostListResponse, Error>({
+  return useQuery<FetchDocsListResponse, Error>({
     queryKey: ['docList', filters, page, token, refreshKey],
     queryFn: async () => {
-      if (!token) {
-        throw new Error('Token is not available');
-      }
-      return fetchDocList(filters, page, token);
+      return fetchDocList(filters, page, token || undefined);
     },
 
     staleTime: 60000,

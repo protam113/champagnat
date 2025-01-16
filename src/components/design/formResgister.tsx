@@ -1,3 +1,4 @@
+'use client';
 // src/components/Contact.tsx
 import React from 'react';
 import { message } from 'antd';
@@ -43,7 +44,7 @@ const Contact = () => {
           onSubmit={onSubmit}
           className="flex flex-col md:flex-row space-y-6 md:space-y-0 md:space-x-6"
         >
-          {/* Left Section: Three Fields */}
+          {/* Left Section: Four Fields (added new field for Giáo Xứ / Giáo Phận) */}
           <div className="flex-1 flex flex-col space-y-4">
             <div>
               <label className="block text-16 text-white mb-1" htmlFor="name">
@@ -90,6 +91,23 @@ const Contact = () => {
                 className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
               />
             </div>
+            {/* New field for Giáo Xứ / Giáo Phận */}
+            {/* <div>
+              <label
+                className="block text-16 text-white font-medium mb-1"
+                htmlFor="parish"
+              >
+                Giáo Xứ / Giáo Phận
+              </label>
+              <input
+                type="text"
+                id="parish"
+                name="parish"
+                placeholder="Nhập tên giáo xứ / giáo phận"
+                required
+                className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
+              />
+            </div> */}
           </div>
 
           {/* Right Section: Message Field */}

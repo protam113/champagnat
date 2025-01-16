@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, memo } from 'react';
+import { useEffect, useState, memo, useMemo } from 'react';
 import Image from 'next/image';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'; // Thêm style cho slideshow
@@ -9,9 +9,43 @@ import { NewsList } from '@/lib/newList';
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import formatDate from '@/utils/formatDate';
-import logo from '@/assets/image/logo_default.png';
 import Link from 'next/link';
 // Dữ liệu cho phần tin tức
+
+const HeroBanner = [
+  {
+    id: 1,
+    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003238/BeaconOfHope_banner_cirl6h.jpg',
+  },
+  {
+    id: 2,
+    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003233/InTheFootsteps_banner-scaled_cdn648.jpg',
+  },
+  {
+    id: 3,
+    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003233/MarcellinoEN_uf1f2y.jpg',
+  },
+  {
+    id: 4,
+    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003232/Banner_Web_standup_epgoce.jpg',
+  },
+  {
+    id: 5,
+    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003232/ChampagnatGlobalBanner_EN_nxhobl.jpg',
+  },
+  {
+    id: 6,
+    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003232/Capitulo_2025_Banner_EN-scaled_mpockm.jpg',
+  },
+  {
+    id: 7,
+    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003232/OtherMaristVoices_banner_tulbs1.jpg',
+  },
+  {
+    id: 8,
+    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003231/BannerHomeRIP_luisCarlos-1-scaled_cypr4q.jpg',
+  },
+];
 
 const Hero = () => {
   const [currentPage] = useState(1);
@@ -24,12 +58,13 @@ const Hero = () => {
     isLoading,
     isError,
   } = NewsList(currentPage, '', refreshKey);
+  const dataSource = useMemo(() => newsData, [newsData]);
 
   const [isClient, setIsClient] = useState(false);
 
   // Chia dữ liệu tin tức thành các slide với số lượng bài tương ứng
   const slides = [];
-  if (newsData) {
+  if (dataSource) {
     for (let i = 0; i < newsData.length; i += slideItems) {
       slides.push(newsData.slice(i, i + slideItems));
     }
@@ -80,7 +115,7 @@ const Hero = () => {
   }
 
   return (
-    <div className="relative w-full h-4/5">
+    <div className=" relative w-full h-4/5">
       <Slide
         easing="ease"
         autoplay={true}
@@ -88,26 +123,28 @@ const Hero = () => {
         transitionDuration={500}
         arrows={false}
       >
-        {newsData.map((news, index) => (
-          <Link href={`/news/${news.id}`} className="each-slide" key={index}>
-            <div className="relative w-full h-[300px] lg:h-[450px]">
+        {HeroBanner.map((banner) => (
+          <div
+            key={banner.id} // Thêm key để React có thể theo dõi từng phần tử
+            className="each-slide brightness-50"
+          >
+            <div className="relative w-full h-[250px] lg:h-[400px]">
               <Image
-                src={news.image || logo}
-                alt={`Banner Image ${index + 1}`}
+                src={banner.url} // Sử dụng URL từ HeroBanner
+                alt={`Banner Image ${banner.id}`} // Dùng ID của ảnh cho alt
                 className="object-cover"
                 layout="fill"
                 priority
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
-          </Link>
+          </div>
         ))}
       </Slide>
 
       {/* Phần tin tức */}
       <div className="relative cursor-pointer">
         <div
-          className="rounded-lg w-full -bottom-10 md:w-3/4 absolute left-1/2 transform -translate-x-1/2 bg-primary-800 px-3"
+          className="rounded-lg -bottom-10 w-3/4 absolute left-1/2 transform -translate-x-1/2 bg-primary-800 px-3"
           style={{
             boxShadow: '0px 4px 12px rgba(0, 0, 0, 0.25)', // Điều chỉnh độ mờ và hướng của shadow
           }}

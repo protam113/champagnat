@@ -21,7 +21,7 @@ export const News = () => {
         {/* Phần nội dung */}
         <div className="max-w-4xl mx-auto py-2 px-2 sm:py-2 sm:px-6">
           <div className="text-center">
-            <p className="mt-1 text-24 font-light text-stone-900 sm:text-5xl sm:tracking-tight lg:text-25">
+            <p className="mt-1 text-24 font-bold text-primary-500 sm:text-5xl sm:tracking-tight lg:text-25">
               Dòng Anh Em Đức Maria
             </p>
           </div>
