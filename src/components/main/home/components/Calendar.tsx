@@ -1,11 +1,14 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Badge, Spin, Alert, DatePicker, Select } from 'antd';
 import type { BadgeProps } from 'antd';
 import { useScheduleList } from '@/hooks/schedule/useSchedule';
+import { useInView } from 'react-intersection-observer';
 
 const { Option } = Select;
+
+const ITEMS_PER_PAGE = 30;
 
 const feastTypeColors: Record<string, BadgeProps['status']> = {
   'Lễ trọng': 'error',
@@ -15,6 +18,7 @@ const feastTypeColors: Record<string, BadgeProps['status']> = {
   'Lễ nhớ tùy ý*': 'processing',
 };
 
+// Memoize date range calculation
 const getDateRange = (
   currentDate: Date,
   daysBefore: number,
@@ -34,34 +38,69 @@ const CatholicCalendarTable: React.FC = () => {
   const [month, setMonth] = useState<string>(
     (new Date().getMonth() + 1).toString(),
   );
-  const [refreshKey] = useState<number>(0);
-  const currentDate = new Date();
-  const dateRange = getDateRange(new Date(`${year}-01-01`), 0, 364); // Get whole year
+  const [visibleItems, setVisibleItems] = useState(ITEMS_PER_PAGE);
+  const { ref, inView } = useInView({
+    threshold: 0.5,
+    triggerOnce: false,
+  });
+
+  const currentDate = useMemo(() => new Date(), []);
+
+  // Memoize date range calculation
+  const dateRange = useMemo(
+    () => getDateRange(new Date(`${year}-01-01`), 0, 364),
+    [year],
+  );
 
   const {
     data: scheduleData,
     isLoading,
     isError,
-  } = useScheduleList({ year: year, month: month }, refreshKey);
+  } = useScheduleList({ year, month }, 0);
 
-  const getFeastsByDate = (date: Date) => {
-    if (!scheduleData || !Array.isArray(scheduleData)) return [];
-    const formattedDate = date.toISOString().split('T')[0];
-    return scheduleData
-      .filter((item) => item.day === formattedDate)
-      .flatMap((item) => item.feasts || []);
-  };
+  // Memoize feast filtering function
+  const getFeastsByDate = useCallback(
+    (date: Date) => {
+      if (!scheduleData || !Array.isArray(scheduleData)) return [];
+      const formattedDate = date.toISOString().split('T')[0];
+      return scheduleData
+        .filter((item) => item.day === formattedDate)
+        .flatMap((item) => item.feasts || []);
+    },
+    [scheduleData],
+  );
 
-  // Show loading
+  // Implement infinite scrolling
+  React.useEffect(() => {
+    if (inView && visibleItems < dateRange.length) {
+      setVisibleItems((prev) =>
+        Math.min(prev + ITEMS_PER_PAGE, dateRange.length),
+      );
+    }
+  }, [inView, dateRange.length]);
+
+  // Memoize year change handler
+  const handleYearChange = useCallback((date: any) => {
+    if (date) {
+      setYear(date.year().toString());
+      setVisibleItems(ITEMS_PER_PAGE); // Reset visible items when year changes
+    }
+  }, []);
+
+  // Memoize month change handler
+  const handleMonthChange = useCallback((value: string) => {
+    setMonth(value);
+    setVisibleItems(ITEMS_PER_PAGE); // Reset visible items when month changes
+  }, []);
+
   if (isLoading) {
     return (
       <div style={{ textAlign: 'center', marginTop: '20px' }}>
-        <Spin tip="Đang tải lịch..."></Spin>
+        <Spin tip="Đang tải lịch..." />
       </div>
     );
   }
 
-  // Show error
   if (isError) {
     return (
       <div style={{ textAlign: 'center', marginTop: '20px' }}>
@@ -72,7 +111,6 @@ const CatholicCalendarTable: React.FC = () => {
 
   return (
     <div>
-      {/* Year and month selector */}
       <div
         style={{
           display: 'flex',
@@ -83,17 +121,13 @@ const CatholicCalendarTable: React.FC = () => {
       >
         <DatePicker
           picker="year"
-          onChange={(date) => {
-            if (date) {
-              setYear(date.year().toString());
-            }
-          }}
+          onChange={handleYearChange}
           placeholder="Chọn năm"
         />
 
         <Select
           value={month}
-          onChange={(value) => setMonth(value)}
+          onChange={handleMonthChange}
           style={{ width: 120 }}
           placeholder="Chọn tháng"
         >
@@ -105,7 +139,6 @@ const CatholicCalendarTable: React.FC = () => {
         </Select>
       </div>
 
-      {/* Calendar Display */}
       <div
         style={{
           maxHeight: '750px',
@@ -116,12 +149,12 @@ const CatholicCalendarTable: React.FC = () => {
         }}
         className="calendar-container"
       >
-        {dateRange.map((date, index) => {
+        {dateRange.slice(0, visibleItems).map((date, index) => {
           const feasts = getFeastsByDate(date);
           const isToday = date.toDateString() === currentDate.toDateString();
 
           return (
-            <div key={index} style={{ marginBottom: '16px' }}>
+            <div key={date.toISOString()} style={{ marginBottom: '16px' }}>
               <div
                 style={{
                   fontSize: '16px',
@@ -150,7 +183,7 @@ const CatholicCalendarTable: React.FC = () => {
                         fontSize: '16px',
                       }}
                       onClick={() => {
-                        console.log(feast); // Replace with modal if needed
+                        console.log(feast);
                       }}
                     >
                       <Badge
@@ -163,10 +196,11 @@ const CatholicCalendarTable: React.FC = () => {
                   <li>Không có lễ</li>
                 )}
               </ul>
-              {index < dateRange.length - 1 && <hr />}
+              {index < visibleItems - 1 && <hr />}
             </div>
           );
         })}
+        <div ref={ref} style={{ height: '20px' }} />
       </div>
     </div>
   );
