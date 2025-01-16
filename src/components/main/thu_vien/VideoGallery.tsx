@@ -96,18 +96,20 @@ const VideoGallery = () => {
 
                 <span className="absolute inset-0 bg-yellow-500 scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
               </a> */}
-              <button
-                className={`group relative rounded-full border border-white bg-white p-2 text-16 font-semibold `}
-              >
-                <div className="absolute bg-primary-500 left-0 top-0 flex h-full w-11 items-center justify-end rounded-full transition-all duration-200 ease-in-out group-hover:w-full">
-                  <span className="mr-3 text-white transition-all duration-200 ease-in-out">
-                    <ArrowRight size={20} />
+              <a href={video.link} target="_blank" rel="noopener noreferrer">
+                <button
+                  className={`group relative rounded-full border border-white bg-white p-2 text-16 font-semibold`}
+                >
+                  <div className="absolute bg-primary-500 left-0 top-0 flex h-full w-11 items-center justify-end rounded-full transition-all duration-200 ease-in-out group-hover:w-full">
+                    <span className="mr-3 text-white transition-all duration-200 ease-in-out">
+                      <ArrowRight size={20} />
+                    </span>
+                  </div>
+                  <span className="relative left-4 z-10 whitespace-nowrap px-8 font-semibold text-black transition-all duration-200 ease-in-out group-hover:-left-3 group-hover:text-yellow-500">
+                    xem thêm{' '}
                   </span>
-                </div>
-                <span className="relative left-4 z-10 whitespace-nowrap px-8 font-semibold text-black transition-all duration-200 ease-in-out group-hover:-left-3 group-hover:text-yellow-500">
-                  xem thêm{' '}
-                </span>
-              </button>
+                </button>
+              </a>
             </div>
 
             {/* Các nút chức năng */}
