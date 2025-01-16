@@ -58,7 +58,7 @@ const Page = () => {
 
             <div className="flex items-center justify-center text-gray-500 text-sm">
               <p className="mr-4">
-                {suvu.user.first_name} {suvu.user.last_name}
+                {suvu?.user?.first_name} {suvu?.user?.last_name}
               </p>
 
               <span>{formatDate(suvu.created_date)}</span>

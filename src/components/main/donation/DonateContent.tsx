@@ -21,7 +21,7 @@ const DonateContent = () => {
     next,
     isLoading,
     isError,
-    count,
+    count = 0,
   } = DonateList(currentPage, '', refreshKey);
   const dataSource = useMemo(() => donate, [donate]);
 
@@ -51,35 +51,37 @@ const DonateContent = () => {
               />
             ))}
       </div>
-      <div className="flex justify-center mt-8 items-center space-x-2">
-        <button
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-          className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-            currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
-        >
-          <FaArrowLeft />
-        </button>
-        {Array.from({ length: totalPages }, (_, i) => (
+      {count > 0 && (
+        <div className="flex justify-center mt-8 items-center space-x-2">
           <button
-            key={i}
-            onClick={() => setCurrentPage(i + 1)}
-            className={`w-6 h-6 text-10 rounded-full hover:bg-gray-300 ${currentPage === i + 1 ? 'bg-primary-500 text-white' : 'bg-gray-200'}`}
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
+              currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
           >
-            {i + 1}
+            <FaArrowLeft />
           </button>
-        ))}
-        <button
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-          disabled={!next}
-          className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-            !next ? 'opacity-50 cursor-not-allowed' : ''
-          }`}
-        >
-          <FaArrowRight />
-        </button>
-      </div>
+          {Array.from({ length: totalPages }, (_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrentPage(i + 1)}
+              className={`w-6 h-6 text-10 rounded-full hover:bg-gray-300 ${currentPage === i + 1 ? 'bg-primary-500 text-white' : 'bg-gray-200'}`}
+            >
+              {i + 1}
+            </button>
+          ))}
+          <button
+            onClick={() => setCurrentPage((prev) => prev + 1)}
+            disabled={!next}
+            className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
+              !next ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+          >
+            <FaArrowRight />
+          </button>
+        </div>
+      )}
     </Container>
   );
 };
