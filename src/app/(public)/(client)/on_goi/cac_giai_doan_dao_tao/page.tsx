@@ -5,7 +5,8 @@ import StageOne from '@/components/main/on_goi/Stages/stageOne';
 import StageTwo from '@/components/main/on_goi/Stages/stageTwo';
 import StageThree from '@/components/main/on_goi/Stages/stageThree';
 import StageFour from '@/components/main/on_goi/Stages/stageFour';
-import Contact from '@/components/design/formResgister';
+import VocationForm from '@/components/design/VocationForm';
+
 const page = () => {
   return (
     <div className="container w-full max-w-[1400px] px-[10px] mx-auto relative ">
@@ -40,7 +41,7 @@ const page = () => {
         <StageFour />
       </div>
 
-      <Contact />
+      <VocationForm />
     </div>
   );
 };

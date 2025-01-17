@@ -6,7 +6,7 @@ interface SuvuCardProps {
   description: string;
   date: string;
   author: string;
-  category: string[];
+  category: string;
   image: string | null;
 }
 
@@ -35,14 +35,12 @@ const SuvuProb: React.FC<SuvuCardProps> = ({
 
       <div className="p-4">
         <div className="flex flex-wrap gap-2 mb-4">
-          {category.map((category) => (
-            <span
-              key={category}
-              className="text-12 bg-primary-800 text-white rounded-full px-2 py-1"
-            >
-              {category}
-            </span>
-          ))}
+          <span
+            key={category}
+            className="text-12 bg-primary-800 text-white rounded-full px-2 py-1"
+          >
+            {category}
+          </span>
         </div>
         <p className="text-gray-500 text-sm">
           {author} • {date}

@@ -67,14 +67,6 @@ const ReplyCommentSection = ({
             <p className="ml-10 text-black">{comment.content}</p>
 
             <hr className="my-2 border-gray-300" />
-            {/* <div className="mt-4 text-center">
-              <button
-                onClick={loadNextPage}
-                className="text-blue-500 hover:text-blue-300 text-sm px-4 py-2 rounded"
-              >
-                Tải Thêm
-              </button>
-            </div> */}
           </div>
         ) : null,
       )}

@@ -8,12 +8,23 @@ import Image from 'next/image';
 import { useMissionDetail } from '@/hooks/misssion/useMissionDetail';
 import Container from '@/components/Container/container';
 import { BsFillShareFill } from 'react-icons/bs';
+import BackButton from '@/components/button/BackButton';
+import Tittle from '@/components/design/Tittle';
+import { MissionList } from '@/lib/missionList';
+import Link from 'next/link';
 
 const Page = () => {
   const { id: suvuIdParam } = useParams();
   const postId = Array.isArray(suvuIdParam) ? suvuIdParam[0] : suvuIdParam;
   const { data: suvu, isLoading, isError } = useMissionDetail(postId);
+  const { queueData } = MissionList(1, '', 0);
 
+  const relatedPost = queueData.filter((relatedPost) => {
+    return (
+      relatedPost.id !== suvu?.id &&
+      relatedPost.category.id === suvu?.category.id // so sánh category trực tiếp khi chỉ có 1 category
+    );
+  });
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -50,6 +61,7 @@ const Page = () => {
 
   return (
     <Container>
+      <BackButton />
       <div className="grid grid-cols-12 gap-8">
         {/* Sứ vụ chi tiết (bên trái) */}
         <div className="col-span-12 lg:col-span-8">
@@ -135,6 +147,41 @@ const Page = () => {
               <p className="text-gray-500 font-semibold">Nguồn:</p>
               <p className="text-blue-800">{suvu.link}</p>
             </div>
+          </div>
+        </div>
+        {/* Các bài viết gợi ý (bên phải) */}
+        <div className=" col-span-12 lg:col-span-4  p-6 ">
+          <div>
+            <div className=" mb-4">
+              <Tittle name="Bài Viết Liên Quan" />
+            </div>
+            <ul>
+              {relatedPost.slice(0, 5).map((relatedPost, index) => (
+                <li key={index} className="mb-4">
+                  <Link href={`/mission/${relatedPost.id}`}>
+                    <p className="text-16 border-b-2 pb-2 line-clamp-3 text-gray-700 transform transition-transform duration-300 hover:text-gray-500">
+                      {relatedPost.title}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="pt-10">
+            <div className=" mb-4">
+              <Tittle name="Tất Cả Bài Viết" />
+            </div>
+            <ul>
+              {queueData.slice(0, 10).map((allPost, index) => (
+                <li key={index} className="mb-4">
+                  <Link href={`/mission/${allPost.id}`}>
+                    <p className="text-16 border-b-2 pb-2 line-clamp-3 text-gray-700 transform transition-transform duration-300 hover:text-gray-500">
+                      {allPost.title}
+                    </p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

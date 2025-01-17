@@ -1,18 +1,18 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense } from 'react';
 import formatDate from '@/utils/formatDate';
-import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
 import { ClipLoader } from 'react-spinners';
 import Tittle from '@/components/design/Tittle';
 import { motion } from 'framer-motion';
-import DocProb from './DocProb';
 import { DocList } from '@/lib/docList';
-import { CategoriesList } from '@/lib/categoriesList';
-import Category from '@/components/design/category';
 import { NotiPostNull, NotiPostError } from '@/components/design/index';
 import SkeletonCard from '@/components/Skeleton/SkeletonCard';
+import Pagination from '@/components/Pagination/Pagination';
+import CategoryTag from '@/components/category/CategoryTag';
+
+const LazyDocProb = React.lazy(() => import('./DocProb'));
 
 const DocContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,22 +20,18 @@ const DocContent = () => {
   const [selectedCategory] = useState<string | null>(null);
 
   const categoryQuery = selectedCategory ? selectedCategory : '';
-  const {
-    queueData,
-    isLoading: isCatLoading,
-    isError: isCatError,
-  } = CategoriesList(currentPage, 'document', 0);
+
   // Lấy danh sách tin tức từ API
   const {
     queueData: document,
     next,
     isLoading,
     isError,
-    count,
+    count = 0,
   } = DocList(currentPage, categoryQuery, refreshKey);
   const dataSource = useMemo(() => document, [document]);
   // Kiểm tra dữ liệu
-  if (isLoading || isCatLoading)
+  if (isLoading)
     return (
       <div>
         <div className="text-center">
@@ -43,7 +39,7 @@ const DocContent = () => {
         </div>
       </div>
     );
-  if (isError || isCatError) return <NotiPostError />;
+  if (isError) return <NotiPostError />;
 
   if (!isLoading && count === 0) return <NotiPostNull />;
 
@@ -54,9 +50,8 @@ const DocContent = () => {
       <Container>
         <Tittle name="TẤT CẢ TÀI LIỆU" />
         <div className="mt-6 mb-4">
-          <Category queueData={queueData} model="document" />
+          <CategoryTag model="document" href="/document/category" />
         </div>
-
         {/* Animating news list with framer-motion */}
         <motion.div
           initial={{ opacity: 0 }}
@@ -68,50 +63,32 @@ const DocContent = () => {
           {isLoading
             ? Array(count)
                 .fill(0)
-                .map((_, index) => <SkeletonCard key={index} />) // Hiển thị skeletons
+                .map((_, index) => <SkeletonCard key={index} />)
             : dataSource.map((blog, index) => (
-                <DocProb
+                <Suspense
+                  fallback={<div className="opacity-0"></div>}
                   key={index}
-                  id={blog.id}
-                  title={blog.title}
-                  description={blog.description}
-                  date={formatDate(blog.created_date)}
-                  author={blog.user.username}
-                  category={blog.category.name}
-                  image={blog.image}
-                />
+                >
+                  <LazyDocProb
+                    id={blog.id}
+                    title={blog.title}
+                    description={blog.description}
+                    date={formatDate(blog.created_date)}
+                    author={blog.user.username}
+                    category={blog.category.name}
+                    image={blog.image}
+                  />
+                </Suspense>
               ))}
         </motion.div>
 
-        <div className="flex justify-center mt-8 items-center space-x-2">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-              currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
-          >
-            <FaArrowLeft />
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentPage(i + 1)}
-              className={`w-6 h-6 text-10 rounded-full hover:bg-gray-300 ${currentPage === i + 1 ? 'bg-primary-500 text-white' : 'bg-gray-200'}`}
-            >
-              {i + 1}
-            </button>
-          ))}
-          <button
-            onClick={() => setCurrentPage((prev) => prev + 1)}
-            disabled={!next}
-            className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-              !next ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
-          >
-            <FaArrowRight />
-          </button>
-        </div>
+        {count > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        )}
       </Container>
     </main>
   );

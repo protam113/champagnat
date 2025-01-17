@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from 'react';
 import formatDate from '@/utils/formatDate';
-import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
 import { ClipLoader } from 'react-spinners';
 import Tittle from '@/components/design/Tittle';
@@ -11,6 +10,7 @@ import { motion } from 'framer-motion';
 import MessageProb from './messageProb';
 import { MessageList } from '@/lib/messageList';
 import { NotiPostNull, NotiPostError } from '@/components/design/index';
+import Pagination from '@/components/Pagination/Pagination';
 
 const MessageContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -64,35 +64,11 @@ const MessageContent = () => {
           ))}
         </motion.div>
         {count > 0 && (
-          <div className="flex justify-center mt-8 items-center space-x-2">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-                currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            >
-              <FaArrowLeft />
-            </button>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`w-6 h-6 text-10 rounded-full hover:bg-gray-300 ${currentPage === i + 1 ? 'bg-primary-500 text-white' : 'bg-gray-200'}`}
-              >
-                {i + 1}
-              </button>
-            ))}
-            <button
-              onClick={() => setCurrentPage((prev) => prev + 1)}
-              disabled={!next}
-              className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-                !next ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            >
-              <FaArrowRight />
-            </button>
-          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
         )}
       </Container>
     </main>

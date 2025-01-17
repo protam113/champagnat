@@ -1,18 +1,18 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import React, { useState, useMemo, Suspense } from 'react';
 import formatDate from '@/utils/formatDate';
-import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
 import Container from '../../Container/container';
 import { ClipLoader } from 'react-spinners';
-import SuvuProb from './suvuProb';
 import { MissionList } from '@/lib/missionList';
 import Tittle from '@/components/design/Tittle';
 import { motion } from 'framer-motion';
-import Category from '@/components/design/category';
-import { CategoriesList } from '@/lib/categoriesList';
 import { NotiPostNull, NotiPostError } from '@/components/design/index';
 import SkeletonCard from '@/components/Skeleton/SkeletonCard';
+import CategoryTag from '@/components/category/CategoryTag';
+import Pagination from '@/components/Pagination/Pagination';
+
+const LazyPostProb = React.lazy(() => import('./suvuProb'));
 
 const SuvuContent = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -20,11 +20,6 @@ const SuvuContent = () => {
   const [selectedCategory] = useState<string | null>(null);
 
   const categoryQuery = selectedCategory ? selectedCategory : '';
-  const {
-    queueData,
-    isLoading: isCatLoading,
-    isError: isCatError,
-  } = CategoriesList(currentPage, 'mission', 0);
 
   // Lấy danh sách tin tức từ API
   const {
@@ -37,7 +32,7 @@ const SuvuContent = () => {
 
   const dataSource = useMemo(() => su_vu, [su_vu]);
   // Kiểm tra dữ liệu
-  if (isLoading || isCatLoading)
+  if (isLoading)
     return (
       <div>
         <div className="text-center">
@@ -45,7 +40,7 @@ const SuvuContent = () => {
         </div>
       </div>
     );
-  if (isError || isCatError) return <NotiPostError />;
+  if (isError) return <NotiPostError />;
   if (!isLoading && count === 0) return <NotiPostNull />;
 
   const totalPages = next ? currentPage + 1 : currentPage;
@@ -55,7 +50,7 @@ const SuvuContent = () => {
       <Container>
         <Tittle name="TẤT CẢ SỨ VỤ" />
         <div className="mt-6 mb-4">
-          <Category queueData={queueData} model="mission" />
+          <CategoryTag model="mission" href="/mission/category" />
         </div>
 
         {/* Add motion for smooth transition of the content grid */}
@@ -71,49 +66,30 @@ const SuvuContent = () => {
                 .fill(0)
                 .map((_, index) => <SkeletonCard key={index} />) // Hiển thị skeletons
             : dataSource.map((suvu, index) => (
-                <SuvuProb
+                <Suspense
+                  fallback={<div className="opacity-0"></div>}
                   key={index}
-                  id={suvu.id}
-                  title={suvu.title}
-                  description={suvu.description}
-                  date={formatDate(suvu.created_date)}
-                  author={suvu.user.username}
-                  category={[suvu.category.name]}
-                  image={suvu.image}
-                />
+                >
+                  <LazyPostProb
+                    key={index}
+                    id={suvu.id}
+                    title={suvu.title}
+                    description={suvu.description}
+                    date={formatDate(suvu.created_date)}
+                    author={suvu.user.username}
+                    category={suvu.category.name}
+                    image={suvu.image}
+                  />
+                </Suspense>
               ))}
         </motion.div>
 
         {count > 0 && (
-          <div className="flex justify-center mt-8 items-center space-x-2">
-            <button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-                currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            >
-              <FaArrowLeft />
-            </button>
-            {Array.from({ length: totalPages }, (_, i) => (
-              <button
-                key={i}
-                onClick={() => setCurrentPage(i + 1)}
-                className={`w-6 h-6 text-10 rounded-full hover:bg-gray-300 ${currentPage === i + 1 ? 'bg-primary-500 text-white' : 'bg-gray-200'}`}
-              >
-                {i + 1}
-              </button>
-            ))}
-            <button
-              onClick={() => setCurrentPage((prev) => prev + 1)}
-              disabled={!next}
-              className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-                !next ? 'opacity-50 cursor-not-allowed' : ''
-              }`}
-            >
-              <FaArrowRight />
-            </button>
-          </div>
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
         )}
       </Container>
     </main>

@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import Link from 'next/link';
+
 interface DocCardProps {
   id: string;
   title: string;

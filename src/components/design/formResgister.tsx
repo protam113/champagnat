@@ -91,23 +91,6 @@ const Contact = () => {
                 className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
               />
             </div>
-            {/* New field for Giáo Xứ / Giáo Phận */}
-            {/* <div>
-              <label
-                className="block text-16 text-white font-medium mb-1"
-                htmlFor="parish"
-              >
-                Giáo Xứ / Giáo Phận
-              </label>
-              <input
-                type="text"
-                id="parish"
-                name="parish"
-                placeholder="Nhập tên giáo xứ / giáo phận"
-                required
-                className="w-full px-4 py-2 bg-white text-gray-700 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-500"
-              />
-            </div> */}
           </div>
 
           {/* Right Section: Message Field */}

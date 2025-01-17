@@ -6,6 +6,7 @@ import { endpoints } from '@/apis/api';
 import { useAuth } from '@/context/authContext';
 import { useEffect, useState } from 'react';
 import { ApplyVocationData } from '@/types/types';
+import { message } from 'antd';
 
 const ApplyVocation = async (
   applyVocation: ApplyVocationData,
@@ -57,6 +58,7 @@ const useApplyVocation = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['vocationList'] });
+      message.success('Thông tin đã được cập nhật thành công');
     },
     onError: (error) => {
       console.error(error.message || 'Failed to create comment.');

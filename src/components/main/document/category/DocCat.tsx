@@ -1,14 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import React, { Suspense, useMemo, useState } from 'react';
 import formatDate from '@/utils/formatDate';
-import { FaArrowLeft, FaArrowRight } from '@/lib/iconLib';
-import { ClipLoader } from 'react-spinners';
 import { motion } from 'framer-motion';
 import { useParams } from 'next/navigation';
 import Container from '@/components/Container/container';
 import { DocList } from '@/lib/docList';
-import DocProb from '../DocProb';
+import Pagination from '@/components/Pagination/Pagination';
+import SkeletonCard from '@/components/Skeleton/SkeletonCard';
+import { NotiPostNull, NotiPostError } from '@/components/design/index';
+
+const LazyPostProb = React.lazy(() => import('../DocProb'));
 
 const DocsCat = () => {
   const { id: catId } = useParams();
@@ -23,18 +25,12 @@ const DocsCat = () => {
     next,
     isLoading,
     isError,
+    count = 0,
   } = DocList(currentPage, categoryId, refreshKey);
+  const dataSource = useMemo(() => document, [document]);
 
-  // Kiểm tra dữ liệu
-  if (isLoading)
-    return (
-      <div>
-        <div className="text-center">
-          <ClipLoader size="20" loading={isLoading} />
-        </div>
-      </div>
-    );
-  if (isError) return <p>Error loading news...</p>;
+  if (!isLoading && count === 0) return <NotiPostNull />;
+  if (isError) return <NotiPostError />;
 
   const totalPages = next ? currentPage + 1 : currentPage;
 
@@ -49,49 +45,36 @@ const DocsCat = () => {
           transition={{ duration: 0.5 }}
           className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {document.map((blog, index) => (
-            <DocProb
-              key={index}
-              id={blog.id}
-              title={blog.title}
-              description={blog.description}
-              date={formatDate(blog.created_date)}
-              author={blog.user.username}
-              category={blog.category.name}
-              image={blog.image}
-            />
-          ))}
+          {isLoading
+            ? Array(count)
+                .fill(0)
+                .map((_, index) => <SkeletonCard key={index} />) // Hiển thị skeletons
+            : dataSource.map((blog, index) => (
+                <Suspense
+                  fallback={<div className="opacity-0"></div>}
+                  key={index}
+                >
+                  <LazyPostProb
+                    key={index}
+                    id={blog.id}
+                    title={blog.title}
+                    description={blog.description}
+                    date={formatDate(blog.created_date)}
+                    author={blog.user.username}
+                    category={blog.category.name}
+                    image={blog.image}
+                  />
+                </Suspense>
+              ))}
         </motion.div>
 
-        <div className="flex justify-center mt-8 items-center space-x-2">
-          <button
-            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-            disabled={currentPage === 1}
-            className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-              currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
-          >
-            <FaArrowLeft />
-          </button>
-          {Array.from({ length: totalPages }, (_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentPage(i + 1)}
-              className={`w-6 h-6 text-10 rounded-full hover:bg-gray-300 ${currentPage === i + 1 ? 'bg-primary-500 text-white' : 'bg-gray-200'}`}
-            >
-              {i + 1}
-            </button>
-          ))}
-          <button
-            onClick={() => setCurrentPage((prev) => prev + 1)}
-            disabled={!next}
-            className={`flex items-center justify-center w-6 h-6 text-10 bg-gray-200 rounded-full hover:bg-gray-300 ${
-              !next ? 'opacity-50 cursor-not-allowed' : ''
-            }`}
-          >
-            <FaArrowRight />
-          </button>
-        </div>
+        {count > 0 && (
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
+        )}
       </Container>
     </main>
   );

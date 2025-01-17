@@ -25,6 +25,8 @@ import { FaPhoneVolume } from 'react-icons/fa';
 import { IoIosArrowDown } from 'react-icons/io';
 import { FiMenu } from 'react-icons/fi';
 import { AiOutlineClose, AiOutlineYoutube } from 'react-icons/ai';
+import { IoIosArrowBack } from "react-icons/io";
+
 // Export trực tiếp các icon mà không cần khai báo interface
 export {
   IoIosArrowDown, FiMenu, AiOutlineClose, AiOutlineYoutube,
@@ -50,5 +52,6 @@ export {
   FaArrowLeft, FaArrowRight,
   FaSync,
   SlCalender,
-  FaPhoneAlt, FaMapMarkerAlt
+  FaPhoneAlt, FaMapMarkerAlt,
+  IoIosArrowBack
 };

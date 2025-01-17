@@ -15,7 +15,7 @@ interface Category {
   image: string;
 }
 
-const NewsTag = () => {
+const CategoryTag = ({ model, href }: { model: string; href: string }) => {
   const [currentPage] = useState(1);
   const [selectedCategory] = useState<string | null>(null);
 
@@ -23,7 +23,7 @@ const NewsTag = () => {
 
   const { queueData, isLoading, isError } = CategoriesList(
     currentPage,
-    'news',
+    model,
     0,
   );
 
@@ -104,7 +104,7 @@ const NewsTag = () => {
       <Slider {...settings}>
         {queueData?.map((category: Category) => (
           <Link
-            href={`/news/category/${category.id}`}
+            href={`${href}/${category.id}`}
             key={category.id}
             className="px-2"
           >
@@ -146,4 +146,4 @@ const NewsTag = () => {
   );
 };
 
-export default NewsTag;
+export default CategoryTag;

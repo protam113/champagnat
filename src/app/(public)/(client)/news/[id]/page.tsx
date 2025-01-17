@@ -14,6 +14,9 @@ import Container from '@/components/Container/container';
 import Tittle from '@/components/design/Tittle';
 import Comment from '@/components/main/blog/comment/Comment';
 import BlogCommentsSection from '@/components/main/blog/comment/CommentsSection';
+import BackButton from '@/components/button/BackButton';
+import PostDetailSkeleton from '@/components/Skeleton/PostDetailSkeleton';
+import { NotiPostError } from '@/components/design/index';
 
 const Page = () => {
   const { id: blogIdParam } = useParams();
@@ -40,11 +43,7 @@ const Page = () => {
   }
 
   if (isError) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-red-500">Có lỗi xảy ra khi tải bài viết.</p>
-      </div>
-    );
+    return <NotiPostError />;
   }
 
   if (!blog) {
@@ -67,94 +66,101 @@ const Page = () => {
 
   return (
     <Container>
+      <BackButton />
+
       <div className="grid grid-cols-12 gap-8">
         {/* Bài viết chi tiết (bên trái) */}
-        <div className="col-span-12 lg:col-span-8">
-          <div className="flex flex-col gap-4">
-            <h1 className="text-24 font-semibold text-center">{blog.title}</h1>
+        {isLoading ? (
+          <PostDetailSkeleton />
+        ) : (
+          <div className="col-span-12 lg:col-span-8">
+            <div className="flex flex-col gap-4">
+              <h1 className="text-24 font-semibold text-center">
+                {blog.title}
+              </h1>
 
-            <div className="flex items-center justify-center text-gray-500 text-sm">
-              <p className="mr-4">
-                {blog.user.first_name} {blog.user.last_name}
-              </p>
-              <span className="text-blue-800 mr-4 text-16">
-                {blog.categories?.map((category) => category.name).join(', ')}
-              </span>
-              <span>{formatDate(blog.created_date)}</span>
+              <div className="flex items-center justify-center text-gray-500 text-sm">
+                <p className="mr-4">
+                  {blog.user.first_name} {blog.user.last_name}
+                </p>
+                <span className="text-blue-800 mr-4 text-16">
+                  {blog.categories?.map((category) => category.name).join(', ')}
+                </span>
+                <span>{formatDate(blog.created_date)}</span>
 
-              <button
-                onClick={handleShare}
-                className="px-4 py-2 ml-4 bg-blue-500 text-white rounded-md shadow-md hover:bg-primary-500 transition"
-              >
-                <BsFillShareFill />
-              </button>
-            </div>
-
-            <div className="text-center mt-2 text-16">
-              <p>{blog.description}</p>
-            </div>
-
-            {/* Image */}
-            {blog.image && (
-              <div className="mt-8 w-full max-w-3xl mx-auto">
-                <Image
-                  src={blog.image}
-                  alt={blog.title}
-                  className="rounded-2xl object-cover"
-                  width={800}
-                  height={450}
-                />
+                <button
+                  onClick={handleShare}
+                  className="px-4 py-2 ml-4 bg-blue-500 text-white rounded-md shadow-md hover:bg-primary-500 transition"
+                >
+                  <BsFillShareFill />
+                </button>
               </div>
-            )}
-          </div>
 
-          {/* Content */}
-          <div className="flex flex-col gap-8 mt-12">
-            <div
-              className="content text-lg text-justify"
-              dangerouslySetInnerHTML={{
-                __html: blog.content.replace(/\"/g, ''), // Xóa tất cả dấu "
-              }}
-            />
+              <div className="text-center mt-2 text-16">
+                <p>{blog.description}</p>
+              </div>
 
-            {/* pdf or image */}
-            <div className="text-blue-800 mr-4 text-16">
-              {blog.media?.map((media) => {
-                if (media.file_type === 'PDF') {
-                  return (
-                    <iframe
-                      key={media.id} // Thêm key cho mỗi phần tử
-                      src={media.file}
-                      width="100%" // Bạn có thể điều chỉnh chiều rộng của iframe
-                      height="600px" // Bạn có thể điều chỉnh chiều cao của iframe"
-                      title="PDF Viewer"
-                    />
-                  );
-                } else if (media.file_type === 'IMAGE') {
-                  return (
-                    <div key={media.id} className="w-full">
-                      <Image
+              {/* Image */}
+              {blog.image && (
+                <div className="mt-8 w-full max-w-3xl mx-auto">
+                  <Image
+                    src={blog.image}
+                    alt={blog.title}
+                    className="rounded-2xl object-cover"
+                    width={800}
+                    height={450}
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Content */}
+            <div className="flex flex-col gap-8 mt-12">
+              <div
+                className="content text-lg text-justify"
+                dangerouslySetInnerHTML={{
+                  __html: blog.content.replace(/\"/g, ''), // Xóa tất cả dấu "
+                }}
+              />
+
+              {/* pdf or image */}
+              <div className="text-blue-800 mr-4 text-16">
+                {blog.media?.map((media) => {
+                  if (media.file_type === 'PDF') {
+                    return (
+                      <iframe
+                        key={media.id} // Thêm key cho mỗi phần tử
                         src={media.file}
-                        alt={blog.title}
-                        className=" object-cover"
-                        width={800}
-                        height={450}
+                        width="100%" // Bạn có thể điều chỉnh chiều rộng của iframe
+                        height="600px" // Bạn có thể điều chỉnh chiều cao của iframe"
+                        title="PDF Viewer"
                       />
-                    </div>
-                  );
-                }
-                return null;
-              })}
-            </div>
+                    );
+                  } else if (media.file_type === 'IMAGE') {
+                    return (
+                      <div key={media.id} className="w-full">
+                        <Image
+                          src={media.file}
+                          alt={blog.title}
+                          className=" object-cover"
+                          width={800}
+                          height={450}
+                        />
+                      </div>
+                    );
+                  }
+                  return null;
+                })}
+              </div>
 
-            {/* Source */}
-            <div className="mt-6">
-              <p className="text-gray-500 font-semibold">Nguồn:</p>
-              <p className="text-blue-800">{blog.link}</p>
+              {/* Source */}
+              <div className="mt-6">
+                <p className="text-gray-500 font-semibold">Nguồn:</p>
+                <p className="text-blue-800">{blog.link}</p>
+              </div>
             </div>
           </div>
-        </div>
-
+        )}
         {/* Các bài viết gợi ý (bên phải) */}
         <div className="col-span-12 lg:col-span-4 p-6">
           <div>
@@ -164,7 +170,7 @@ const Page = () => {
             <ul>
               {relatedNews.slice(0, 5).map((relatedPost, index) => (
                 <li key={index} className="mb-4">
-                  <Link href={`/new/${relatedPost.id}`}>
+                  <Link href={`/news/${relatedPost.id}`}>
                     <p className="text-16 border-b-2 pb-2 text-gray-700 transform transition-transform duration-300 hover:text-gray-500">
                       {relatedPost.title}
                     </p>
@@ -181,7 +187,7 @@ const Page = () => {
             <ul>
               {news.slice(0, 10).map((allPost, index) => (
                 <li key={index} className="mb-4">
-                  <Link href={`/new/${allPost.id}`}>
+                  <Link href={`/news/${allPost.id}`}>
                     <p className="text-16 border-b-2 pb-2 text-gray-700 transform transition-transform duration-300 hover:text-gray-500">
                       {allPost.title}
                     </p>

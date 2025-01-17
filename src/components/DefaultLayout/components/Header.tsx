@@ -233,6 +233,17 @@ export const MultimediaDropdown_Item = () => {
           Video
         </span>
       </Link>
+      <Link
+        href="https://www.flickr.com/photos/fms_champagnat/collections?fbclid=IwY2xjawH2k6pleHRuA2FlbQIxMAABHUBVmKmWgdT2ThL06grdrqdcXrGE09hhmtlNwYf-LMN-kJ2R5ldeuIy4BA_aem_79VkDt8YUcOYRURmIO3OMQ"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex cursor-pointer items-center py-1 pr-8 text-white hover:text-primary-50"
+      >
+        {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
+        <span className="whitespace-nowrap overflow-hidden text-ellipsis">
+          Thư Viện Ảnh
+        </span>
+      </Link>
     </>
   );
 };
@@ -496,18 +507,20 @@ function MobileNavItem({
   );
 }
 
-function BacAiNavItem() {
+function BacAiNavItem({ closeSideMenu }: { closeSideMenu: any }) {
   return (
     <div className="flex flex-col gap-2 py-3 px-4 bg-white rounded-md shadow-md transition-all">
       <Link
         href="/projects"
         className="flex cursor-pointer items-center py-2 pr-6 text-black hover:text-primary-500 transition-all"
+        onClick={closeSideMenu}
       >
         <span className="whitespace-nowrap pl-3">Dự Án</span>
       </Link>
       <Link
         href="/donation"
         className="flex cursor-pointer items-center py-2 pr-6 text-black hover:text-albert-warning transition-all"
+        onClick={closeSideMenu}
       >
         <span className="whitespace-nowrap pl-3">Quyên Góp</span>
       </Link>
@@ -515,12 +528,13 @@ function BacAiNavItem() {
   );
 }
 
-function MultimediaNavItem() {
+function MultimediaNavItem({ closeSideMenu }: { closeSideMenu: any }) {
   return (
     <div className="flex flex-col gap-2 py-3 px-4 bg-white rounded-md shadow-md transition-all">
       <Link
         href="/thu_vien/thu_vien_anh"
         className="flex cursor-pointer items-center py-1 pr-8 text-black hover:text-primary-50"
+        onClick={closeSideMenu}
       >
         {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
         <span className="whitespace-nowrap ">Ảnh</span>
@@ -528,6 +542,17 @@ function MultimediaNavItem() {
       <Link
         href="/thu_vien/thu_vien_video"
         className="flex cursor-pointer items-center py-1 pr-8 text-black hover:text-primary-50"
+        onClick={closeSideMenu}
+      >
+        {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
+        <span className="whitespace-nowrap ">Video</span>
+      </Link>
+      <Link
+        href="https://www.flickr.com/photos/fms_champagnat/collections?fbclid=IwY2xjawH2k6pleHRuA2FlbQIxMAABHUBVmKmWgdT2ThL06grdrqdcXrGE09hhmtlNwYf-LMN-kJ2R5ldeuIy4BA_aem_79VkDt8YUcOYRURmIO3OMQ"
+        className="flex cursor-pointer items-center py-1 pr-8 text-black hover:text-primary-50"
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={closeSideMenu}
       >
         {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
         <span className="whitespace-nowrap ">Video</span>
@@ -680,7 +705,7 @@ function MobileNav({
               {/* Hiển thị dropdown khi openDropdown === 'Giáo Hội' */}
               {openDropdown === 'Bác Aí' && (
                 <div className="w-auto flex-col flex overflow-hidden transition-all">
-                  <BacAiNavItem />
+                  <BacAiNavItem closeSideMenu={closeSideMenu} />
                 </div>
               )}
             </div>
@@ -732,7 +757,7 @@ function MobileNav({
               {/* Hiển thị dropdown khi openDropdown === 'Giáo Hội' */}
               {openDropdown === 'Media' && (
                 <div className="w-auto flex-col flex overflow-hidden transition-all">
-                  <MultimediaNavItem />
+                  <MultimediaNavItem closeSideMenu={closeSideMenu} />
                 </div>
               )}
             </div>
