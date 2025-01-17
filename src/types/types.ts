@@ -16,8 +16,20 @@ export interface OverlayCopyProps {
   subheading: string;
   heading: string;
 }
-// Message Interface
 
+// Banner Interface
+interface BannerList {
+  id: string;
+  image: string;
+  visibility: string,
+}
+
+
+export interface FetchBannerListResponse {
+  data: BannerList[];
+}
+
+// Message Interface
 
 interface MessageList {
   id: string;
@@ -177,7 +189,7 @@ export interface DocsList {
   description: string;
   content: string;
   link: string;
-  image: string | null; 
+  image: string | null;
   category: Category;
   user: User;
   media: Media[] | null;

@@ -11,7 +11,7 @@ interface BlogCardProps {
 const EventProb: React.FC<BlogCardProps> = ({ id, title, date, image }) => {
   return (
     <Link
-      href={`/events/${id}`}
+      href={`/projects/${id}`}
       className="rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-300 hover:scale-105" // Thêm hiệu ứng hover
     >
       <div className="relative h-48 w-full">

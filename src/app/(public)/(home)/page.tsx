@@ -1,5 +1,4 @@
 'use client';
-
 import Hero from '@/components/DefaultLayout/components/Hero';
 import { Content } from '@/components/main/home/homeComponents';
 

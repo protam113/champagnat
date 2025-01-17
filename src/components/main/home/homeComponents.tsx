@@ -1,6 +1,5 @@
 import { Invitation } from './components/Invitation';
 import PushButton from '../../design/Head';
-import Header from '../../design/Header';
 import { Donation } from './components/donationProb';
 import Container from '../../Container/container';
 import { News } from './components/New';
@@ -23,13 +22,13 @@ export const Content = () => {
         <PushButton label="Giáo Hội" href="/blog" />
         <Congregation />
 
-        <PushButton label="Sứ Vụ" href="/hoi_dong/su_vu" />
+        <PushButton label="Sứ Vụ" href="mission" />
         <Invitation />
 
         <PushButton label="Quyên Góp" href="/donation " />
         <Donation />
 
-        <Header name="Dự Án" />
+        <PushButton label="Dự Án" href="/projects" />
         <Activity />
 
         <PushButton label="Tư Liệu" href="/document" />

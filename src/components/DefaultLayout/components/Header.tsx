@@ -271,8 +271,15 @@ export default function Navbar() {
       >
         {/* logo */}
         <Link href="/">
-          <Image src={logo} alt="logo" height={80} width={120} />
+          <Image
+            src={logo}
+            alt="logo"
+            height={80}
+            width={120}
+            className="transition-transform duration-300 ease-in-out hover:scale-90"
+          />
         </Link>
+
         <MobileNav
           closeSideMenu={closeSideMenu}
           isSideMenuOpen={isSideMenuOpen}

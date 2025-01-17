@@ -76,7 +76,10 @@ const endpoints = {
     video: process.env.NEXT_PUBLIC_VIDEO,
 
     //Vocation
-    vocation: process.env.NEXT_PUBLIC_VOCATION
+    vocation: process.env.NEXT_PUBLIC_VOCATION,
+
+    //Banner
+    banner: process.env.NEXT_PUBLIC_BANNER,
 };
 
 export { baseURL, endpoints };

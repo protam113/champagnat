@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect, useState, memo, useMemo } from 'react';
-import Image from 'next/image';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'; // Thêm style cho slideshow
 import { FaArrowLeft, FaArrowRight, FaLongArrowAltRight } from 'react-icons/fa';
@@ -9,42 +8,46 @@ import { NewsList } from '@/lib/newList';
 import formatDate from '@/utils/formatDate';
 import Link from 'next/link';
 import NewSekelton from '@/components/design/NewSekelton';
+import { NotiPostError } from '@/components/design/index';
+import { MoonLoader } from 'react-spinners';
+import Image from 'next/image';
+import { useBannerList } from '@/hooks/banner/useBanner';
 // Dữ liệu cho phần tin tức
 
-const HeroBanner = [
-  {
-    id: 1,
-    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003238/BeaconOfHope_banner_cirl6h.jpg',
-  },
-  {
-    id: 2,
-    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003233/InTheFootsteps_banner-scaled_cdn648.jpg',
-  },
-  {
-    id: 3,
-    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003233/MarcellinoEN_uf1f2y.jpg',
-  },
-  {
-    id: 4,
-    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003232/Banner_Web_standup_epgoce.jpg',
-  },
-  {
-    id: 5,
-    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003232/ChampagnatGlobalBanner_EN_nxhobl.jpg',
-  },
-  {
-    id: 6,
-    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003232/Capitulo_2025_Banner_EN-scaled_mpockm.jpg',
-  },
-  {
-    id: 7,
-    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003232/OtherMaristVoices_banner_tulbs1.jpg',
-  },
-  {
-    id: 8,
-    url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003231/BannerHomeRIP_luisCarlos-1-scaled_cypr4q.jpg',
-  },
-];
+// const HeroBanner = [
+//   {
+//     id: 1,
+//     url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003238/BeaconOfHope_banner_cirl6h.jpg',
+//   },
+//   {
+//     id: 2,
+//     url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003233/InTheFootsteps_banner-scaled_cdn648.jpg',
+//   },
+//   {
+//     id: 3,
+//     url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003233/MarcellinoEN_uf1f2y.jpg',
+//   },
+//   {
+//     id: 4,
+//     url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003232/Banner_Web_standup_epgoce.jpg',
+//   },
+//   {
+//     id: 5,
+//     url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003232/ChampagnatGlobalBanner_EN_nxhobl.jpg',
+//   },
+//   {
+//     id: 6,
+//     url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003232/Capitulo_2025_Banner_EN-scaled_mpockm.jpg',
+//   },
+//   {
+//     id: 7,
+//     url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003232/OtherMaristVoices_banner_tulbs1.jpg',
+//   },
+//   {
+//     id: 8,
+//     url: 'https://res.cloudinary.com/ddw50zstg/image/upload/v1737003231/BannerHomeRIP_luisCarlos-1-scaled_cypr4q.jpg',
+//   },
+// ];
 
 const NewHero = () => {
   const [currentPage] = useState(1);
@@ -119,8 +122,8 @@ const NewHero = () => {
         <Slide
           easing="ease"
           autoplay={true}
-          duration={3000}
-          transitionDuration={500}
+          duration={4000}
+          transitionDuration={1000}
           arrows={true}
           prevArrow={
             <div
@@ -187,28 +190,75 @@ const NewHero = () => {
   );
 };
 
+interface Banner {
+  id: string;
+  image: string;
+  visibility: string;
+}
+
 const Hero = () => {
+  // Đảm bảo truyền đủ 3 tham số vào useBannerList
+  const [refreshKey] = useState(0); // State để refresh dữ liệu
+  const [visibility] = useState<string>('show'); // Default value of "show"
+  const filters = visibility.trim() === '' ? {} : { visibility };
+
+  // Dữ liệu banner từ hook useBannerList
+  const { data, isLoading, isError } = useBannerList(filters, refreshKey);
+
+  // Kiểm tra nếu data là mảng, nếu không thì set là mảng rỗng
+  const queueData: Banner[] = Array.isArray(data) ? data : [];
+  if (isLoading) {
+    return (
+      <div className="flex pt-10 items-center justify-center">
+        <MoonLoader size={18} />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <NotiPostError />;
+  }
+
   return (
-    <div className=" relative w-full h-4/5">
+    <div className="relative w-full h-4/5">
       <Slide
         easing="ease"
         autoplay={true}
-        duration={4000}
-        transitionDuration={500}
-        arrows={false}
-      >
-        {HeroBanner.map((banner) => (
+        duration={3000}
+        transitionDuration={1000}
+        prevArrow={
           <div
-            key={banner.id} // Thêm key để React có thể theo dõi từng phần tử
-            className="each-slide brightness-50"
+            style={{
+              width: '20px',
+              height: '20px',
+              fontSize: '14px',
+              color: 'white',
+            }}
           >
+            <FaArrowLeft />
+          </div>
+        }
+        nextArrow={
+          <div
+            style={{
+              width: '20px',
+              height: '20px',
+              fontSize: '14px',
+              color: 'white',
+            }}
+          >
+            <FaArrowRight />
+          </div>
+        }
+      >
+        {queueData.map((banner) => (
+          <div key={banner.id} className="each-slide brightness-75">
             <div className="relative w-full h-[250px] lg:h-[400px]">
               <Image
-                src={banner.url} // Sử dụng URL từ HeroBanner
-                alt={`Banner Image ${banner.id}`} // Dùng ID của ảnh cho alt
-                className="object-cover"
+                src={banner.image}
+                alt={`Banner Image ${banner.id}`}
+                className="object-cover w-full h-full"
                 layout="fill"
-                priority
               />
             </div>
           </div>

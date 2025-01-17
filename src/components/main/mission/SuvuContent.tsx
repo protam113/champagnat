@@ -5,11 +5,9 @@ import formatDate from '@/utils/formatDate';
 import Container from '../../Container/container';
 import { ClipLoader } from 'react-spinners';
 import { MissionList } from '@/lib/missionList';
-import Tittle from '@/components/design/Tittle';
 import { motion } from 'framer-motion';
 import { NotiPostNull, NotiPostError } from '@/components/design/index';
 import SkeletonCard from '@/components/Skeleton/SkeletonCard';
-import CategoryTag from '@/components/category/CategoryTag';
 import Pagination from '@/components/Pagination/Pagination';
 
 const LazyPostProb = React.lazy(() => import('./suvuProb'));
@@ -48,11 +46,6 @@ const SuvuContent = () => {
   return (
     <main>
       <Container>
-        <Tittle name="TẤT CẢ SỨ VỤ" />
-        <div className="mt-6 mb-4">
-          <CategoryTag model="mission" href="/mission/category" />
-        </div>
-
         {/* Add motion for smooth transition of the content grid */}
         <motion.div
           initial={{ opacity: 0 }}
