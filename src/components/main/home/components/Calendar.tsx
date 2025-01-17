@@ -77,7 +77,7 @@ const CatholicCalendarTable: React.FC = () => {
         Math.min(prev + ITEMS_PER_PAGE, dateRange.length),
       );
     }
-  }, [inView, dateRange.length]);
+  }, [inView, visibleItems, dateRange.length]);
 
   // Memoize year change handler
   const handleYearChange = useCallback((date: any) => {
