@@ -36,6 +36,7 @@
     "react-slick": "^0.30.3",
     "react-slideshow-image": "^4.3.2",
     "react-spinners": "^0.15.0",
+    "sharp": "^0.33.5",
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^2.5.5",
     "zustand": "^5.0.2"
