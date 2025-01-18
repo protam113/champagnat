@@ -39,14 +39,14 @@ const Page = () => {
       {isLoading ? (
         <PostDetailSkeleton />
       ) : (
-        <div className="flex flex-col gap-8 items-center">
+        <div className="flex flex-col gap-8">
           {/* detail */}
-          <div className="flex flex-col gap-8 lg:w-3/5">
+          <div className="flex flex-col gap-4">
             <h1 className="text-24 font-semibold text-center">{blog.title}</h1>
             <div className="flex items-center gap-2 text-gray-400 text-sm justify-center">
               <span>{formatDate(blog.created_date)}</span>
             </div>
-            <div className="lg:text-16 flex flex-col gap-6 text-justify">
+            <div className="lg:text-16 flex flex-col gap-6 text-center">
               <p>{blog.description}</p>
             </div>
           </div>
@@ -79,32 +79,57 @@ const Page = () => {
 
           {/* pdf or image */}
           <div className="text-blue-800 mr-4 text-16">
-            {blog.media?.map((media) => {
-              if (media.file_type === 'PDF') {
-                return (
-                  <iframe
-                    key={media.id} // Thêm key cho mỗi phần tử
-                    src={media.file}
-                    width="100%" // Bạn có thể điều chỉnh chiều rộng của iframe
-                    height="600px" // Bạn có thể điều chỉnh chiều cao của iframe"
-                    title="PDF Viewer"
-                  />
-                );
-              } else if (media.file_type === 'IMAGE') {
-                return (
-                  <div key={media.id} className="w-full">
-                    <Image
-                      src={media.file}
-                      alt={blog.title}
-                      className=" object-cover"
-                      width={800}
-                      height={450}
-                    />
-                  </div>
-                );
-              }
-              return null;
-            })}
+            <div className="flex flex-wrap -mx-2">
+              {blog.media?.map((media) => {
+                if (media.file_type === 'PDF') {
+                  return (
+                    <div key={media.id} className="w-full mb-4">
+                      <iframe
+                        src={media.file}
+                        width="100%"
+                        height="600px"
+                        title="PDF Viewer"
+                      />
+                    </div>
+                  );
+                } else if (media.file_type === 'IMAGE') {
+                  const imageCount = blog.media.filter(
+                    (item) => item.file_type === 'IMAGE',
+                  ).length; // Đếm số lượng hình ảnh
+                  const isSingleImage = imageCount === 1;
+
+                  return (
+                    <div
+                      key={media.id}
+                      className={`${isSingleImage ? 'w-full' : 'w-1/2'} px-2 mb-4`}
+                    >
+                      {isSingleImage ? (
+                        <Image
+                          src={media.file}
+                          alt={blog.title}
+                          className="object-cover"
+                          width={800}
+                          height={450}
+                        />
+                      ) : (
+                        <div
+                          className="relative overflow-hidden"
+                          style={{ height: '250px' }} // Chiều cao cố định khi có nhiều hình
+                        >
+                          <Image
+                            src={media.file}
+                            alt={blog.title}
+                            className="object-cover"
+                            layout="fill"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  );
+                }
+                return null;
+              })}
+            </div>
           </div>
         </div>
       )}

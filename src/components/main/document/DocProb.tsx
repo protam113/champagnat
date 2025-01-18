@@ -30,7 +30,7 @@ const DocProb: React.FC<DocCardProps> = ({
           src={image || '/img/logo_default.png'}
           alt={title}
           fill // Tương ứng với layout="fill"
-          className="object-cover rounded-lg" // Tailwind CSS cho hình ảnh
+          className="object-cover rounded-t-lg" // Tailwind CSS cho hình ảnh
         />
       </div>
       <div className="p-4">
