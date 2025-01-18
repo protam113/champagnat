@@ -263,7 +263,7 @@ export default function Navbar() {
   }
 
   return (
-    <div className="sticky top-0 mx-auto flex w-full justify-between px-8 py-3 text-14 bg-primary-500 z-10">
+    <div className="sticky top-0 mx-auto flex w-full justify-between px-8 py-3 text-14 bg-primary-500 z-50">
       {/* left side  */}
       <section
         ref={animationParent}
@@ -562,7 +562,7 @@ function MultimediaNavItem({ closeSideMenu }: { closeSideMenu: any }) {
         onClick={closeSideMenu}
       >
         {/* Danh mục sẽ chỉ hiển thị trong một dòng và dài ra khi cần */}
-        <span className="whitespace-nowrap ">Video</span>
+        <span className="whitespace-nowrap ">Thư Viện Ảnh</span>
       </Link>
     </div>
   );

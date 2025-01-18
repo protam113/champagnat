@@ -80,22 +80,6 @@ const VideoGallery = () => {
                 {video.content}
               </h3>
               <p className="text-sm text-gray-500 mb-4">{video.create_date}</p>
-              {/* <a
-                href={video.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="relative flex items-center text-primary-500 text-16 sm:text-16 md:text-18 lo:text-20 font-semibold group transition duration-300 overflow-hidden"
-              >
-                <span className="absolute left-0 top-0 h-full w-1 bg-primary-500"></span>
-
-                <span className="relative z-10 pl-4">Xem Thêm</span>
-
-                <span className="relative z-10 ml-1 transition-transform group-hover:translate-x-1">
-                  →
-                </span>
-
-                <span className="absolute inset-0 bg-yellow-500 scale-x-0 origin-left transition-transform duration-300 group-hover:scale-x-100"></span>
-              </a> */}
               <a href={video.link} target="_blank" rel="noopener noreferrer">
                 <button
                   className={`group relative rounded-full border border-white bg-white p-2 text-16 font-semibold`}
@@ -105,7 +89,7 @@ const VideoGallery = () => {
                       <ArrowRight size={20} />
                     </span>
                   </div>
-                  <span className="relative left-4 z-10 whitespace-nowrap px-8 font-semibold text-black transition-all duration-200 ease-in-out group-hover:-left-3 group-hover:text-yellow-500">
+                  <span className="relative left-4 z-10 whitespace-nowrap px-8 font-semibold text-black transition-all duration-200 ease-in-out group-hover:-left-3 group-hover:text-white">
                     xem thêm{' '}
                   </span>
                 </button>

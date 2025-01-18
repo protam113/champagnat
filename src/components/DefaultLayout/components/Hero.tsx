@@ -207,6 +207,7 @@ const Hero = () => {
 
   // Kiểm tra nếu data là mảng, nếu không thì set là mảng rỗng
   const queueData: Banner[] = Array.isArray(data) ? data : [];
+
   if (isLoading) {
     return (
       <div className="flex pt-10 items-center justify-center">
@@ -229,6 +230,7 @@ const Hero = () => {
         prevArrow={
           <div
             style={{
+              zIndex: '-10px',
               width: '20px',
               height: '20px',
               fontSize: '14px',
@@ -241,6 +243,7 @@ const Hero = () => {
         nextArrow={
           <div
             style={{
+              zIndex: '-10px',
               width: '20px',
               height: '20px',
               fontSize: '14px',

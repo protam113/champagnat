@@ -1,23 +1,13 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  reactStrictMode: true, // Thêm dòng này
   experimental: {
     outputFileTracingRoot: undefined,
   },
   images: {
     remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'hcm03.vstorage.vngcloud.vn',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-      },
+      { protocol: 'https', hostname: 'hcm03.vstorage.vngcloud.vn' },
     ],
   },
 };

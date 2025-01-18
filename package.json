@@ -16,8 +16,10 @@
     "@tiptap/starter-kit": "^2.10.4",
     "@types/react-slick": "^0.23.13",
     "aos": "^2.3.4",
+    "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
     "crypto-js": "^4.2.0",
+    "cssnano": "^7.0.6",
     "date-fns": "^4.1.0",
     "framer-motion": "^11.11.11",
     "lucide-react": "^0.468.0",
@@ -34,7 +36,6 @@
     "react-slick": "^0.30.3",
     "react-slideshow-image": "^4.3.2",
     "react-spinners": "^0.15.0",
-    "sharp": "^0.33.5",
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^2.5.5",
     "zustand": "^5.0.2"
@@ -52,7 +53,7 @@
     "eslint-config-next": "14.2.16",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-prettier": "^5.2.1",
-    "postcss": "^8.4.49",
+    "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "tailwindcss": "^3.4.1",
     "typescript": "^5"

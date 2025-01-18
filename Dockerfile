@@ -1,31 +1,39 @@
-# Stage 1: Build
-FROM node:20-alpine AS builder
-
+# Stage 1: Dependencies
+FROM node:20-alpine AS deps
 WORKDIR /app
-
-# Copy package files và cài đặt dependencies
 COPY package*.json ./
+# Install ALL dependencies (including devDependencies)
 RUN npm ci
-
-# Copy toàn bộ mã nguồn và build ứng dụng
-COPY . .
-RUN npm run build
-
-# Stage 2: Runtime
-FROM node:20-alpine AS runtime
-
+# Stage 2: Builder
+FROM node:20-alpine AS builder
 WORKDIR /app
-
-# Copy các file cần thiết từ builder
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/next.config.mjs ./
-
-# Cài đặt dependencies cần thiết cho production
-RUN npm ci --production
-
+# Copy ALL dependencies from deps stage
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+# Set environment variables for build
+ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
+# Build the application
+RUN npm run build
+# Stage 3: Runner
+FROM node:20-alpine AS runner
+WORKDIR /app
+# Create non-root user for security
+RUN addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
+# Set directory permissions
+RUN mkdir .next && \
+    chown nextjs:nodejs .next
+# Copy only necessary files
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+# Environment variables
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+# Switch to non-root user
+USER nextjs
 EXPOSE 3000
-
-CMD ["npm", "start"]
+CMD ["node", "server.js"]
