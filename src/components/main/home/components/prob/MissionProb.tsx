@@ -23,7 +23,7 @@ const MissionProb: React.FC<SuvuCardProps> = ({
 }) => {
   return (
     <Link
-      href={`/hoi_dong/su_vu/${id}`}
+      href={`/mission/${id}`}
       className="rounded-lg shadow-lg overflow-hidden bg-white transform transition-transform duration-300 hover:scale-105  hover:text-yellow-500" // Thêm hiệu ứng hover
     >
       <LazyLoad
