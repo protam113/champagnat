@@ -37,7 +37,7 @@ const baxh = [
 
 const media = [
   { name: 'Ảnh', link: '/thu_vien/thu_vien_anh' },
-  { name: 'Video', link: '/thu_vien/thu_vien_anh/thu_vien_video' },
+  { name: 'Video', link: '/thu_vien/thu_vien_video' },
 ];
 interface SocialIconProps {
   href: string;

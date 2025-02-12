@@ -1,13 +1,13 @@
 // components/Loading.tsx
 import React from 'react';
 import Image from 'next/image';
-
+import loading from '@/assets/image/image_logo.png';
 const Loading: React.FC = () => {
   return (
     <div className="loading-container">
       <div className="logo-container">
         <Image
-          src="/img/image_logo.png"
+          src={loading} // Đường dẫn ảnh
           alt="Logo"
           width={128} // Chiều rộng ảnh
           height={128} // Chiều cao ảnh
